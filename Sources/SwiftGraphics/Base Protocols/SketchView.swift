@@ -8,16 +8,16 @@
 import AppKit
 
 /// A basic subclass of NSView for displaying a `Sketch`
-class SketchView: NSView {
+open class SketchView: NSView {
     
     /// The `Sketch` to display
-    var sketch: Sketch?
+    open var sketch: Sketch?
     
     /// Whether this is the first run of the sketch, controls whether `.setup()` is called on `.draw(_:)`
     var firstRun = true
     
     /// Calls the sketches `.draw()` method
-    override func draw(_ dirtyRect: NSRect) {
+    override open func draw(_ dirtyRect: NSRect) {
         
         if firstRun {
             sketch?.setup()
@@ -28,7 +28,7 @@ class SketchView: NSView {
     }
     
     /// Draws the sketch to an image
-    func drawToImage() -> NSImage {
+    open func drawToImage() -> NSImage {
         let image = NSImage(size: self.frame.size)
         image.lockFocusFlipped(false)
         if firstRun {
@@ -45,7 +45,7 @@ class SketchView: NSView {
     /// - Parameters:
     ///   - image: Image to save
     ///   - url: URL to save to
-    func saveImage(_ image: NSImage, to url: URL) throws {
+    open func saveImage(_ image: NSImage, to url: URL) throws {
         
         guard let tiffData = image.tiffRepresentation else {
             return
@@ -58,13 +58,13 @@ class SketchView: NSView {
     
     /// Draw the sketch to an image and attempt to save it
     /// - Parameter url: URL to write the image to
-    func saveImage(to url: URL) throws {
+    open func saveImage(to url: URL) throws {
         let image = drawToImage()
         try saveImage(image, to: url)
     }
     
     /// Passes clicks to the sketch
-    @IBAction func clickGestureAction(_ sender: NSClickGestureRecognizer) {
+    @IBAction open func clickGestureAction(_ sender: NSClickGestureRecognizer) {
         let point = sender.location(in: self)
         let v = Vector(point.x, point.y)
         (sketch as? InteractiveSketch)?.mouseDown(at: v)
@@ -74,7 +74,7 @@ class SketchView: NSView {
     }
     
     /// Passes pan gestures to the sketch
-    @IBAction func panGestureAction(_ sender: NSPanGestureRecognizer) {
+    @IBAction open func panGestureAction(_ sender: NSPanGestureRecognizer) {
         let point = sender.location(in: self)
         let v = Vector(point.x, point.y)
         (sketch as? InteractiveSketch)?.mousePan(at: v)
@@ -83,7 +83,7 @@ class SketchView: NSView {
     }
     
     /// Passes scroll events to the sketch
-    override func scrollWheel(with event: NSEvent) {
+    override open func scrollWheel(with event: NSEvent) {
         super.scrollWheel(with: event)
 
         let windowPoint = event.locationInWindow
