@@ -10,6 +10,9 @@ import AppKit
 /// A basic subclass of NSView for displaying a `Sketch`
 open class SketchView: NSView {
     
+    /// Use top-left origin
+    override var isFlipped: Bool { true }
+    
     /// The `Sketch` to display
     open var sketch: Sketch?
     
@@ -30,7 +33,7 @@ open class SketchView: NSView {
     /// Draws the sketch to an image
     open func drawToImage() -> NSImage {
         let image = NSImage(size: self.frame.size)
-        image.lockFocusFlipped(false)
+        image.lockFocusFlipped(true)
         if firstRun {
             sketch?.setup()
         }
