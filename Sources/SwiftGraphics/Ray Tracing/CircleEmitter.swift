@@ -36,7 +36,7 @@ public class CircleEmitter: Circle, Emitter {
     ///   - y: Center Y coordinate
     ///   - radius: Radius of the emitter
     ///   - rayStep: Angle between emitted rays
-    public init(x: Double? = nil, y: Double? = nil, radius: Double, rayStep: Double) {
+    public init(x: Double, y: Double, radius: Double, rayStep: Double) {
         self.rayStep = rayStep
         super.init(x: x, y: y, radius: radius)
         

@@ -41,11 +41,6 @@ public class Vector: Shape {
         return Vector(self.x, self.y, self.z)
     }
     
-    public func draw() {
-        let rect = CGRect(x: x, y: y, width: 1, height: 1)
-        context?.fill(rect)
-    }
-    
     var cgPoint: CGPoint { CGPoint(x: x, y: y) }
     
 }
@@ -147,16 +142,12 @@ extension Vector {
         // to floating-point rounding issues. This can make Math.acos return NaN.
         //
         // Solution: we'll clamp the value to the -1,1 range
-//        var angle
+        
         var angle = acos(min(1, max(-1, dotmagmag)))
         angle = angle * sign(self.cross(v).z ?? 1)
         
         return angle
         
-//        if (this.p5) {
-//            angle = this.p5._fromRadians(angle)
-//        }
-//        return angle;
     }
     
     func sign(_ num: Double) -> Double {
@@ -168,3 +159,20 @@ extension Vector {
     }
 }
 
+extension Vector: CGDrawable {
+    public func draw(in context: CGContext) {
+        let rect = CGRect(x: x, y: y, width: 1, height: 1)
+        context.fill(rect)
+    }
+    
+    public func debugDraw(in context: CGContext) {
+        draw(in: context)
+    }
+}
+
+
+extension Vector: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        return Rectangle(x: x, y: y, width: 1, height: 1).svgElement()
+    }
+}

@@ -3,12 +3,22 @@ import AppKit
 
 /// The base protocol for any shape that is drawable on screen
 public protocol Shape: Codable {
+//    static var context: DrawingContext?//CGContext? { NSGraphicsContext.current?.cgContext }
     func draw()
 }
 
 extension Shape {
-    /// Returns the `CGContext` of the current `NSGraphicsContext`
-    var context: CGContext? { NSGraphicsContext.current?.cgContext }
+
+    public func draw() {
+        switch SketchContext.context {
+        case let c as CGContext:
+            (self as? CGDrawable)?.draw(in: c)
+        case let c as SVGContext:
+            (self as? SVGDrawable)?.draw(in: c)
+        default:
+            break
+        }
+    }
 }
 
 

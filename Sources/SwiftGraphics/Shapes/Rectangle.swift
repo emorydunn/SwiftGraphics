@@ -159,43 +159,7 @@ public class Rectangle: Polygon {
 
         return reverseRelativePoint(relPoint)
     }
-    
-    public func draw() {
-        let rect = CGRect(x: x, y: y, width: width, height: height)
-        
-        context?.stroke(rect)
-        context?.fill(rect)
-    }
-    
-    public func debugDraw() {
-        
-        let tlColor = CGColor(red: 255 / 255, green: 159 / 255, blue: 82 / 255, alpha: 1)
-        let trColor = CGColor(red: 82 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
-        let brColor = CGColor(red: 163 / 255, green: 82 / 255, blue: 255 / 255, alpha: 1)
-        let blColor = CGColor(red: 255 / 255, green: 82 / 255, blue: 82 / 255, alpha: 1)
-        
-        context?.setFillColor(tlColor)
-        context?.setStrokeColor(tlColor)
-        Circle(center: topLeft, radius: 5).draw()
-        topEdge.draw()
-        
-        context?.setFillColor(trColor)
-        context?.setStrokeColor(trColor)
-        Circle(center: topRight, radius: 5).draw()
-        rightEdge.draw()
-        
-        context?.setFillColor(brColor)
-        context?.setStrokeColor(brColor)
-        Circle(center: bottomRight, radius: 5).draw()
-        bottomEdge.draw()
-        
-        context?.setFillColor(blColor)
-        context?.setStrokeColor(blColor)
-        Circle(center: bottomLeft, radius: 5).draw()
-        leftEdge.draw()
 
-    }
-    
     /// Determine whether the specified point is in the rectangle
     ///
     /// Tests whether the point is between the left and right edges, and top and bottom edges
@@ -234,42 +198,57 @@ extension Rectangle: Intersectable {
     
 }
 
-/// A specialized `Rectangle` which is inset from the canvas size
-public class BoundingBox: Rectangle {
-    public var inset: Double
-    
-    enum CodingKeys: String, CodingKey {
-        case inset
+extension Rectangle: CGDrawable {
+    public func draw(in context: CGContext) {
+        let rect = CGRect(x: x, y: y, width: width, height: height)
+        
+        context.stroke(rect)
+        context.fill(rect)
     }
     
-    /// Instantiate a new `BoundingBox`
-    /// - Parameter inset: Margin from the edge
-    public init(inset: Double = 100) {
-        self.inset = inset
-        super.init(x: 0, y: 0, width: 0, height: 0)
+    public func debugDraw(in context: CGContext) {
         
-        update()
+        let tlColor = CGColor(red: 255 / 255, green: 159 / 255, blue: 82 / 255, alpha: 1)
+        let trColor = CGColor(red: 82 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
+        let brColor = CGColor(red: 163 / 255, green: 82 / 255, blue: 255 / 255, alpha: 1)
+        let blColor = CGColor(red: 255 / 255, green: 82 / 255, blue: 82 / 255, alpha: 1)
+        
+        context.setFillColor(tlColor)
+        context.setStrokeColor(tlColor)
+        Circle(center: topLeft, radius: 5).draw()
+        topEdge.draw()
+        
+        context.setFillColor(trColor)
+        context.setStrokeColor(trColor)
+        Circle(center: topRight, radius: 5).draw()
+        rightEdge.draw()
+        
+        context.setFillColor(brColor)
+        context.setStrokeColor(brColor)
+        Circle(center: bottomRight, radius: 5).draw()
+        bottomEdge.draw()
+        
+        context.setFillColor(blColor)
+        context.setStrokeColor(blColor)
+        Circle(center: bottomLeft, radius: 5).draw()
+        leftEdge.draw()
         
     }
-    
-    required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
+}
 
-        self.inset = try container.decode(Double.self, forKey: .inset)
+extension Rectangle: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(kind: .element)
+        element.name = "rect"
+        element.setAttributesWith([
+            "x": String(self.x),
+            "y": String(self.y),
+            "width": String(self.width),
+            "height": String(self.height),
+            "stroke": "#000",
+            "fill": "#fff"
+        ])
         
-        try super.init(from: decoder)
-        
-    }
-    
-    /// Update the size of the rectangle based on the current context
-    func update() {
-        guard let contextWidth = context?.width, let contextHeight = context?.height else {
-            return
-        }
-        
-        self.x = inset
-        self.y = inset
-        self.width = Double(contextWidth / 2) - inset * 2
-        self.height = Double(contextHeight / 2) - inset * 2
+        return element
     }
 }

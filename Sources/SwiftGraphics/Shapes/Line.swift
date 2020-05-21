@@ -48,11 +48,6 @@ public class Line: Shape, Intersectable {
         self.end = Vector(x2, y2)
     }
     
-    /// Draw the line
-    public func draw() {
-        context?.strokeLineSegments(between: [start.cgPoint, end.cgPoint])
-    }
-    
     /// Determine whether a point is on the line
     /// - Parameter point: Whether the point is on the line
     public func pointIsOnLine(_ point: Vector) -> Bool {
@@ -80,23 +75,6 @@ public class Line: Shape, Intersectable {
         return normal
     }
     
-    /// Draw a debug representation of the line
-    public func debugDraw() {
-        let normal = self.normal()
-        
-        context?.setStrokeColor(.init(red: 255, green: 0, blue: 128, alpha: 1))
-        Line(
-            center.x,
-            center.y,
-            center.x - normal.x * 50,
-            center.y - normal.y * 50
-        ).draw()
-        
-        context?.setStrokeColor(.init(gray: 0.5, alpha: 1))
-        self.draw()
-        
-        
-    }
 
     /// Find any intersecting points with the specified line
     ///
@@ -130,3 +108,43 @@ public class Line: Shape, Intersectable {
     
 }
 
+extension Line: CGDrawable {
+    public func draw(in context: CGContext) {
+        context.strokeLineSegments(between: [start.cgPoint, end.cgPoint])
+    }
+    
+    
+    /// Draw a debug representation of the line
+    public func debugDraw(in context: CGContext) {
+        let normal = self.normal()
+        
+        context.setStrokeColor(.init(red: 255, green: 0, blue: 128, alpha: 1))
+        Line(
+            center.x,
+            center.y,
+            center.x - normal.x * 50,
+            center.y - normal.y * 50
+        ).draw()
+        
+        context.setStrokeColor(.init(gray: 0.5, alpha: 1))
+        self.draw(in: context)
+        
+    }
+}
+
+extension Line: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(kind: .element)
+        element.name = "line"
+        element.setAttributesWith([
+            "x1": String(self.start.x),
+            "y1": String(self.start.y),
+            "x2": String(self.end.x),
+            "y2": String(self.end.y),
+            "stroke": "#000",
+            "stroke-width": "4"
+        ])
+        
+        return element
+    }
+}

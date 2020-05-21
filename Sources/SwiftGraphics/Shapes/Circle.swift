@@ -43,20 +43,21 @@ public class Circle: Polygon, Intersectable {
     ///   - x: Center X coordinate
     ///   - y: Center Y coordinate
     ///   - radius: Radius of the circle
-    public init(x: Double? = nil, y: Double? = nil, radius: Double) {
+    public init(x: Double, y: Double, radius: Double) {
         self.center = Vector(x: 0, y: 0)
         self.radius = radius
         
-        if x == nil && y == nil {
-            guard let contextWidth = context?.width, let contextHeight = context?.height else {
-                return
-            }
-            self.center = Vector(x: Double(contextWidth / 4),
-                  y: Double(contextHeight / 4))
-            
-        } else if let x = x, let y = y {
-            self.center = Vector(x: x, y: y)
-        }
+//        if x == nil && y == nil {
+//            guard let contextWidth = context?.width, let contextHeight = context?.height else {
+//                return
+//            }
+//            self.center = Vector(x: Double(contextWidth / 4),
+//                  y: Double(contextHeight / 4))
+//            
+//        } else if let x = x, let y = y {
+//            
+//        }
+        self.center = Vector(x: x, y: y)
         
         
     }
@@ -221,24 +222,46 @@ public class Circle: Polygon, Intersectable {
 
     }
     
-    /// Draw the circle
-    public func draw() {
-        
-        context?.saveGState()
-        context?.translateBy(x: CGFloat(-radius), y: CGFloat(-radius))
-        let bb = CGRect(x: center.x, y: center.y, width: diameter, height: diameter)
-        
-        context?.strokeEllipse(in: bb)
-        context?.fillEllipse(in: bb)
-        
-        context?.restoreGState()
-    }
-    
     /// Determine whether teh specified point is inside the circle
     ///
     /// This method compares the distance between the center and point to the radius of the circle.
     /// - Parameter point: Whether the point is inside the circle
     public func contains(_ point: Vector) -> Bool {
         return point.dist(center) < radius
+    }
+}
+
+extension Circle: CGDrawable {
+    /// Draw the circle
+    public func draw(in context: CGContext) {
+        
+        context.saveGState()
+        context.translateBy(x: CGFloat(-radius), y: CGFloat(-radius))
+        let bb = CGRect(x: center.x, y: center.y, width: diameter, height: diameter)
+        
+        context.strokeEllipse(in: bb)
+        context.fillEllipse(in: bb)
+        
+        context.restoreGState()
+    }
+    
+    public func debugDraw(in context: CGContext) {
+        draw(in: context)
+    }
+}
+
+extension Circle: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(kind: .element)
+        element.name = "circle"
+        element.setAttributesWith([
+            "cx": String(self.center.x),
+            "cy": String(self.center.y),
+            "r": String(self.radius),
+            "stroke": "#000",
+            "fill": "#fff"
+        ])
+        
+        return element
     }
 }
