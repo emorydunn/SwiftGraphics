@@ -31,7 +31,7 @@ extension Sketch {
     /// The string takes the form of `YYYYMMDD-HHmmss-<short hash>`
     public func hashedFileName() -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "YYYYMMDD-HHmmss"
+        formatter.dateFormat = "yyyyMMdd-HHmmss"
         
         let dateString = formatter.string(from: Date())
         
