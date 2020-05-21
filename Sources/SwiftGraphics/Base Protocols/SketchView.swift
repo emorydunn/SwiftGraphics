@@ -11,7 +11,7 @@ import AppKit
 open class SketchView: NSView {
     
     /// Use top-left origin
-    override var isFlipped: Bool { true }
+    override open var isFlipped: Bool { true }
     
     /// The `Sketch` to display
     open var sketch: Sketch?
