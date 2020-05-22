@@ -30,6 +30,10 @@ public class DirectionalEmitter: Circle, Emitter {
 
     }
     
+    public convenience init(x: Double, y: Double, direction: Degrees) {
+        self.init(Vector(x, y), direction)
+    }
+    
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }
