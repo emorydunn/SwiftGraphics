@@ -170,11 +170,13 @@ extension Vector {
 
 extension Vector: CGDrawable {
     public func draw(in context: CGContext) {
-        context.setStrokeColor(strokeColor)
-        context.setFillColor(fillColor)
-        context.setLineWidth(CGFloat(strokeWeight))
-        let rect = CGRect(x: x, y: y, width: 1, height: 1)
-        context.fill(rect)
+        Rectangle(x: x, y: y, width: 1, height: 1).draw(in: context)
+//        context.setStrokeColor(strokeColor)
+//        context.setFillColor(fillColor)
+//        context.setLineWidth(CGFloat(strokeWeight))
+//        let rect = CGRect(x: x, y: y, width: 1, height: 1)
+        
+//        context.fill(rect)
     }
     
     public func debugDraw(in context: CGContext) {
