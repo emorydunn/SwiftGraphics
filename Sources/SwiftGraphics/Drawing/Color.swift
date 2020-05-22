@@ -8,10 +8,11 @@
 import Foundation
 
 public class Color: Equatable {
-    let red: Float
-    let green: Float
-    let blue: Float
-    let alpha: Float
+    
+    public var red: Float
+    public var green: Float
+    public var blue: Float
+    public var alpha: Float
     
     public init(_ r: Float, _ g: Float, _ b: Float, _ a: Float) {
         self.red = r
@@ -66,4 +67,8 @@ public class Color: Equatable {
     public static var black: Color { Color(0, 0, 0, 1) }
     public static var white: Color { Color(1, 1, 1, 1) }
     public static var clear: Color { Color(0, 0, 0, 0) }
+    
+    public static func == (lhs: Color, rhs: Color) -> Bool {
+        lhs.red == rhs.red && lhs.green == rhs.green && lhs.blue == rhs.blue && lhs.alpha == rhs.alpha
+    }
 }
