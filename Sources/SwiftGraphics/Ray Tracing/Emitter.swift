@@ -45,7 +45,7 @@ extension Emitter {
 ///
 /// - `.line` draws a line between the starting and endoing points
 /// - `.point` draws only the end point of a line
-public enum RayTraceStyle: String, Codable {
+public enum RayTraceStyle: String, Codable, CaseIterable {
     case line, point
 }
 
