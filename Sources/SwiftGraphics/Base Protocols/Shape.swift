@@ -10,11 +10,16 @@ public protocol Shape: Codable {
 extension Shape {
 
     public func draw() {
+        // Important: Classes that directly conform to `DrawingContext`
+        // must be listed first.
+        // Conformance by extension will always succeed, because the
+        // method doesn't need to know anything beyond the protocol
+        
         switch SwiftGraphicsContext.current {
-        case let c as CGContext:
-            (self as? CGDrawable)?.draw(in: c)
         case let c as SVGContext:
             (self as? SVGDrawable)?.draw(in: c)
+        case let c as CGContext:
+            (self as? CGDrawable)?.draw(in: c)
         default:
             break
         }
