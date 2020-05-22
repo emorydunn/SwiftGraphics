@@ -7,32 +7,49 @@
 
 import Foundation
 
-public class Color: Equatable {
+public struct Color: Equatable {
     
-    public var red: Float
-    public var green: Float
-    public var blue: Float
-    public var alpha: Float
+    public let red: Float
+    public let green: Float
+    public let blue: Float
+    public let alpha: Float
     
-    public init(_ r: Float, _ g: Float, _ b: Float, _ a: Float) {
-        self.red = r
-        self.green = g
-        self.blue = b
-        self.alpha = a
+    /// Instantiate a new Color
+    ///
+    /// /// This method expects color values between `0` and `1`
+    ///
+    /// - Parameters:
+    ///   - r: Red value
+    ///   - g: Green value
+    ///   - b: Blue value
+    ///   - a: Alpha value
+    public init(red: Float, green: Float, blue: Float, alpha: Float) {
+        self.red = red.clamped(to: 0...1)
+        self.green = green.clamped(to: 0...1)
+        self.blue = blue.clamped(to: 0...1)
+        self.alpha = alpha.clamped(to: 0...1)
     }
     
+    /// Instantiate a new Color
+    ///
+    /// This method expects color values between `0` and `255`
+    ///
+    /// - Parameters:
+    ///   - r: Red value
+    ///   - g: Green value
+    ///   - b: Blue value
+    ///   - a: Alpha value
     public init(_ r: Int, _ g: Int, _ b: Int, _ a: Float) {
-        self.red = Float(r) / 255
-        self.green = Float(g) / 255
-        self.blue = Float(b) / 255
-        self.alpha = a
+        self.init(
+            red: Float(r) / 255,
+            green: Float(g) / 255,
+            blue: Float(b) / 255,
+            alpha: a
+        )
     }
     
     public init(grey: Float, _ a: Float) {
-        self.red = grey
-        self.green = grey
-        self.blue = grey
-        self.alpha = a
+        self.init(red: grey, green: grey, blue: grey, alpha: a)
     }
     
     // Convert to a hex string
@@ -61,14 +78,15 @@ public class Color: Equatable {
         let g = lroundf(green * 255)
         let b = lroundf(blue * 255)
         
-        return "rgba(\(r), \(g), \(b), \(alpha))"
+        return "rgba(\(r),\(g),\(b),\(alpha))"
     }
     
-    public static var black: Color { Color(0, 0, 0, 1) }
-    public static var white: Color { Color(1, 1, 1, 1) }
-    public static var clear: Color { Color(0, 0, 0, 0) }
+    public static var black : Color { Color(red : 0, green : 0, blue : 0, alpha : 1) }
+    public static var white : Color { Color(red : 1, green : 1, blue : 1, alpha : 1) }
+    public static var clear : Color { Color(red : 0, green : 0, blue : 0, alpha : 0) }
     
-    public static func == (lhs: Color, rhs: Color) -> Bool {
-        lhs.red == rhs.red && lhs.green == rhs.green && lhs.blue == rhs.blue && lhs.alpha == rhs.alpha
-    }
+    public static var red   : Color { Color(red : 1, green : 0, blue : 0, alpha : 1) }
+    public static var green : Color { Color(red : 0, green : 1, blue : 0, alpha : 1) }
+    public static var blue  : Color { Color(red : 0, green : 0, blue : 1, alpha : 1) }
+    
 }
