@@ -17,7 +17,7 @@ open class SketchView: NSView {
     open var sketch: Sketch?
     
     /// Whether this is the first run of the sketch, controls whether `.setup()` is called on `.draw(_:)`
-    var firstRun = true
+    open var firstRun = true
     
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
