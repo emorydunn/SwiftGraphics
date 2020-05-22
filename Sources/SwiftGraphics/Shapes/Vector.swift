@@ -187,6 +187,9 @@ extension Vector: CGDrawable {
 
 extension Vector: SVGDrawable {
     public func svgElement() -> XMLElement {
-        return Rectangle(x: x, y: y, width: 1, height: 1).svgElement()
+        let rect = Rectangle(x: x, y: y, width: 1, height: 1).svgElement()
+        rect.addAttribute("vector", forKey: "class")
+        
+        return rect
     }
 }

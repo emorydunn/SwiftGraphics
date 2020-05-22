@@ -90,25 +90,10 @@ final class SVGDrawableTests: XCTestCase {
         
         XCTAssertEqual(
             makeXMLString(xml),
-            #"<rect x="100.0" y="100.0" width="1.0" height="1.0" stroke="rgba(0,0,0,1.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)"></rect>"#
+            #"<rect x="100.0" y="100.0" width="1.0" height="1.0" stroke="rgba(0,0,0,1.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)" class="vector"></rect>"#
         )
         
     }
     
-    func testCircleEmitterLine() {
-        
-        setTestContext()
-        
-        let shape = CircleEmitter(x: 100, y: 100, radius: 10, rayStep: 1)
-        let line = Line(0, 0, 100, 100)
-        shape.drawLine(line)
-        let xml = shape.svgElement()
-        
-        XCTAssertEqual(
-            makeXMLString(xml),
-            #"<rect x="100.0" y="100.0" width="1.0" height="1.0" stroke="rgba(0,0,0,1.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)"></rect>"#
-        )
-        
-    }
     
 }
