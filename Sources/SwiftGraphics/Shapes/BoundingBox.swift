@@ -26,15 +26,6 @@ public class BoundingBox: Rectangle {
         
     }
     
-    required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        self.inset = try container.decode(Double.self, forKey: .inset)
-        
-        try super.init(from: decoder)
-        
-    }
-    
     /// Update the size of the rectangle based on the current context
     func update() {
         

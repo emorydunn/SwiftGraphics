@@ -42,17 +42,6 @@ public class CircleEmitter: Circle, Emitter {
         
     }
     
-    required public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        // Caster Values
-        self.rayStep = try container.decode(Double.self, forKey: .rayStep)
-        self.style = try container.decode(RayTraceStyle.self, forKey: .style)
-        
-        try super.init(from: decoder)
-        
-    }
-    
     /// Draw the emitter and ray trace using the specified `BoundingBox` and objects
     /// - Parameters:
     ///   - boundingBox: `BoundingBox` for ray termination

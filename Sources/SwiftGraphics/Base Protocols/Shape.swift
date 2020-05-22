@@ -2,9 +2,14 @@ import Foundation
 import AppKit
 
 /// The base protocol for any shape that is drawable on screen
-public protocol Shape: Codable {
-//    static var context: DrawingContext?//CGContext? { NSGraphicsContext.current?.cgContext }
+public protocol Shape {
+
     func draw()
+    
+    var strokeColor: CGColor { get set }
+    var fillColor: CGColor { get set }
+    var strokeWeight: Double { get set }
+    
 }
 
 extension Shape {

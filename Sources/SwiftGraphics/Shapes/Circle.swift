@@ -29,6 +29,15 @@ public class Circle: Polygon, Intersectable {
     /// The offset diameter of the circle
     public var offsetDiameter: Double { offsetRadius * 2 }
     
+    /// Color of the outline of the shape
+    public var strokeColor: CGColor = .black
+    
+    /// Color of the fill of the shape
+    public var fillColor: CGColor = .clear
+    
+    /// Weight of the outline of the shape
+    public var strokeWeight: Double = 1
+    
     /// Instantiate a new `Circle`
     /// - Parameters:
     ///   - center: Center of the circle
@@ -204,7 +213,6 @@ public class Circle: Polygon, Intersectable {
             Math.squared(line.start.y)
 
         if let startZ = line.start.z, let centerZ = center.z {
-//            part1 += center
             part1 += centerZ.squared()
             part1 += startZ.squared()
 
@@ -239,6 +247,9 @@ extension Circle: CGDrawable {
         context.translateBy(x: CGFloat(-radius), y: CGFloat(-radius))
         let bb = CGRect(x: center.x, y: center.y, width: diameter, height: diameter)
         
+        context.setStrokeColor(strokeColor)
+        context.setFillColor(fillColor)
+        context.setLineWidth(CGFloat(strokeWeight))
         context.strokeEllipse(in: bb)
         context.fillEllipse(in: bb)
         
@@ -258,9 +269,11 @@ extension Circle: SVGDrawable {
             "cx": String(self.center.x),
             "cy": String(self.center.y),
             "r": String(self.radius),
-            "stroke": "#000",
-            "fill": "#fff"
+            "stroke": strokeColor.toHex(),
+            "fill": fillColor.toHex()
+            "stroke-width": String(strokeWeight)
         ])
+        
         
         return element
     }

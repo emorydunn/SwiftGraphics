@@ -23,6 +23,15 @@ public class Rectangle: Polygon {
     /// Height of the rectangle
     public var height: Double
     
+    /// Color of the outline of the shape
+    public var strokeColor: CGColor = .black
+    
+    /// Color of the fill of the shape
+    public var fillColor: CGColor = .clear
+    
+    /// Weight of the outline of the shape
+    public var strokeWeight: Double = 1
+    
     /// Instantiate a new `Rectangle`
     /// - Parameters:
     ///   - x: Origin X coordinate
@@ -202,6 +211,9 @@ extension Rectangle: CGDrawable {
     public func draw(in context: CGContext) {
         let rect = CGRect(x: x, y: y, width: width, height: height)
         
+        context.setStrokeColor(strokeColor)
+        context.setFillColor(fillColor)
+        context.setLineWidth(CGFloat(strokeWeight))
         context.stroke(rect)
         context.fill(rect)
     }
@@ -245,8 +257,9 @@ extension Rectangle: SVGDrawable {
             "y": String(self.y),
             "width": String(self.width),
             "height": String(self.height),
-            "stroke": "#000",
-            "fill": "#fff"
+            "stroke": strokeColor.toHex(),
+            "fill": fillColor.toHex()
+            "stroke-width": String(strokeWeight)
         ])
         
         return element

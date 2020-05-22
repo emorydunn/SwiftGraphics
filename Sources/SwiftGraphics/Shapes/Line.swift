@@ -17,6 +17,15 @@ public class Line: Shape, Intersectable {
     /// The ending point of the line
     public var end: Vector
     
+    /// Color of the outline of the shape
+    public var strokeColor: CGColor = .black
+    
+    /// Color of the fill of the shape
+    public var fillColor: CGColor = .clear
+    
+    /// Weight of the outline of the shape
+    public var strokeWeight: Double = 1
+    
     /// The length of the line
     public var length: Double { end.dist(start) }
     
@@ -110,6 +119,9 @@ public class Line: Shape, Intersectable {
 
 extension Line: CGDrawable {
     public func draw(in context: CGContext) {
+        context.setStrokeColor(strokeColor)
+        context.setFillColor(fillColor)
+        context.setLineWidth(CGFloat(strokeWeight))
         context.strokeLineSegments(between: [start.cgPoint, end.cgPoint])
     }
     
@@ -141,8 +153,9 @@ extension Line: SVGDrawable {
             "y1": String(self.start.y),
             "x2": String(self.end.x),
             "y2": String(self.end.y),
-            "stroke": "#000",
-            "stroke-width": "4"
+            "stroke": strokeColor.toHex(),
+            "fill": fillColor.toHex()
+            "stroke-width": String(strokeWeight)
         ])
         
         return element

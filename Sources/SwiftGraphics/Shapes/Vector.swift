@@ -13,6 +13,15 @@ public class Vector: Shape {
     public var y: Double
     public var z: Double?
     
+    /// Color of the outline of the shape
+    public var strokeColor: CGColor = .black
+    
+    /// Color of the fill of the shape
+    public var fillColor: CGColor = .clear
+    
+    /// Weight of the outline of the shape
+    public var strokeWeight: Double = 1
+    
     public init(x: Double, y: Double, z: Double? = nil) {
         self.x = x
         self.y = y
@@ -161,6 +170,9 @@ extension Vector {
 
 extension Vector: CGDrawable {
     public func draw(in context: CGContext) {
+        context.setStrokeColor(strokeColor)
+        context.setFillColor(fillColor)
+        context.setLineWidth(CGFloat(strokeWeight))
         let rect = CGRect(x: x, y: y, width: 1, height: 1)
         context.fill(rect)
     }
