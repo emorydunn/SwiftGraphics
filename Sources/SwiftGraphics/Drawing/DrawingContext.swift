@@ -10,7 +10,7 @@ import Foundation
 
 
 public class SketchContext {
-    static var context: DrawingContext?
+    public static var context: DrawingContext?
 }
 
 public protocol DrawingContext {
