@@ -6,10 +6,10 @@ public protocol Shape {
 
     func draw()
     
-    var strokeColor: CGColor { get set }
-    var fillColor: CGColor { get set }
-    var strokeWeight: Double { get set }
-    
+//    var strokeColor: CGColor { get set }
+//    var fillColor: CGColor { get set }
+//    var strokeWeight: Double { get set }
+//
 }
 
 extension Shape {
@@ -30,13 +30,13 @@ extension Shape {
         }
     }
     
-    /// Copy the style from another shape
-    /// - Parameter shape: The shape whose style will be copied
-    public mutating func copyStyle(from shape: Shape) {
-        self.fillColor = shape.fillColor
-        self.strokeColor = shape.strokeColor
-        self.strokeWeight = shape.strokeWeight
-    }
+//    /// Copy the style from another shape
+//    /// - Parameter shape: The shape whose style will be copied
+//    public mutating func copyStyle(from shape: Shape) {
+//        self.fillColor = shape.fillColor
+//        self.strokeColor = shape.strokeColor
+//        self.strokeWeight = shape.strokeWeight
+//    }
 }
 
 
@@ -70,11 +70,7 @@ extension Intersectable {
         var segments = intersections
             .sortedByDistance(from: line.start)
             .paired()
-            .map { pair -> Line in
-                var l = Line(pair.0, pair.1)
-                l.copyStyle(from: line)
-                return l
-        }
+            .map { Line($0.0, $0.1) }
 
         if firstOnly {
             segments.removeLast(segments.count - 1)

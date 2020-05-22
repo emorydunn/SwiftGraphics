@@ -12,6 +12,8 @@ import Foundation
 public protocol RayTracer: AnyObject, Shape {
     
     func intersections(for angle: Radians, origin: Vector, bb: BoundingBox, objects: [Intersectable]) -> [Line]
+    
+//    var passStyle: Bool { get set }
 
 }
 
@@ -32,8 +34,7 @@ extension RayTracer {
             return []
         }
         
-        var rayLine = Line(origin, endPoint)
-        rayLine.copyStyle(from: self)
+        let rayLine = Line(origin, endPoint)
         
         var shortestLine = rayLine
         var segments = [rayLine]

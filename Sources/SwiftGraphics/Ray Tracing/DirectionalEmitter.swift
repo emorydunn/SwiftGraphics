@@ -17,6 +17,8 @@ public class DirectionalEmitter: Circle, Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
     
+    public var passStyle: Bool = true
+    
     /// Instantiate a new emitter
     /// - Parameters:
     ///   - origin: The emitter's origin

@@ -29,14 +29,14 @@ public class Circle: Polygon, Intersectable {
     /// The offset diameter of the circle
     public var offsetDiameter: Double { offsetRadius * 2 }
     
-    /// Color of the outline of the shape
-    public var strokeColor: CGColor = .black
-    
-    /// Color of the fill of the shape
-    public var fillColor: CGColor = .clear
-    
-    /// Weight of the outline of the shape
-    public var strokeWeight: Double = 1
+//    /// Color of the outline of the shape
+//    public var strokeColor: CGColor = .black
+//    
+//    /// Color of the fill of the shape
+//    public var fillColor: CGColor = .clear
+//    
+//    /// Weight of the outline of the shape
+//    public var strokeWeight: Double = 1
     
     /// Instantiate a new `Circle`
     /// - Parameters:
@@ -247,9 +247,9 @@ extension Circle: CGDrawable {
         context.translateBy(x: CGFloat(-radius), y: CGFloat(-radius))
         let bb = CGRect(x: center.x, y: center.y, width: diameter, height: diameter)
         
-        context.setStrokeColor(strokeColor)
-        context.setFillColor(fillColor)
-        context.setLineWidth(CGFloat(strokeWeight))
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor)
+        context.setFillColor(SwiftGraphicsContext.fillColor)
+        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
         context.strokeEllipse(in: bb)
         context.fillEllipse(in: bb)
         
@@ -269,9 +269,9 @@ extension Circle: SVGDrawable {
             "cx": String(self.center.x),
             "cy": String(self.center.y),
             "r": String(self.radius),
-            "stroke": strokeColor.toHex(),
-            "fill": fillColor.toHex(),
-            "stroke-width": String(strokeWeight)
+            "stroke": SwiftGraphicsContext.strokeColor.toHex(),
+            "fill": SwiftGraphicsContext.fillColor.toHex(),
+            "stroke-width": String(SwiftGraphicsContext.strokeWeight)
         ])
         
         

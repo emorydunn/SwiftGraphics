@@ -26,6 +26,8 @@ public class CircleEmitter: Circle, Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
     
+    public var passStyle: Bool = true
+    
     enum CodingKeys: String, CodingKey {
         case rayStep, style
     }
