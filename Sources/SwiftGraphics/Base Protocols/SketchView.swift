@@ -22,6 +22,9 @@ open class SketchView: NSView {
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
         
+        // Set the context to CoreGraphics
+        SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
+        
         if firstRun {
             sketch?.setup()
             firstRun = false
@@ -34,6 +37,10 @@ open class SketchView: NSView {
     open func drawToImage() -> NSImage {
         let image = NSImage(size: self.frame.size)
         image.lockFocusFlipped(true)
+        
+        // Set the context to CoreGraphics
+        SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
+        
         if firstRun {
             sketch?.setup()
         }
@@ -41,6 +48,22 @@ open class SketchView: NSView {
         image.unlockFocus()
         
         return image
+    }
+    
+    open func drawToSVG() -> XMLDocument {
+
+        let context = SVGContext(sketch: self)
+        
+        SwiftGraphicsContext.current = context
+        
+        if firstRun {
+            sketch?.setup()
+        }
+        sketch?.draw()
+        
+        let doc = context.makeDoc()
+        
+        return doc
     }
     
     
