@@ -10,7 +10,7 @@ public protocol Shape: Codable {
 extension Shape {
 
     public func draw() {
-        switch SketchContext.context {
+        switch SwiftGraphicsContext.current {
         case let c as CGContext:
             (self as? CGDrawable)?.draw(in: c)
         case let c as SVGContext:

@@ -41,7 +41,7 @@ public class BoundingBox: Rectangle {
         let contextWidth: Double
         let contextHeight: Double
         
-        switch SketchContext.context {
+        switch SwiftGraphicsContext.current {
         case let c as CGContext:
             //            draw(in: c)
             contextWidth = Double(c.width)
