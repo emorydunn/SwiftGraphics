@@ -21,9 +21,9 @@ public protocol Sketch {
 
 extension Sketch {
     
-    /// Returns the current `CGContext`
-    public var context: CGContext? {
-        NSGraphicsContext.current?.cgContext
+    /// Returns the current `DrawingContext`
+    public var context: DrawingContext? {
+        SwiftGraphicsContext.current
     }
     
     /// Return a unique file name based on the time and a hash of the time
