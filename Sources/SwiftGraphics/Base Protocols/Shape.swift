@@ -29,6 +29,14 @@ extension Shape {
             break
         }
     }
+    
+    /// Copy the style from another shape
+    /// - Parameter shape: The shape whose style will be copied
+    public mutating func copyStyle(from shape: Shape) {
+        self.fillColor = shape.fillColor
+        self.strokeColor = shape.strokeColor
+        self.strokeWeight = shape.strokeWeight
+    }
 }
 
 

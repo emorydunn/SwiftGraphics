@@ -9,7 +9,7 @@
 import Foundation
 
 /// An object that can calculate intersections beetween a ray and other objects
-public protocol RayTracer: AnyObject {
+public protocol RayTracer: AnyObject, Shape {
     
     func intersections(for angle: Radians, origin: Vector, bb: BoundingBox, objects: [Intersectable]) -> [Line]
 
@@ -32,7 +32,8 @@ extension RayTracer {
             return []
         }
         
-        let rayLine = Line(origin, endPoint)
+        var rayLine = Line(origin, endPoint)
+        rayLine.copyStyle(from: self)
         
         var shortestLine = rayLine
         var segments = [rayLine]

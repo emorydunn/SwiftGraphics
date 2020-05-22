@@ -154,7 +154,7 @@ extension Line: SVGDrawable {
             "x2": String(self.end.x),
             "y2": String(self.end.y),
             "stroke": strokeColor.toHex(),
-            "fill": fillColor.toHex()
+            "fill": fillColor.toHex(),
             "stroke-width": String(strokeWeight)
         ])
         

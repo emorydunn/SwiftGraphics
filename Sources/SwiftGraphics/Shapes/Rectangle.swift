@@ -258,7 +258,7 @@ extension Rectangle: SVGDrawable {
             "width": String(self.width),
             "height": String(self.height),
             "stroke": strokeColor.toHex(),
-            "fill": fillColor.toHex()
+            "fill": fillColor.toHex(),
             "stroke-width": String(strokeWeight)
         ])
         

@@ -270,7 +270,7 @@ extension Circle: SVGDrawable {
             "cy": String(self.center.y),
             "r": String(self.radius),
             "stroke": strokeColor.toHex(),
-            "fill": fillColor.toHex()
+            "fill": fillColor.toHex(),
             "stroke-width": String(strokeWeight)
         ])
         
