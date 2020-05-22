@@ -252,20 +252,15 @@ extension Rectangle: SVGDrawable {
     public func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "rect"
-        element.setAttributesWith([
-            "x": String(self.x),
-            "y": String(self.y),
-            "width": String(self.width),
-            "height": String(self.height),
-            
-            "stroke": SwiftGraphicsContext.strokeColor.toHex(),
-            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
-            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
-            
-            "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
-        ])
+        element.addAttribute(x, forKey: "x")
+        element.addAttribute(y, forKey: "y")
+        element.addAttribute(width, forKey: "width")
+        element.addAttribute(height, forKey: "height")
         
+        element.addAttribute(SwiftGraphicsContext.strokeColor, forKey: "stroke")
+        element.addAttribute(SwiftGraphicsContext.strokeWeight, forKey: "stroke-width")
+        element.addAttribute(SwiftGraphicsContext.fillColor, forKey: "fill")
+
         return element
     }
 }

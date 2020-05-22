@@ -36,12 +36,9 @@ public class SVGContext: DrawingContext {
         // Set up the SVG root element
         let svgRoot = XMLElement(kind: .element)
         svgRoot.name = "svg"
-        svgRoot.setAttributesWith([
-            "width": String(width),
-            "height": String(height),
-            "xmlns": "http://www.w3.org/2000/svg"
-        ])
-        
+        svgRoot.addAttribute(width, forKey: "width")
+        svgRoot.addAttribute(height, forKey: "height")
+        svgRoot.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
         
         // Transform the shapes into XML elements and add them to the root
         let nodes = shapes.map {
@@ -51,6 +48,10 @@ public class SVGContext: DrawingContext {
         
         let doc = XMLDocument(kind: .document)
         doc.setRootElement(svgRoot)
+        doc.characterEncoding = "UTF-8"
+        doc.isStandalone = false
+        doc.documentContentKind = .xml
+        doc.version = "1.0"
         
         return doc
     }

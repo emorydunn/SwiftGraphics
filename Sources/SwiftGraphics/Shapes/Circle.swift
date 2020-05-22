@@ -265,21 +265,15 @@ extension Circle: SVGDrawable {
     public func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "circle"
-        element.setAttributesWith([
-            "cx": String(self.center.x),
-            "cy": String(self.center.y),
-            "r": String(self.radius),
-            
-            "stroke": SwiftGraphicsContext.strokeColor.toHex(),
-            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
-            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
-            
-            "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
-            
-        ])
+        element.addAttribute(center.x, forKey: "cx")
+        element.addAttribute(center.y, forKey: "cy")
+        element.addAttribute(radius, forKey: "r")
         
+        element.addAttribute(SwiftGraphicsContext.strokeColor, forKey: "stroke")
+        element.addAttribute(SwiftGraphicsContext.strokeWeight, forKey: "stroke-width")
+        element.addAttribute(SwiftGraphicsContext.fillColor, forKey: "fill")
         
         return element
     }
 }
+

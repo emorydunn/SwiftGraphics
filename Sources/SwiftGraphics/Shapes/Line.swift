@@ -148,19 +148,13 @@ extension Line: SVGDrawable {
     public func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "line"
-        element.setAttributesWith([
-            "x1": String(self.start.x),
-            "y1": String(self.start.y),
-            "x2": String(self.end.x),
-            "y2": String(self.end.y),
-            
-            "stroke": SwiftGraphicsContext.strokeColor.toHex(),
-            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
-            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
-            
-            "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
-        ])
+        element.addAttribute(start.x, forKey: "x1")
+        element.addAttribute(start.y, forKey: "y1")
+        element.addAttribute(end.x, forKey: "x2")
+        element.addAttribute(end.y, forKey: "y2")
+        
+        element.addAttribute(SwiftGraphicsContext.strokeColor, forKey: "stroke")
+        element.addAttribute(SwiftGraphicsContext.strokeWeight, forKey: "stroke-width")
         
         return element
     }
