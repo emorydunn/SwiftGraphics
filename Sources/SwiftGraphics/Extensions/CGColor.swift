@@ -18,7 +18,7 @@ extension CGColor {
         let b: CGFloat
         
         switch components?.count {
-        case 3:
+        case 4:
             /// RGB Colors
             r = components?[0] ?? 0.0
             g = components?[1] ?? 0.0
