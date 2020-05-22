@@ -70,7 +70,11 @@ extension Intersectable {
         var segments = intersections
             .sortedByDistance(from: line.start)
             .paired()
-            .map { Line($0.0, $0.1) }
+            .map { pair -> Line in
+                var l = Line(pair.0, pair.1)
+                l.copyStyle(from: line)
+                return l
+        }
 
         if firstOnly {
             segments.removeLast(segments.count - 1)
