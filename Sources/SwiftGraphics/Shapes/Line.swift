@@ -119,8 +119,8 @@ public class Line: Shape, Intersectable {
 
 extension Line: CGDrawable {
     public func draw(in context: CGContext) {
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor)
-        context.setFillColor(SwiftGraphicsContext.fillColor)
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
         context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
         context.strokeLineSegments(between: [start.cgPoint, end.cgPoint])
     }
@@ -153,9 +153,13 @@ extension Line: SVGDrawable {
             "y1": String(self.start.y),
             "x2": String(self.end.x),
             "y2": String(self.end.y),
+            
             "stroke": SwiftGraphicsContext.strokeColor.toHex(),
+            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
+            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
+            
             "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "stroke-width": String(SwiftGraphicsContext.strokeWeight)
+            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
         ])
         
         return element

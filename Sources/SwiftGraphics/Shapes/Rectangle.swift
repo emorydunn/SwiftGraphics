@@ -211,8 +211,8 @@ extension Rectangle: CGDrawable {
     public func draw(in context: CGContext) {
         let rect = CGRect(x: x, y: y, width: width, height: height)
         
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor)
-        context.setFillColor(SwiftGraphicsContext.fillColor)
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
         context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
         context.stroke(rect)
         context.fill(rect)
@@ -257,9 +257,13 @@ extension Rectangle: SVGDrawable {
             "y": String(self.y),
             "width": String(self.width),
             "height": String(self.height),
+            
             "stroke": SwiftGraphicsContext.strokeColor.toHex(),
+            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
+            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
+            
             "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "stroke-width": String(SwiftGraphicsContext.strokeWeight)
+            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
         ])
         
         return element

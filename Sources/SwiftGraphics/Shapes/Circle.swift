@@ -247,8 +247,8 @@ extension Circle: CGDrawable {
         context.translateBy(x: CGFloat(-radius), y: CGFloat(-radius))
         let bb = CGRect(x: center.x, y: center.y, width: diameter, height: diameter)
         
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor)
-        context.setFillColor(SwiftGraphicsContext.fillColor)
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
         context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
         context.strokeEllipse(in: bb)
         context.fillEllipse(in: bb)
@@ -269,9 +269,14 @@ extension Circle: SVGDrawable {
             "cx": String(self.center.x),
             "cy": String(self.center.y),
             "r": String(self.radius),
+            
             "stroke": SwiftGraphicsContext.strokeColor.toHex(),
+            "stroke-opacity": "\(SwiftGraphicsContext.strokeColor.alpha)",
+            "stroke-width": "\(SwiftGraphicsContext.strokeWeight)",
+            
             "fill": SwiftGraphicsContext.fillColor.toHex(),
-            "stroke-width": String(SwiftGraphicsContext.strokeWeight)
+            "fill-opacity": "\(SwiftGraphicsContext.fillColor.alpha)"
+            
         ])
         
         

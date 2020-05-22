@@ -13,10 +13,10 @@ public class SwiftGraphicsContext {
     public static var current: DrawingContext?
     
     /// Color of the outline of the shape
-    public static var strokeColor: CGColor = .black
+    public static var strokeColor: Color = .black
     
     /// Color of the fill of the shape
-    public static var fillColor: CGColor = .clear
+    public static var fillColor: Color = .clear
     
     /// Weight of the outline of the shape
     public static var strokeWeight: Double = 1
