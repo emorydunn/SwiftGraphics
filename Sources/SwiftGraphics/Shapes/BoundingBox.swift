@@ -33,11 +33,10 @@ public class BoundingBox: Rectangle {
         let contextHeight: Double
         
         switch SwiftGraphicsContext.current {
-        case let c as CGContext:
-            //            draw(in: c)
+        case let c as SVGContext:
             contextWidth = Double(c.width)
             contextHeight = Double(c.height)
-        case let c as SVGContext:
+        case let c as CGContext:
             contextWidth = Double(c.width)
             contextHeight = Double(c.height)
         default:
@@ -46,7 +45,7 @@ public class BoundingBox: Rectangle {
         
         self.x = inset
         self.y = inset
-        self.width = contextWidth / 2 - inset * 2
-        self.height = contextHeight / 2 - inset * 2
+        self.width = contextWidth - (inset * 2)
+        self.height = contextHeight - (inset * 2)
     }
 }
