@@ -9,7 +9,7 @@
 import Foundation
 
 /// A specialized `RayTracer` that collimates intersecting rays and casts them along the vector normal of the lens
-public class Fesnel: Line, RayTracer {
+public class Fresnel: Line, RayTracer {
     
     /// The angle at which rays are reflected, relative to the normal
     public var reflectionAngle: Degrees = 180
