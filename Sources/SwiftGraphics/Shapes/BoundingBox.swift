@@ -26,8 +26,13 @@ public class BoundingBox: Rectangle {
         
     }
     
+    public func draw() {
+        self.update()
+        super.draw()
+    }
+    
     /// Update the size of the rectangle based on the current context
-    func update() {
+    public func update() {
         
         let contextWidth: Double
         let contextHeight: Double
