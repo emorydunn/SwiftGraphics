@@ -42,8 +42,8 @@ public class BoundingBox: Rectangle {
             contextWidth = Double(c.width)
             contextHeight = Double(c.height)
         case let c as CGContext:
-            contextWidth = Double(c.width)
-            contextHeight = Double(c.height)
+            contextWidth = Double(c.width) / 2
+            contextHeight = Double(c.height) / 2
         default:
             return
         }
