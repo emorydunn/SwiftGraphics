@@ -12,16 +12,25 @@ extension CGColor {
     // Convert to a hex string
     // From: https://stackoverflow.com/a/26341062
     func toHex() -> String {
-        let r: CGFloat = components?[0] ?? 0.0
-        let g: CGFloat = components?[1] ?? 0.0
-        let b: CGFloat = components?[2] ?? 0.0
         
-        let hexString = String.init(
-            format: "#%02lX%02lX%02lX",
-            lroundf(Float(r * 255)),
-            lroundf(Float(g * 255)),
-            lroundf(Float(b * 255)))
+        let r: CGFloat
+        let g: CGFloat
+        let b: CGFloat
         
+        switch components?.count {
+        case 3:
+            /// RGB Colors
+            r = components?[0] ?? 0.0
+            g = components?[1] ?? 0.0
+            b = components?[2] ?? 0.0
+        default:
+            // Greyscale colors
+            r = components?[0] ?? 0.0
+            g = components?[0] ?? 0.0
+            b = components?[0] ?? 0.0
+        }
+        
+        let hexString = String.init(format: "#%02lX%02lX%02lX", lroundf(Float(r * 255)), lroundf(Float(g * 255)), lroundf(Float(b * 255)))
         return hexString
     }
 }
