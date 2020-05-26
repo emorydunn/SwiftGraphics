@@ -9,7 +9,7 @@
 import Foundation
 
 /// A rectangle
-public class Rectangle: Polygon {
+open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     
     /// Origin X coordinate
     public var x: Double
@@ -22,15 +22,6 @@ public class Rectangle: Polygon {
     
     /// Height of the rectangle
     public var height: Double
-    
-//    /// Color of the outline of the shape
-//    public var strokeColor: CGColor = .black
-//    
-//    /// Color of the fill of the shape
-//    public var fillColor: CGColor = .clear
-//    
-//    /// Weight of the outline of the shape
-//    public var strokeWeight: Double = 1
     
     /// Instantiate a new `Rectangle`
     /// - Parameters:
@@ -180,35 +171,8 @@ public class Rectangle: Polygon {
 
         return withinX && withinY
     }
-}
-
-extension Rectangle: Intersectable {
     
-    /// Determine where the specified line intersects with the rectangle
-    ///
-    /// The rectangle tests whether the line intersects with each of its four edges
-    /// - Parameter line: The line to test
-    public func lineIntersection(_ line: Line) -> [Vector] {
-        // Collect the edges
-        let edges = [
-            topEdge,
-            bottomEdge,
-            leftEdge,
-            rightEdge
-        ]
-        
-        return edges.reduce(into: [Vector]()) { (intersections, edge) in
-            intersections.append(contentsOf: edge.lineIntersection(line))
-
-        }
-
-    }
-    
-    
-}
-
-extension Rectangle: CGDrawable {
-    public func draw(in context: CGContext) {
+    open func draw(in context: CGContext) {
         let rect = CGRect(x: x, y: y, width: width, height: height)
         
         context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
@@ -218,7 +182,7 @@ extension Rectangle: CGDrawable {
         context.fill(rect)
     }
     
-    public func debugDraw(in context: CGContext) {
+    open func debugDraw(in context: CGContext) {
         
         let tlColor = CGColor(red: 255 / 255, green: 159 / 255, blue: 82 / 255, alpha: 1)
         let trColor = CGColor(red: 82 / 255, green: 243 / 255, blue: 255 / 255, alpha: 1)
@@ -246,10 +210,8 @@ extension Rectangle: CGDrawable {
         leftEdge.draw()
         
     }
-}
 
-extension Rectangle: SVGDrawable {
-    public func svgElement() -> XMLElement {
+    open func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "rect"
         element.addAttribute(x, forKey: "x")
@@ -263,4 +225,28 @@ extension Rectangle: SVGDrawable {
 
         return element
     }
+}
+
+extension Rectangle: Intersectable {
+    
+    /// Determine where the specified line intersects with the rectangle
+    ///
+    /// The rectangle tests whether the line intersects with each of its four edges
+    /// - Parameter line: The line to test
+    public func lineIntersection(_ line: Line) -> [Vector] {
+        // Collect the edges
+        let edges = [
+            topEdge,
+            bottomEdge,
+            leftEdge,
+            rightEdge
+        ]
+        
+        return edges.reduce(into: [Vector]()) { (intersections, edge) in
+            intersections.append(contentsOf: edge.lineIntersection(line))
+
+        }
+
+    }
+    
 }
