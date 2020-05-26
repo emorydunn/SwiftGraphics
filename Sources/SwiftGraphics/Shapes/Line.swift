@@ -17,15 +17,6 @@ public class Line: Shape, Intersectable {
     /// The ending point of the line
     public var end: Vector
     
-//    /// Color of the outline of the shape
-//    public var strokeColor: CGColor = .black
-//    
-//    /// Color of the fill of the shape
-//    public var fillColor: CGColor = .clear
-//    
-//    /// Weight of the outline of the shape
-//    public var strokeWeight: Double = 1
-    
     /// The length of the line
     public var length: Double { end.dist(start) }
     
@@ -157,5 +148,11 @@ extension Line: SVGDrawable {
         element.addAttribute(SwiftGraphicsContext.strokeWeight, forKey: "stroke-width")
         
         return element
+    }
+}
+
+extension Line: CustomStringConvertible {
+    public var description: String {
+        "Line (\(start.x), \(start.y)) → (\(end.x), \(end.y))"
     }
 }
