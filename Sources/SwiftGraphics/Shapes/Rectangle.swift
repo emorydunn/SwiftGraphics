@@ -114,8 +114,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     
     /// Returns the point on the rectangle where the specified angle originating from the center intersects
     /// - Parameter theta: Angle in radians
-    public func pointOnRect(_ theta: Radians) -> Vector {
-        return rayRectangleIntersection(self.center, theta: theta)!
+    public func rayIntersection(_ theta: Radians) -> Vector {
+        return rayIntersection(origin: self.center, theta: theta)!
 
     }
     
@@ -126,7 +126,7 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     /// - Parameters:
     ///   - point: Point of origin for the angle
     ///   - theta: Angle
-    public func rayRectangleIntersection(_ point: Vector, theta: Radians) -> Vector? {
+    public func rayIntersection(origin point: Vector, theta: Radians) -> Vector? {
         let relPoint = relativePoint(point)
 
         if (theta == 0) {

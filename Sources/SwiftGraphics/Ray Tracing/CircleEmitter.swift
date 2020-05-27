@@ -68,7 +68,7 @@ public class CircleEmitter: Circle, Emitter {
         stride(from: rayStep, through: 360, by: rayStep).forEach { angle in
             let rAngle = Double(angle).toRadians()
             
-            let origin = pointOnCircle(rAngle)
+            let origin = rayIntersection(rAngle)
             let intersections = self.intersections(for: rAngle, origin: origin, bb: boundingBox, objects: objects)
             
             drawIntersections(intersections)

@@ -30,7 +30,7 @@ extension RayTracer {
     public func defaultIntersections(for angle: Radians, origin: Vector, bb: BoundingBox, objects: [Intersectable]) -> [Line] {
         
         // Calculate point to end of BB
-        guard let endPoint = bb.rayRectangleIntersection(origin, theta: angle) else {
+        guard let endPoint = bb.rayIntersection(origin: origin, theta: angle) else {
             return []
         }
         

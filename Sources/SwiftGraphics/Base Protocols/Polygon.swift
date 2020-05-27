@@ -9,7 +9,11 @@
 import Foundation
 
 /// Represens a `Shape` that has an internal area
-public protocol Polygon: Shape {
+public protocol Polygon: Intersectable {
     
     func contains(_ point: Vector) -> Bool
+    
+    func rayIntersection(origin: Vector, theta: Radians) -> Vector?
+    
+    func rayIntersection(_ theta: Radians) -> Vector
 }
