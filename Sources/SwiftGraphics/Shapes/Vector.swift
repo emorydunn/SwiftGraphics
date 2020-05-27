@@ -11,33 +11,30 @@ import Foundation
 public class Vector: Shape {
     public var x: Double
     public var y: Double
-    public var z: Double?
+    public var z: Double
     
-    /// Color of the outline of the shape
-    public var strokeColor: CGColor = .black
-    
-    /// Color of the fill of the shape
-    public var fillColor: CGColor = .clear
-    
-    /// Weight of the outline of the shape
-    public var strokeWeight: Double = 1
-    
-    public init(x: Double, y: Double, z: Double? = nil) {
+    public init(x: Double, y: Double, z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
     }
     
-    public init(_ x: Double, _ y: Double, _ z: Double? = nil) {
+    public init(_ x: Double, _ y: Double, _ z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
     }
     
-    public init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat? = nil) {
+    public init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat = 0) {
         self.x = Double(x)
         self.y = Double(y)
-        self.z = z == nil ? nil : Double(z!)
+        self.z = Double(z)
+    }
+    
+    public init(angle: Radians) {
+        self.x = cos(angle)
+        self.y = sin(angle)
+        self.z = 0
     }
     
     public func set(_ v: Vector) {
@@ -52,37 +49,45 @@ public class Vector: Shape {
     
     var cgPoint: CGPoint { CGPoint(x: x, y: y) }
     
+    public var boundingBox: Rectangle {
+        Rectangle(x: x, y: y, width: 1, height: 1)
+    }
+    
 }
 
 // MARK: - Static Vector Math Functions
 extension Vector {
     public static func add(_ v1: Vector, _ v2: Vector) -> Vector {
-        return Vector(v1.x + v2.x, v1.y + v2.y, v1.z != nil ? (v1.z! + v2.z!) : nil)
+        return Vector(
+            v1.x + v2.x,
+            v1.y + v2.y,
+            v1.z + v2.z
+        )
     }
     
     public static func sub (_ v1: Vector, _ v2: Vector) -> Vector {
-        return Vector(v1.x - v2.x, v1.y - v2.y, v1.z != nil ? (v1.z! - v2.z!) : nil)
+        return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
     }
     
     public static func mult(_ v: Vector, _ n: Double) -> Vector {
-        return Vector(v.x * n, v.y * n, v.z != nil ? (v.z! * n) : nil)
+        return Vector(v.x * n, v.y * n, v.z * n)
     }
     
     public static func div(_ v: Vector, _ n: Double) -> Vector {
-        return Vector(v.x / n, v.y / n, v.z != nil ? (v.z! / n) : nil)
+        return Vector(v.x / n, v.y / n, v.z / n)
     }
     
     public static func dist(_ v1: Vector, _ v2: Vector) -> Double {
-        return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + (v1.z != nil ? pow(v2.z! - v1.z!, 2) : 0))
+        return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2))
     }
     
     public static func dot(_ v1: Vector, _ v2: Vector) -> Double {
-        return v1.x * v2.x + v2.y * v2.y + (v1.z ?? 0) * (v2.z ?? 0)//(v1.z != nil ? (v1.z! * v2.z!) : 0)
+        return v1.x * v2.x + v2.y * v2.y + v1.z * v2.z
     }
     
     public static func cross(_ v1: Vector, _ v2: Vector) -> Vector {
-        let x = v1.y * (v2.z ?? 0) - (v1.z ?? 0) * v2.y
-        let y = (v1.z ?? 0) * v2.x - v1.x * (v2.z ?? 0)
+        let x = v1.y * v2.z - v1.z * v2.y
+        let y = v1.z * v2.x - v1.x * v2.z
         let z = v1.x * v2.y - v1.y * v2.x
         
         return Vector(x, y, z)
@@ -93,13 +98,15 @@ extension Vector {
 // MARK: - Vector Math Functions
 extension Vector {
     public func add(_ v: Vector) {
-        let result = Vector.add(self, v)
-        self.set(result)
+        self.x += v.x
+        self.y += v.y
+        self.z += v.z
     }
     
     public func sub(_ v: Vector) {
-        let result = Vector.sub(self, v)
-        self.set(result)
+        self.x -= v.x
+        self.y -= v.y
+        self.z -= v.z
     }
     
     public func mult(_ n: Double) {
@@ -117,7 +124,7 @@ extension Vector {
     }
     
     public func magSq() -> Double {
-        return x * x + y * y + (z != nil ? z! * z! : 0)
+        return x * x + y * y + z * z
     }
     
     public func dist(_ v: Vector) -> Double {
@@ -153,7 +160,7 @@ extension Vector {
         // Solution: we'll clamp the value to the -1,1 range
         
         var angle = acos(min(1, max(-1, dotmagmag)))
-        angle = angle * sign(self.cross(v).z ?? 1)
+        angle = angle * sign(self.cross(v).z)
         
         return angle
         
@@ -165,6 +172,22 @@ extension Vector {
     
     public func heading() -> Radians {
         return atan2(self.y, self.x)
+    }
+    
+    public func rotate(by theta: Radians) {
+        let newHeading = self.heading() + theta
+        rotate(to: newHeading)
+//        self.x = cos(newHeading) * mag()
+//        self.y = sin(newHeading) * mag()
+        
+    }
+    
+    public func rotate(to theta: Radians) {
+        let newHeading = theta
+        
+        self.x = cos(newHeading) * mag()
+        self.y = sin(newHeading) * mag()
+        
     }
 }
 
@@ -180,7 +203,8 @@ extension Vector: CGDrawable {
     }
     
     public func debugDraw(in context: CGContext) {
-        draw(in: context)
+//        draw(in: context)
+        Circle(center: self, radius: 5).draw(in: context)
     }
 }
 
@@ -191,5 +215,11 @@ extension Vector: SVGDrawable {
         rect.addAttribute("vector", forKey: "class")
         
         return rect
+    }
+}
+
+extension Vector: CustomStringConvertible {
+    public var description: String {
+        "Vector (\(x), \(y))"
     }
 }

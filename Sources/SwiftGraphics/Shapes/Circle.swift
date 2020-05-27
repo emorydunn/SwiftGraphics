@@ -104,11 +104,10 @@ public class Circle: Polygon, Intersectable {
             
             let p1 = Vector(
                 line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y)
+                line.start.y + mu * (line.end.y - line.start.y),
+                line.start.z + mu * (line.end.z - line.start.z)
             )
-            if let startZ = line.start.z, let endZ = line.end.z {
-                p1.z = startZ + mu * (endZ - startZ)
-            }
+            
             if line.pointIsOnLine(p1) {
                 intersections.append(p1)
             }
@@ -119,11 +118,10 @@ public class Circle: Polygon, Intersectable {
             
             let p1 = Vector(
                 line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y)
+                line.start.y + mu * (line.end.y - line.start.y),
+                line.start.z + mu * (line.end.z - line.start.z)
             )
-            if let startZ = line.start.z, let endZ = line.end.z {
-                p1.z = startZ + mu * (endZ - startZ)
-            }
+            
             
             if line.pointIsOnLine(p1) {
                 intersections.append(p1)
@@ -134,11 +132,10 @@ public class Circle: Polygon, Intersectable {
             
             let p2 = Vector(
                 line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y)
+                line.start.y + mu * (line.end.y - line.start.y),
+                line.start.z + mu * (line.end.z - line.start.z)
             )
-            if let startZ = line.start.z, let endZ = line.end.z {
-                p1.z = startZ + mu * (endZ - startZ)
-            }
+
             
             if line.pointIsOnLine(p2) {
                 intersections.append(p2)
@@ -154,14 +151,11 @@ public class Circle: Polygon, Intersectable {
         //    Math.square(line.end.x - line.start.x) +
         //    Math.square(line.end.y - line.start.y) +
         //    Math.square(line.end.z ?? 0 - line.start.z ?? 0)
-        var a = Math.squared(line.end.x - line.start.x) +
-            Math.squared(line.end.y - line.start.y)
+        return Math.squared(line.end.x - line.start.x) +
+            Math.squared(line.end.y - line.start.y) + Math.squared(line.end.z - line.start.z)
+//        }
 
-        if let startZ = line.start.z, let endZ = line.end.z {
-            a += Math.squared(endZ - startZ)
-        }
-
-        return a
+//        return a
 
     }
 
@@ -178,11 +172,12 @@ public class Circle: Polygon, Intersectable {
             (line.end.x - line.start.x) *
                 (line.start.x - center.x) +
                 (line.end.y - line.start.y) *
-                (line.start.y - center.y)
+                (line.start.y - center.y) +
+                (line.end.z - line.start.z) * (line.start.z - center.z)
 
-        if let startZ = line.start.z, let endZ = line.end.z, let centerZ = center.z {
-            b += (endZ - startZ) * (startZ - centerZ)
-        }
+//        if let startZ = line.start.z, let endZ = line.end.z, let centerZ = center.z {
+//            b += (line.end.z - line.start.z) * (line.start.z - centerZ.z)
+//        }
 
         b *= 2
 
@@ -207,24 +202,19 @@ public class Circle: Polygon, Intersectable {
         //        Math.square(r)
         //    )
 
-        var part1 = Math.squared(center.x) +
+        let part1 = Math.squared(center.x) +
             Math.squared(center.y) +
             Math.squared(line.start.x) +
-            Math.squared(line.start.y)
+            Math.squared(line.start.y) +
+            center.z.squared() +
+            line.start.z.squared()
 
-        if let startZ = line.start.z, let centerZ = center.z {
-            part1 += centerZ.squared()
-            part1 += startZ.squared()
 
-        }
-
-        var part2 = center.x *
+        let part2 = center.x *
             line.start.x +
             center.y *
-            line.start.y
-        if let startZ = line.start.z, let centerZ = center.z {
-            part2 += centerZ * startZ
-        }
+            line.start.y +
+            center.z * line.start.z
 
         return part1 - 2 * part2 - offsetRadius.squared()
 
