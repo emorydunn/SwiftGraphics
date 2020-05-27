@@ -6,10 +6,7 @@ public protocol Shape {
 
     func draw()
     
-//    var strokeColor: CGColor { get set }
-//    var fillColor: CGColor { get set }
-//    var strokeWeight: Double { get set }
-//
+    var boundingBox: Rectangle { get }
 }
 
 extension Shape {

@@ -36,6 +36,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         self.height = height
     }
     
+    public var boundingBox: Rectangle { self }
+    
     /// Returns the coordinates of the center of the Rectangle
     public var center: Vector {
         get {

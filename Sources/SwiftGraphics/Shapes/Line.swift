@@ -63,6 +63,17 @@ public class Line: Shape, Intersectable {
         }
     }
     
+    public var boundingBox: Rectangle {
+
+        Rectangle(
+            x: min(start.x, end.x),
+            y: min(start.y, end.y),
+            width: abs(end.x - start.x),
+            height: abs(end.y - start.y)
+        )
+        
+    }
+    
     /// Calculate the vector normal of the line
     ///
     /// - Returns: A `Vector` whose heading is perpendicular to the line

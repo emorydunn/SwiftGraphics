@@ -71,6 +71,15 @@ public class Circle: Polygon, Intersectable {
         
     }
     
+    public var boundingBox: Rectangle {
+        Rectangle(
+            x: center.x - radius,
+            y: center.y - radius,
+            width: radius * 2,
+            height: radius * 2
+        )
+    }
+    
     /// Return the intersection point of the specified angle from the center of the circle
     /// - Parameter angle:The angle
     public func pointOnCircle(_ angle: Radians) -> Vector {
