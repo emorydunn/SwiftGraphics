@@ -65,189 +65,40 @@ public class Circle: Polygon, Intersectable {
     /// - Parameter angle:The angle
     public func rayIntersection(_ theta: Radians) -> Vector {
         
-//        return rayIntersection(origin: center, theta: theta)!
         let x = center.x + radius * cos(theta)
         let y = center.y + radius * sin(theta)
 
         return Vector(x: x, y: y)
     }
     
+    /// Return the intersection of a ray
+    ///
+    /// From https://math.stackexchange.com/a/311956
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the way
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
 
+        let a = (dir.x - origin.x).squared() + (dir.y - origin.y).squared()
+        let b = 2 * (dir.x - origin.x) * (origin.x - center.x) + 2 * (dir.y - origin.y) * (origin.y - center.y)
+        let c = (origin.x - center.x).squared() + (origin.y - center.y).squared() - radius.squared()
         
+        let discr = b.squared() - 4 * a * c
         
-//
-        let l = Vector.sub(origin, center)
-        let a = dir.dot(dir)
-        let b = 2 * dir.dot(l)
-        let c = l.dot(l) - radius * 2
-//
-        guard var (t0, t1) = solveQuadratic(a: a, b: b, c: c) else {
-            print("solveQuadratic failed")
-            return nil
-        }
-
+        let t = (2 * c) / (-b + sqrt(discr))
         
-        if t0 > t1 {
-            swap(&t0, &t1)
-        }
-
-        if t0 < 0 {
-            t0 = t1 // if t0 is negative, let's use t1 instead
-            if t0 < 0 {
-                print("t0 is less than 0 after swapping with t1")
-                return nil
-
-            }
-        }
-
-        let t = t0
-        let v = Vector.add(origin, dir)
-        v.mult(t)
-
-        SwiftGraphicsContext.strokeColor = .red
-        v.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-
-        return v
+        // If t is less than 0 the intersection is behind the ray
+        guard t > 0 else { return nil }
         
-    }
-    
-    public func analyticIntersection(origin: Vector, dir: Vector) -> Vector? {
-        let origin = origin.copy()
-        dir.normalize()
-        
-        let l = Vector.sub(origin, center)
-        let a = dir.dot(dir)
-        let b = 2 * dir.dot(l)
-        let c = l.dot(l) - radius * 2
-
-        guard let (t0, t1) = solveQuadratic(a: a, b: b, c: c) else {
-            print("solveQuadratic failed")
-            return nil
-        }
-        
-        // Intersection Point determination
-        return resolveTValues(origin: origin, dir: dir, t0: t0, t1: t1)
-
-        
-    }
-//
-//    public func analyticIntersectionII(origin: Vector, dir: Vector) -> Vector? {
-//
-////        let origin = origin.copy()
-////
-////        let l = Vector.sub(origin, center)
-////        let a = dir.dot(dir)
-////        let b = 2 * dir.dot(l)
-////        let c = l.dot(l) - radius * 2
-////
-////        guard let (t0, t1) = solveQuadratic(a: a, b: b, c: c) else {
-////            print("solveQuadratic failed")
-////            return nil
-////        }
-////
-////        // Intersection Point determination
-////        return resolveTValues(origin: origin, dir: dir, t0: t0, t1: t1)
-////
-//
-//    }
-    
-    public func geometricIntersection(origin: Vector, dir: Vector) -> Vector? {
-        let origin = origin.copy()
-        
-        // geometric solution
-        let l = Vector.sub(center, origin)
-        let tca = l.dot(dir)
-        guard tca > 0 else {
-            print("tca < 0")
-            return nil
-        }
-        
-        let d2 = l.dot(l) - tca * tca
-        let radius2 = radius.squared()
-        
-        guard d2 < radius2 else {
-            print("d2 > radius:", d2, radius2, d2 > radius2)
-            return nil
-        }
-        
-        let thc = sqrt(radius2 - d2)
-        
-        let t0 = tca - thc
-        let t1 = tca + thc
-        
-        
-        // Intersection Point determination
-        return resolveTValues(origin: origin, dir: dir, t0: t0, t1: t1)
-
-        
-    }
-    
-    func resolveTValues(origin: Vector, dir: Vector, t0: Double, t1: Double) -> Vector? {
-        var t0 = t0
-        var t1 = t1
-        
-        print(t0, t1)
-        
-        if t0 > t1 {
-            print("Swapping t values")
-            swap(&t0, &t1)
-        }
-        
-        if t0 < 0 {
-            print("Using t1")
-            t0 = t1 // if t0 is negative, let's use t1 instead
-//            guard t0 > 0 else {
-//                print("both t0 and t1 are negative")
-//                return nil
-//            }
-        }
-        
-        let t = t0
         let pHit = Vector(
-            origin.x + dir.x * t,
-            origin.y + dir.y * t
+            (dir.x - origin.x) * t + origin.x,
+            (dir.y - origin.y) * t + origin.y
         )
-//        pHit.sub(center)
+        
+        return pHit
 
-        SwiftGraphicsContext.strokeColor = .red
-        pHit.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-        
-        return pHit
     }
-    
-    public func geometricIntersectionII(origin: Vector, dir: Vector) -> Vector? {
-        let e = dir.copy()
-        e.normalize()
-        let h = Vector.sub(center, origin)
-        let lf = e.dot(h)
-        var s = radius.squared() - h.dot(h) + lf.squared()
-        
-        guard s > 0 else { return nil }
-        
-        s = sqrt(s)
-        
-        var resultCount = 0
-        
-        if lf < s {
-            if lf + s >= 0 {
-                s = -s
-                resultCount = 1
-            }
-        } else {
-            resultCount = 2
-        }
-        
-        print("Result count: \(resultCount)")
-        
-        let pHit = Vector.mult(e, lf - s)
-        pHit.add(origin)
-        
-        SwiftGraphicsContext.strokeColor = .red
-        pHit.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-        
-        return pHit
-    }
+
 
     public func rayIntersection(origin: Vector, theta: Radians) -> Vector? {
         let e = Vector(angle: theta)
@@ -256,81 +107,11 @@ public class Circle: Polygon, Intersectable {
         
         SwiftGraphicsContext.strokeColor = .blue
         e.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-        e.normalize()
         
-        
-        
-        let l = Vector.sub(center, origin)
-//        let a = e.dot(e)
-//        let b = 2 * e.dot(l)
-//        let c = l.dot(l) - radius * 2
-//
-//        guard var (t0, t1) = solveQuadratic(a: a, b: b, c: c) else {
-//            print("solveQuadratic failed")
-//            return nil
-//        }
-        
-        let tca = l.dot(e)
-        let d2 = l.dot(l) - tca * tca
-
-        guard d2 < pow(radius, 2) else {
-            print("d2 > radius ^ 2", d2, pow(radius, 2))
-            return nil
-            
-        }
-
-        let thc = sqrt(pow(radius, 2) - d2)
-        var t0 = tca - thc
-        var t1 = tca + thc
-        
-        
-        
-        if t0 > t1 {
-            swap(&t0, &t1)
-        }
-        
-        if t0 < 0 {
-            t0 = t1 // if t0 is negative, let's use t1 instead
-            if t0 < 0 {
-                print("t0 is less than 0 after swapping with t1")
-                return nil
-                
-            }
-        }
-        
-        let t = t0
-        let v = Vector.add(origin, e)
-        v.mult(t)
-
-        SwiftGraphicsContext.strokeColor = .red
-        v.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-
-        return v
+        return rayIntersection(origin: origin, dir: e)
 
     }
     
-    func solveQuadratic(a: Double, b: Double, c: Double) -> (Double, Double)? {
-        let discr = b * b - 4 * a * c
-        
-        var x0: Double
-        var x1: Double
-        
-        if discr < 0 {
-            print("discr < 0:", discr)
-            return nil
-        } else if discr == 0 {
-            x0 = -0.5 * b / a
-            x1 = x0
-        } else {
-            let q = b > 0 ? -0.5 * (b + sqrt(discr)) : -0.5 * (b - sqrt(discr))
-            x0 = q / a
-            x1 = c / q
-        }
-
-        return (x0, x1)
-    }
-    
-//    func swa
     
     /// Determine the points where the specified `Line` intersects the `Circle`
     ///
@@ -405,9 +186,6 @@ public class Circle: Polygon, Intersectable {
         //    Math.square(line.end.z ?? 0 - line.start.z ?? 0)
         return Math.squared(line.end.x - line.start.x) +
             Math.squared(line.end.y - line.start.y) + Math.squared(line.end.z - line.start.z)
-//        }
-
-//        return a
 
     }
 
@@ -426,10 +204,6 @@ public class Circle: Polygon, Intersectable {
                 (line.end.y - line.start.y) *
                 (line.start.y - center.y) +
                 (line.end.z - line.start.z) * (line.start.z - center.z)
-
-//        if let startZ = line.start.z, let endZ = line.end.z, let centerZ = center.z {
-//            b += (line.end.z - line.start.z) * (line.start.z - centerZ.z)
-//        }
 
         b *= 2
 
