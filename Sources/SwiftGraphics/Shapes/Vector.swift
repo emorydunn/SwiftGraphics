@@ -53,6 +53,10 @@ public class Vector: Shape {
         Rectangle(x: x, y: y, width: 1, height: 1)
     }
     
+    public func nsPoint() -> NSPoint {
+        NSPoint(x: x, y: y)
+    }
+    
 }
 
 // MARK: - Static Vector Math Functions
