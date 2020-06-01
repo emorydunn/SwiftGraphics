@@ -86,6 +86,10 @@ public class Line: Shape, Intersectable {
         return normal
     }
     
+    public func angle() -> Radians {
+        end.angleBetween(start)
+    }
+    
 
     /// Find any intersecting points with the specified line
     ///
@@ -115,6 +119,20 @@ public class Line: Shape, Intersectable {
         }
 
         return intersections
+    }
+    
+    /// Return a point at the specified distance of the line
+    /// - Parameter distance: Distance from the end point
+    public func pointAlongLine(at distance: Double) -> Vector {
+        let v = Vector.sub(end, start)
+        v.normalize()
+        v.mult(distance)
+        
+        let point = end.copy()
+        
+        point.add(v)
+        
+        return point
     }
     
 }
