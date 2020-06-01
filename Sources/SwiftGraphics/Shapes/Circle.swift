@@ -253,6 +253,14 @@ public class Circle: Polygon, Intersectable {
     public func contains(_ point: Vector) -> Bool {
         return point.dist(center) < radius
     }
+    
+    /// Return an array of points at the specified angular distance apart
+    /// - Parameter angle: Angle in degrees
+    public func pointsOnCircle(every angle: Degrees) -> [Vector] {
+        stride(from: 0.0, to: 360.0, by: angle).map { angle in
+            rayIntersection(angle.toRadians())
+        }
+    }
 }
 
 extension Circle: CGDrawable {
