@@ -29,13 +29,13 @@ public struct Math {
 extension Double {
     
     /// Return a new Double that has been squared
-    func squared() -> Double {
+    public func squared() -> Double {
         return pow(self, 2)
     }
     
     
     /// Square the receiver
-    mutating func square() {
+    public mutating func square() {
         self = pow(self, 2)
     }
 }
