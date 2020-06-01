@@ -29,6 +29,15 @@ extension Array {
         
         return pairedItems
     }
+    
+    /// Ensure the given index is not out of bouds
+    /// - Parameter index: index
+    func safeElement(_ index: Int) -> Element? {
+        guard index >= 0 else { return nil }
+        guard index <= self.endIndex - 1 else { return nil }
+        
+        return self[index]
+    }
 }
 
 extension Array where Element == Vector {
