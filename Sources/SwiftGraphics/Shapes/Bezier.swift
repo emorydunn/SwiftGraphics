@@ -64,8 +64,6 @@ public class Bezier: Shape {
         // If is end-control-point, add PI to the angle to go backward
         angle += reverse ? Double.pi : 0
         
-        print(length, angle)
-        
         // The control point position is relative to the current point
         let x = current.x + cos(angle) * length
         let y = current.y + sin(angle) * length
@@ -85,10 +83,8 @@ public class Bezier: Shape {
         }
         
         return bezPoints.enumerated().compactMap { index, point in
-            print("Adding \(index) \(point)")
             
             guard let backOne = points.safeElement(index - 1) else {
-                print("No index at \(index - 1)")
                 return nil
             }
             let control1 = controlPoint(
