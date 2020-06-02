@@ -13,3 +13,8 @@ public protocol InteractiveSketch {
     func mouseDown(at point: Vector)
     func scrolled(deltaX: Double, deltaY: Double, at point: Vector)
 }
+
+/// Allows a sketch to modify SketchView behavior
+public protocol SketchViewDelegate {
+    func willWriteToSVG(with context: SVGContext)
+}

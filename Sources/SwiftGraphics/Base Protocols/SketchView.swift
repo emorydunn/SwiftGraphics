@@ -61,6 +61,7 @@ open class SketchView: NSView {
         }
         sketch?.draw()
         
+        (sketch as? SketchViewDelegate)?.willWriteToSVG(with: context)
         let doc = context.makeDoc()
         
         return doc
