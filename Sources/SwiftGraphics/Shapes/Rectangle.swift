@@ -36,6 +36,20 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         self.height = height
     }
     
+    /// Instantiate a new `Rectangle`
+    /// - Parameters:
+    ///   - x: Origin X coordinate
+    ///   - y: Origin Y coordinate
+    ///   - width: Width of the rectangle
+    ///   - height: Height of the rectangle
+    public init(centerX: Double, centerY: Double, width: Double, height: Double) {
+        self.x = centerX - width / 2
+        self.y = centerY - height / 2
+        
+        self.width = width
+        self.height = height
+    }
+    
     public var boundingBox: Rectangle { self }
     
     /// Returns the coordinates of the center of the Rectangle
@@ -250,5 +264,6 @@ extension Rectangle: Intersectable {
         }
 
     }
+    
     
 }
