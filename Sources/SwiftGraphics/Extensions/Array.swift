@@ -40,7 +40,7 @@ extension Array {
     }
 }
 
-extension Array where Element == Vector {
+extension Array where Element: Vector {
     
     /// Sort an array of `Vector`s by distance to the specified point
     /// - Parameter point: Origin point
@@ -55,6 +55,32 @@ extension Array where Element == Vector {
     func sortedByDistance(from point: Vector) -> [Vector] {
         return self.sorted { (lhs, rhs) -> Bool in
             point.dist(lhs) < point.dist(rhs)
+        }
+    }
+    
+    /// Randomly shift the position of points along a line extending from the given origin and the point
+    /// - Parameters:
+    ///   - origin: Origin to shift along
+    ///   - range: Range within to shift
+    public func randomizePoints(origin: Vector, range: Range<Double> = -60..<60) -> [Vector] {
+        
+        return self.enumerated().map { index, point in
+            let percent: Double
+            if index > count / 2 {
+                percent = Double( count - index) / Double(count)
+            } else {
+                percent = Double(index) / Double(count)
+            }
+            
+            let r: Double = Double.random(in: range) * percent
+            // let r = perlin(x: $0.x, y: $0.y)
+            let v = Vector.sub(point, origin)
+            v.normalize()
+            v.mult(r)
+            
+            point.add(v)
+            
+            return point
         }
     }
 }
