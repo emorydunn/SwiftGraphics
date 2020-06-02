@@ -24,18 +24,6 @@ public class SVGContext: DrawingContext {
         svg.addAttribute(height, forKey: "height")
         svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
         
-        // Transform the shapes into XML elements and add them to the root
-        //        let nodes = shapes.map {
-        //            $0.svgElement()
-        //        }
-        //        svgRoot.setChildren(nodes)
-        
-//        self.svg = XMLDocument(kind: .document)
-//        svg.setRootElement(svgRoot)
-//        svg.characterEncoding = "UTF-8"
-//        svg.isStandalone = false
-//        svg.documentContentKind = .xml
-//        svg.version = "1.0"
     }
     
     public convenience init(sketch: SketchView) {
@@ -48,17 +36,37 @@ public class SVGContext: DrawingContext {
     
     public func addShape(_ shape: SVGDrawable) {
         let xml = shape.svgElement()
-        
+
         svg.addChild(xml)
-//        shapes.append(shape)
+    }
+    
+    public func groupElements(by attributeName: String) {
+        guard let children = svg.children as? [XMLElement] else { return }
+    
+        let grouped: [String?: [XMLElement]] = Dictionary(grouping: children) {
+            $0.detach()
+            return $0.attribute(forName: attributeName)?.stringValue
+        }
+        
+        let xmlGroups: [XMLElement] = grouped.map { (arg) in
+            
+            let (key, value) = arg
+            
+            let groupNode = XMLElement(name: "g")
+            groupNode.addAttribute(key ?? "", forKey: "id")
+            
+            groupNode.setChildren(value)
+            return groupNode
+        }
+        
+        svg.setChildren(xmlGroups)
+        
     }
     
     public func makeDoc() -> XMLDocument {
-//
-        
-//        svg.setChildren(nodes)
 
         let doc = XMLDocument(kind: .document)
+        
         doc.setRootElement(svg)
         doc.characterEncoding = "UTF-8"
         doc.isStandalone = false
@@ -67,6 +75,6 @@ public class SVGContext: DrawingContext {
 
         return doc
     }
-//
+
 }
 
