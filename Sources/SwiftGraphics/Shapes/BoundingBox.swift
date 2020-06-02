@@ -10,6 +10,8 @@ import Foundation
 
 /// A specialized `Rectangle` which is inset from the canvas size
 public class BoundingBox: Rectangle {
+    
+    /// Amount to inset the bounding box from the canvas
     public var inset: Double
     
     enum CodingKeys: String, CodingKey {
@@ -26,6 +28,9 @@ public class BoundingBox: Rectangle {
         
     }
     
+    /// Draw the `BoundingBox`
+    ///
+    /// This method calls `.update()` before drawing
     public func draw() {
         self.update()
         super.draw()

@@ -52,6 +52,7 @@ public class Circle: Polygon, Intersectable {
         
     }
     
+    /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         Rectangle(
             x: center.x - radius,
@@ -253,18 +254,13 @@ public class Circle: Polygon, Intersectable {
     public func contains(_ point: Vector) -> Bool {
         return point.dist(center) < radius
     }
-    
-//    /// Return an array of points at the specified angular distance apart
-//    /// - Parameter angle: Angle in degrees
-//    public func pointsDistributed(every angle: Degrees, starting: Degrees = 0, ending: Degrees = 360) -> [Vector] {
-//        stride(from: starting, to: ending, by: angle).map { angle in
-//            rayIntersection(angle.toRadians())
-//        }
-//    }
+
 }
 
 extension Circle: CGDrawable {
-    /// Draw the circle
+    
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
     public func draw(in context: CGContext) {
         
         context.saveGState()
@@ -280,12 +276,17 @@ extension Circle: CGDrawable {
         context.restoreGState()
     }
     
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     public func debugDraw(in context: CGContext) {
         draw(in: context)
     }
 }
 
 extension Circle: SVGDrawable {
+    
+    
+    /// Create a `XMLElement` representing the receiver
     public func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "circle"

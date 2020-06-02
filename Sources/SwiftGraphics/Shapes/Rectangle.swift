@@ -50,6 +50,7 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         self.height = height
     }
     
+    /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle { self }
     
     /// Returns the coordinates of the center of the Rectangle
@@ -188,6 +189,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         return withinX && withinY
     }
     
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
     open func draw(in context: CGContext) {
         let rect = CGRect(x: x, y: y, width: width, height: height)
         
@@ -198,6 +201,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         context.fill(rect)
     }
     
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     open func debugDraw(in context: CGContext) {
         
         let tlColor = CGColor(red: 255 / 255, green: 159 / 255, blue: 82 / 255, alpha: 1)
@@ -227,6 +232,7 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         
     }
 
+    /// Create a `XMLElement` representing the receiver
     open func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "rect"

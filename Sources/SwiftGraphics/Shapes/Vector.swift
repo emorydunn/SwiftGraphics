@@ -8,51 +8,83 @@
 
 import Foundation
 
+/// Represents a Euclidean vector
 public class Vector: Shape {
+    
+    /// The `x` position of the vector
     public var x: Double
+    
+    /// The `y` position of the vector
     public var y: Double
+    
+    /// The `z` position of the vector
     public var z: Double
     
+    /// Instantiate a new `Vector` at the specified coordinates
+    /// - Parameters:
+    ///   - x: The `x` position of the vector
+    ///   - y: The `y` position of the vector
+    ///   - z: The `z` position of the vector
     public init(x: Double, y: Double, z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
     }
     
+    /// Instantiate a new `Vector` at the specified coordinates
+    /// - Parameters:
+    ///   - x: The `x` position of the vector
+    ///   - y: The `y` position of the vector
+    ///   - z: The `z` position of the vector
     public init(_ x: Double, _ y: Double, _ z: Double = 0) {
         self.x = x
         self.y = y
         self.z = z
     }
     
+    /// Instantiate a new `Vector` at the specified coordinates
+    /// - Parameters:
+    ///   - x: The `x` position of the vector
+    ///   - y: The `y` position of the vector
+    ///   - z: The `z` position of the vector
     public init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat = 0) {
         self.x = Double(x)
         self.y = Double(y)
         self.z = Double(z)
     }
     
+    /// Instantiate a new `Vector` with the specified angle
+    /// - Parameter angle: The angle, in Radians, of the vector
     public init(angle: Radians) {
         self.x = cos(angle)
         self.y = sin(angle)
         self.z = 0
     }
     
+    
+    /// Set the coordinates of the receiver to those of the specified vector
+    /// - Parameter v: The vector whose coordinates will be copied
     public func set(_ v: Vector) {
         self.x = v.x
         self.y = v.y
         self.z = v.z
     }
     
+    /// Return a new instance of the receiver
     public func copy() -> Vector {
         return Vector(self.x, self.y, self.z)
     }
     
+    
+    /// Return a `CGPoint` of the receiver
     var cgPoint: CGPoint { CGPoint(x: x, y: y) }
     
+    /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         Rectangle(x: x, y: y, width: 1, height: 1)
     }
     
+    /// Return an `NSPoint` of the receiver
     public func nsPoint() -> NSPoint {
         NSPoint(x: x, y: y)
     }
@@ -61,6 +93,12 @@ public class Vector: Shape {
 
 // MARK: - Static Vector Math Functions
 extension Vector {
+    
+    
+    /// Add two `Vector`s
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func add(_ v1: Vector, _ v2: Vector) -> Vector {
         return Vector(
             v1.x + v2.x,
@@ -69,26 +107,50 @@ extension Vector {
         )
     }
     
+    /// Subtract the second `Vector` from the first
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func sub (_ v1: Vector, _ v2: Vector) -> Vector {
         return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
     }
     
+    /// Multiply two `Vector`s
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func mult(_ v: Vector, _ n: Double) -> Vector {
         return Vector(v.x * n, v.y * n, v.z * n)
     }
     
+    /// Divide the specified `Vector` by a constant
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func div(_ v: Vector, _ n: Double) -> Vector {
         return Vector(v.x / n, v.y / n, v.z / n)
     }
     
+    /// Return the distance between two `Vector`s
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func dist(_ v1: Vector, _ v2: Vector) -> Double {
         return sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2))
     }
     
+    /// Return the dot product of two `Vector`s
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func dot(_ v1: Vector, _ v2: Vector) -> Double {
         return v1.x * v2.x + v2.y * v2.y + v1.z * v2.z
     }
     
+    /// Return the cross product of two `Vector`s
+    /// - Parameters:
+    ///   - v1: The first `Vector`
+    ///   - v2: the second `Vector`
     public static func cross(_ v1: Vector, _ v2: Vector) -> Vector {
         let x = v1.y * v2.z - v1.z * v2.y
         let y = v1.z * v2.x - v1.x * v2.z
@@ -101,6 +163,7 @@ extension Vector {
 
 // MARK: - Vector Math Functions
 extension Vector {
+    
     public func add(_ v: Vector) {
         self.x += v.x
         self.y += v.y
@@ -149,12 +212,7 @@ extension Vector {
             self.mult(1 / len)
         }
     }
-    
-//    public func normal() {
-//        let u = -y
-//        let v = x
-//    }
-    
+
     public func angleBetween(_ v: Vector) -> Double {
         let dotmagmag = self.dot(v) / (self.mag() * v.mag())
         // Mathematically speaking: the dotmagmag variable will be between -1 and 1
@@ -174,18 +232,22 @@ extension Vector {
         return num >= 0 ? 1 : -1
     }
     
+    /// Provide the heading of the receiver
     public func heading() -> Radians {
         return atan2(self.y, self.x)
     }
     
+    
+    /// Rotate the receiver by the specified angle
+    /// - Parameter theta: Angle, in radians, to rotate
     public func rotate(by theta: Radians) {
         let newHeading = self.heading() + theta
         rotate(to: newHeading)
-//        self.x = cos(newHeading) * mag()
-//        self.y = sin(newHeading) * mag()
         
     }
     
+    /// Set the heading of the receiver to the specified angle
+    /// - Parameter theta: The new heading
     public func rotate(to theta: Radians) {
         let newHeading = theta
         
@@ -196,24 +258,24 @@ extension Vector {
 }
 
 extension Vector: CGDrawable {
+    
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
     public func draw(in context: CGContext) {
         Rectangle(x: x, y: y, width: 1, height: 1).draw(in: context)
-//        context.setStrokeColor(strokeColor)
-//        context.setFillColor(fillColor)
-//        context.setLineWidth(CGFloat(strokeWeight))
-//        let rect = CGRect(x: x, y: y, width: 1, height: 1)
-        
-//        context.fill(rect)
     }
     
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     public func debugDraw(in context: CGContext) {
-//        draw(in: context)
         Circle(center: self, radius: 5).draw(in: context)
     }
 }
 
 
 extension Vector: SVGDrawable {
+    
+    /// Create a `XMLElement` representing the receiver
     public func svgElement() -> XMLElement {
         let rect = Rectangle(x: x, y: y, width: 1, height: 1).svgElement()
         rect.addAttribute("vector", forKey: "class")

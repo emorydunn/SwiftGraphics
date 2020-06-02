@@ -63,6 +63,7 @@ public class Line: Shape, Intersectable {
         }
     }
     
+    /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
 
         Rectangle(
@@ -138,6 +139,9 @@ public class Line: Shape, Intersectable {
 }
 
 extension Line: CGDrawable {
+    
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
     public func draw(in context: CGContext) {
         context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
         context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
@@ -146,7 +150,8 @@ extension Line: CGDrawable {
     }
     
     
-    /// Draw a debug representation of the line
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     public func debugDraw(in context: CGContext) {
         let normal = self.normal()
         
@@ -165,6 +170,8 @@ extension Line: CGDrawable {
 }
 
 extension Line: SVGDrawable {
+    
+    /// Create a `XMLElement` representing the receiver
     public func svgElement() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "line"

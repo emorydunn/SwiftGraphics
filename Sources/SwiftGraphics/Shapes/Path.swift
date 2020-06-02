@@ -8,7 +8,8 @@
 
 import AppKit
 
-public class Bezier: Shape {
+/// <#Description#>
+public class Path: Shape {
     
     public struct BezierPoint {
         let point: Vector
@@ -42,7 +43,7 @@ public class Bezier: Shape {
         self.points.append(contentsOf: points)
     }
     
-    public func addPoints(_ other: Bezier) {
+    public func addPoints(_ other: Path) {
         self.points.append(contentsOf: other.points)
     }
     
@@ -108,7 +109,7 @@ public class Bezier: Shape {
     
 }
 
-extension Bezier: CGDrawable {
+extension Path: CGDrawable {
     
     func sharpLine() -> NSBezierPath {
         let path = NSBezierPath()
@@ -174,7 +175,7 @@ extension Bezier: CGDrawable {
     
 }
 
-extension Bezier: SVGDrawable {
+extension Path: SVGDrawable {
     func sharpLine() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "path"
