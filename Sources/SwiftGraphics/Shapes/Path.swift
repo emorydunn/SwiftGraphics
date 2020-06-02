@@ -8,45 +8,86 @@
 
 import AppKit
 
-/// <#Description#>
+/// Represents a multi-point path
 public class Path: Shape {
     
+    /// A point used to draw a Bézier curve
     public struct BezierPoint {
+        /// Anchor point
         let point: Vector
+        
+        
+        /// First control point
         let control1: Vector
+        
+        /// Second control point
         let control2: Vector
     }
     
+    /// Drawing style of the Path
     public enum Style {
-        case sharp, smooth
+        
+        /// Draw straight lines connecting each point
+        case sharp
+        
+        /// Draw a cubic Bézier curve between points
+        case smooth
     }
     
+    /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         Rectangle(x: 0, y: 0, width: 0, height: 0)
     }
     
+    /// Points that make up the path
     public var points: [Vector]
     
+    /// Amount to smooth the Bézier curve
     public var smoothing = 0.2
+    
+    
+    /// Drawing style of the Path
     public var style: Style = .smooth
+    
+    
+    /// Whether to close the path
+    ///
+    /// This is done by appending the first point to the end of `points` while drawing
     public var close: Bool = true
     
+    /// Instantiate a new Path from an array of Vectors
+    /// - Parameter points: Points in the path
     public init(points: [Vector] = []) {
         self.points = points
     }
     
+    
+    /// Append a point to the path
+    /// - Parameter point: New Vector
     public func addPoint(_ point: Vector) {
         self.points.append(point)
     }
     
+    /// Append an array of points to the path
+    /// - Parameter point: New Vectors
     public func addPoints(_ points: [Vector]) {
         self.points.append(contentsOf: points)
     }
     
+    
+    
+    /// Append the points of another Path
+    /// - Parameter other: The other Path
     public func addPoints(_ other: Path) {
         self.points.append(contentsOf: other.points)
     }
     
+    /// Calculate a control point tangent to the curve of the specified `Vector`
+    /// - Parameters:
+    ///   - current: The current point
+    ///   - previous: The previous point in the path
+    ///   - next: The next point in the path
+    ///   - reverse: Whether to rotate the control point 180º
     func controlPoint(of current: Vector, previous: Vector?, next: Vector?, reverse: Bool = false) -> Vector {
         // When 'current' is the first or last point of the array
         // 'previous' or 'next' don't exist.
@@ -85,19 +126,19 @@ public class Path: Shape {
         
         return bezPoints.enumerated().compactMap { index, point in
             
-            guard let backOne = points.safeElement(index - 1) else {
+            guard let backOne = points[safe: index - 1] else {
                 return nil
             }
             let control1 = controlPoint(
                 of: backOne,
-                previous: points.safeElement(index - 2),
+                previous: points[safe: index - 2],
                 next: point
             )
             
             let control2 = controlPoint(
                 of: point,
-                previous: points.safeElement(index - 1),
-                next: points.safeElement(index + 1),
+                previous: points[safe: index - 1],
+                next: points[safe: index + 1],
                 reverse: true
             )
             
@@ -111,6 +152,7 @@ public class Path: Shape {
 
 extension Path: CGDrawable {
     
+    /// Create a `NSBezierPath` drawn with straight lines
     func sharpLine() -> NSBezierPath {
         let path = NSBezierPath()
         
@@ -123,9 +165,7 @@ extension Path: CGDrawable {
         return path
     }
     
-    /// Create  a smooth Bézier curve
-    ///
-    /// From: [Smooth a Svg path with cubic bezier curves](https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74)
+    /// Create a `NSBezierPath` drawn with a Bézier curve
     func smoothLine() -> NSBezierPath {
         let path = NSBezierPath()
         path.lineJoinStyle = .bevel
@@ -145,6 +185,8 @@ extension Path: CGDrawable {
         return path
     }
     
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
     public func draw(in context: CGContext) {
         
         context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
@@ -166,6 +208,8 @@ extension Path: CGDrawable {
         
     }
     
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     public func debugDraw(in context: CGContext) {
         points.forEach {
             $0.debugDraw(in: context)
@@ -176,6 +220,9 @@ extension Path: CGDrawable {
 }
 
 extension Path: SVGDrawable {
+    
+    
+    /// Create a `XMLElement` drawn with straight lines
     func sharpLine() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "path"
@@ -191,6 +238,7 @@ extension Path: SVGDrawable {
         return element
     }
     
+    /// Create a `XMLElement` drawn with a Bézier curve
     func smoothLine() -> XMLElement {
         let element = XMLElement(kind: .element)
         element.name = "path"
@@ -206,6 +254,7 @@ extension Path: SVGDrawable {
         return element
     }
     
+    /// Create an `XMLElement` for the Path in its drawing style
     public func svgElement() -> XMLElement {
         let element: XMLElement
         switch style {
