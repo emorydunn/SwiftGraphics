@@ -99,6 +99,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, unavailable, message: "Use +")
     public static func add(_ v1: Vector, _ v2: Vector) -> Vector {
         return Vector(
             v1.x + v2.x,
@@ -111,6 +112,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, unavailable, message: "Use -")
     public static func sub (_ v1: Vector, _ v2: Vector) -> Vector {
         return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
     }
@@ -119,6 +121,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, unavailable, message: "Use *")
     public static func mult(_ v: Vector, _ n: Double) -> Vector {
         return Vector(v.x * n, v.y * n, v.z * n)
     }
@@ -127,6 +130,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, unavailable, message: "Use /")
     public static func div(_ v: Vector, _ n: Double) -> Vector {
         return Vector(v.x / n, v.y / n, v.z / n)
     }
@@ -144,7 +148,7 @@ extension Vector {
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
     public static func dot(_ v1: Vector, _ v2: Vector) -> Double {
-        return v1.x * v2.x + v2.y * v2.y + v1.z * v2.z
+        return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z
     }
     
     /// Return the cross product of two `Vector`s
@@ -152,6 +156,7 @@ extension Vector {
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
     public static func cross(_ v1: Vector, _ v2: Vector) -> Vector {
+
         let x = v1.y * v2.z - v1.z * v2.y
         let y = v1.z * v2.x - v1.x * v2.z
         let z = v1.x * v2.y - v1.y * v2.x
@@ -163,28 +168,6 @@ extension Vector {
 
 // MARK: - Vector Math Functions
 extension Vector {
-    
-    public func add(_ v: Vector) {
-        self.x += v.x
-        self.y += v.y
-        self.z += v.z
-    }
-    
-    public func sub(_ v: Vector) {
-        self.x -= v.x
-        self.y -= v.y
-        self.z -= v.z
-    }
-    
-    public func mult(_ n: Double) {
-        let result = Vector.mult(self, n)
-        self.set(result)
-    }
-    
-    public func div(_ n: Double) {
-        let result = Vector.div(self, n)
-        self.set(result)
-    }
     
     public func mag() -> Double {
         return sqrt(self.magSq())
@@ -209,7 +192,7 @@ extension Vector {
     public func normalize() {
         let len = self.mag()
         if (len != 0) {
-            self.mult(1 / len)
+            self *= 1 / len
         }
     }
 
@@ -287,5 +270,55 @@ extension Vector: SVGDrawable {
 extension Vector: CustomStringConvertible {
     public var description: String {
         "Vector (\(x), \(y))"
+    }
+}
+
+extension Vector {
+    static func + (lhs: Vector, rhs: Vector) -> Vector {
+        Vector(
+            lhs.x + rhs.x,
+            lhs.y + rhs.y,
+            lhs.z + rhs.z
+        )
+    }
+    
+    static func += (lhs: Vector, rhs: Vector) {
+        lhs.x += rhs.x
+        lhs.y += rhs.y
+        lhs.z += rhs.z
+    }
+    
+    static func - (lhs: Vector, rhs: Vector) -> Vector {
+        Vector(
+            lhs.x - rhs.x,
+            lhs.y - rhs.y,
+            lhs.z - rhs.z
+        )
+    }
+    
+    static func -= (lhs: Vector, rhs: Vector) {
+        lhs.x -= rhs.x
+        lhs.y -= rhs.y
+        lhs.z -= rhs.z
+    }
+    
+    static func * (lhs: Vector, n: Double) -> Vector {
+        Vector(lhs.x * n, lhs.y * n, lhs.z * n)
+    }
+    
+    static func *= (lhs: Vector, n: Double) {
+        lhs.x *= n
+        lhs.y *= n
+        lhs.z *= n
+    }
+    
+    static func / (lhs: Vector, n: Double) -> Vector {
+        Vector(lhs.x / n, lhs.y / n, lhs.z / n)
+    }
+    
+    static func /= (lhs: Vector, n: Double) {
+        lhs.x /= n
+        lhs.y /= n
+        lhs.z /= n
     }
 }

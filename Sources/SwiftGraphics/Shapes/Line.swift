@@ -80,7 +80,7 @@ public class Line: Shape, Intersectable {
     /// - Returns: A `Vector` whose heading is perpendicular to the line
     public func normal() -> Vector {
         //calculate base top normal
-        let baseDelta = Vector.sub(end, start)
+        let baseDelta = end - start//Vector.sub(end, start)
         baseDelta.normalize()
         let normal = Vector(-baseDelta.y, baseDelta.x)
 
@@ -125,15 +125,17 @@ public class Line: Shape, Intersectable {
     /// Return a point at the specified distance of the line
     /// - Parameter distance: Distance from the end point
     public func pointAlongLine(at distance: Double) -> Vector {
-        let v = Vector.sub(end, start)
+        let v = end - start //Vector.sub(end, start)
         v.normalize()
-        v.mult(distance)
+        v *= distance
         
         let point = end.copy()
-        
-        point.add(v)
-        
+        point += v
         return point
+    }
+    
+    func slope() -> Double {
+        return (end.y - start.y) / (end.x - start.x)
     }
     
 }

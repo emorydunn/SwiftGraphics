@@ -74,11 +74,11 @@ extension Array where Element: Vector {
             
             let r: Double = Double.random(in: range) * percent
             // let r = perlin(x: $0.x, y: $0.y)
-            let v = Vector.sub(point, origin)
+            let v = point - origin
             v.normalize()
-            v.mult(r)
-            
-            point.add(v)
+            v *= r
+
+            point += v
             
             return point
         }
