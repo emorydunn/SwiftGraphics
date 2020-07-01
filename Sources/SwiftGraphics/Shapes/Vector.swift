@@ -274,7 +274,7 @@ extension Vector: CustomStringConvertible {
 }
 
 extension Vector {
-    static func + (lhs: Vector, rhs: Vector) -> Vector {
+    public static func + (lhs: Vector, rhs: Vector) -> Vector {
         Vector(
             lhs.x + rhs.x,
             lhs.y + rhs.y,
@@ -282,13 +282,13 @@ extension Vector {
         )
     }
     
-    static func += (lhs: Vector, rhs: Vector) {
+    public static func += (lhs: Vector, rhs: Vector) {
         lhs.x += rhs.x
         lhs.y += rhs.y
         lhs.z += rhs.z
     }
     
-    static func - (lhs: Vector, rhs: Vector) -> Vector {
+    public static func - (lhs: Vector, rhs: Vector) -> Vector {
         Vector(
             lhs.x - rhs.x,
             lhs.y - rhs.y,
@@ -296,29 +296,33 @@ extension Vector {
         )
     }
     
-    static func -= (lhs: Vector, rhs: Vector) {
+    public static func -= (lhs: Vector, rhs: Vector) {
         lhs.x -= rhs.x
         lhs.y -= rhs.y
         lhs.z -= rhs.z
     }
     
-    static func * (lhs: Vector, n: Double) -> Vector {
+    public static func * (lhs: Vector, n: Double) -> Vector {
         Vector(lhs.x * n, lhs.y * n, lhs.z * n)
     }
     
-    static func *= (lhs: Vector, n: Double) {
+    public static func *= (lhs: Vector, n: Double) {
         lhs.x *= n
         lhs.y *= n
         lhs.z *= n
     }
     
-    static func / (lhs: Vector, n: Double) -> Vector {
+    public static func / (lhs: Vector, n: Double) -> Vector {
         Vector(lhs.x / n, lhs.y / n, lhs.z / n)
     }
     
-    static func /= (lhs: Vector, n: Double) {
+    public static func /= (lhs: Vector, n: Double) {
         lhs.x /= n
         lhs.y /= n
         lhs.z /= n
+    }
+    
+    public static prefix func - (vector: Vector) -> Vector {
+        return Vector(-vector.x, -vector.y, -vector.z)
     }
 }
