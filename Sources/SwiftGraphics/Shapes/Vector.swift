@@ -164,6 +164,25 @@ extension Vector {
         return Vector(x, y, z)
     }
     
+    /// Calculates the cross product of two vectors.
+    ///
+    /// The following formula is used to calculate the cross product:
+    ///
+    /// `(Vector1.X * Vector2.Y) - (Vector1.Y * Vector2.X)`
+    ///
+    ///  [Implementation][] from C#.
+    ///
+    /// [Implementation]: https://docs.microsoft.com/en-us/dotnet/api/system.windows.vector.crossproduct?view=netcore-3.1
+    ///
+    /// - Parameters:
+    ///   - v1: The first vector to evaluate.
+    ///   - v2: The second vector to evaluate.
+    /// - Returns: The cross product of vector1 and vector2.
+    public static func crossProduct(_ v1: Vector, _ v2: Vector) -> Double {
+        // (Vector1.X * Vector2.Y) - (Vector1.Y * Vector2.X)
+        return (v1.x * v2.y) - (v1.y * v2.x)
+    }
+    
 }
 
 // MARK: - Vector Math Functions
