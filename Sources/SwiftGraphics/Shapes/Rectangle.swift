@@ -333,3 +333,14 @@ extension Rectangle: Intersectable {
     
     
 }
+
+extension Rectangle: Equatable {
+    public static func == (lhs: Rectangle, rhs: Rectangle) -> Bool {
+        lhs.x == rhs.x &&
+            lhs.y == rhs.y &&
+            lhs.width == rhs.width &&
+            lhs.height == rhs.height
+    }
+    
+    
+}

@@ -97,6 +97,14 @@ final class RectangleTests: XCTestCase {
         
     }
     
+    func testEquality() {
+        
+        XCTAssertEqual(
+            Rectangle(x: 100, y: 200, width: 100, height: 200),
+            Rectangle(centerX: 150, centerY: 300, width: 100, height: 200)
+        )
+    }
+    
     
     
 }

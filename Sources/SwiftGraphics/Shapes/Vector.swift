@@ -345,3 +345,11 @@ extension Vector {
         return Vector(-vector.x, -vector.y, -vector.z)
     }
 }
+
+extension Vector: Equatable {
+    public static func == (lhs: Vector, rhs: Vector) -> Bool {
+        lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+    
+    
+}

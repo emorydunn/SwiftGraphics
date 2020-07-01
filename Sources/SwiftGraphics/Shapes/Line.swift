@@ -234,3 +234,11 @@ extension Line: CustomStringConvertible {
         "Line (\(start.x), \(start.y)) → (\(end.x), \(end.y))"
     }
 }
+
+extension Line: Equatable {
+    public static func == (lhs: Line, rhs: Line) -> Bool {
+        lhs.start == rhs.start && lhs.end == rhs.end
+    }
+    
+    
+}

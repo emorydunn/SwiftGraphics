@@ -289,3 +289,10 @@ extension Circle: SVGDrawable {
     }
 }
 
+extension Circle: Equatable {
+    public static func == (lhs: Circle, rhs: Circle) -> Bool {
+        lhs.center == rhs.center && lhs.radius == rhs.radius
+    }
+    
+    
+}
