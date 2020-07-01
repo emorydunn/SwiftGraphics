@@ -9,7 +9,7 @@
 import Foundation
 
 /// A circle, with an origin and a radius
-public class Circle: Polygon, Intersectable {
+public class Circle: Polygon, Intersectable, CGDrawable {
     
     /// Radius of the circle
     public var radius: Double
@@ -79,9 +79,12 @@ public class Circle: Polygon, Intersectable {
     ///   - origin: Origin of the ray
     ///   - dir: Direction of the way
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
+        
 
-        let a = (dir.x - origin.x).squared() + (dir.y - origin.y).squared()
-        let b = 2 * (dir.x - origin.x) * (origin.x - center.x) + 2 * (dir.y - origin.y) * (origin.y - center.y)
+        let relativeDir = dir + origin
+
+        let a = (relativeDir.x - origin.x).squared() + (relativeDir.y - origin.y).squared()
+        let b = 2 * (relativeDir.x - origin.x) * (origin.x - center.x) + 2 * (relativeDir.y - origin.y) * (origin.y - center.y)
         let c = (origin.x - center.x).squared() + (origin.y - center.y).squared() - radius.squared()
         
         let discr = b.squared() - 4 * a * c
@@ -92,24 +95,12 @@ public class Circle: Polygon, Intersectable {
         guard t > 0 else { return nil }
         
         let pHit = Vector(
-            (dir.x - origin.x) * t + origin.x,
-            (dir.y - origin.y) * t + origin.y
+            (relativeDir.x - origin.x) * t + origin.x,
+            (relativeDir.y - origin.y) * t + origin.y
         )
         
         return pHit
-
-    }
-
-
-    public func rayIntersection(origin: Vector, theta: Radians) -> Vector? {
-        let e = Vector(angle: theta)
-        e.mult(100)
-        e.add(origin)
-        
-        SwiftGraphicsContext.strokeColor = .blue
-        e.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-        
-        return rayIntersection(origin: origin, dir: e)
+//        return origin + (relativeDir * t)
 
     }
     
@@ -254,10 +245,6 @@ public class Circle: Polygon, Intersectable {
     public func contains(_ point: Vector) -> Bool {
         return point.dist(center) < radius
     }
-
-}
-
-extension Circle: CGDrawable {
     
     /// Draw the receiver in the specified context
     /// - Parameter context: Context in which to draw
