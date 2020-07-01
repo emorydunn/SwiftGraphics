@@ -13,11 +13,28 @@ public protocol RayTracer: AnyObject, Shape {
     
     func intersections(for angle: Radians, origin: Vector, bb: BoundingBox, objects: [Intersectable]) -> [Line]
     
+    func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line]
+    
 //    var passStyle: Bool { get set }
 
 }
 
 extension RayTracer {
+    
+    func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        
+        let intersections: [Vector] = objects.compactMap {
+            return $0.rayIntersection(origin: origin, theta: angle)
+            
+        }
+        
+        return intersections.map { Line(origin, $0) }
+
+    }
+    
+    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return defaultIntersections(for: angle, origin: origin, objects: objects)
+    }
     
     /// Find all intersecting points for a ray of a specified angle, terminating on a `BoundingBox`
     ///

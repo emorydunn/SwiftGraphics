@@ -46,12 +46,21 @@ public class DirectionalEmitter: Circle, Emitter {
 
         let intersections = self.intersections(for: direction.toRadians(),
                            origin: center,
-                           bb: boundingBox,
                            objects: objects
         )
         
         drawIntersections(intersections)
         
+    }
+    
+    public override func debugDraw(in context: CGContext) {
+        super.debugDraw(in: context)
+
+        let dirPoint = Vector(angle: direction.toRadians())
+        dirPoint *= 20
+        dirPoint += center
+        
+        dirPoint.debugDraw(in: context)
     }
     
 }

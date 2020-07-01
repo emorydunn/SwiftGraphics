@@ -38,4 +38,10 @@ public class Fresnel: Line, RayTracer {
         
     }
     
+    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return []
+    }
+    
+    
+    
 }

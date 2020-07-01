@@ -122,6 +122,46 @@ public class Line: Shape, Intersectable {
         return intersections
     }
     
+    /// Calculate the intersection point of a ray and a plane defined by the Line
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
+    /// - Returns: The point of intersection, if the ray intersections the plane
+    public func rayPlaneIntersection(origin: Vector, dir: Vector) -> Vector? {
+        let denom = normal().dot(dir)
+
+        let p0 = center - origin
+        let t = p0.dot(normal()) / denom
+        
+        guard t >= 0 else { return nil }
+        let pHit = origin + (dir * t)
+
+        return pHit
+
+    }
+    
+    /// Calculate the intersection point of a ray and the Line
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
+    /// - Returns: The point of intersection, if the ray intersections the line
+    public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
+
+        let v1 = origin - start
+        let v2 = end - start
+        let v3 = Vector(-dir.y, dir.x)
+        
+        let dot = v2.dot(v3)
+        
+        let t1 = Vector.crossProduct(v2, v1) / dot
+        let t2 = v1.dot(v3) / dot
+
+        if (t1 >= 0.0 && (t2 >= 0.0 && t2 <= 1.0)) {
+            return origin + (dir * t1)
+        }
+        return nil
+    }
+    
     /// Return a point at the specified distance of the line
     /// - Parameter distance: Distance from the end point
     public func pointAlongLine(at distance: Double) -> Vector {

@@ -134,48 +134,51 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 
     }
     
-    
-    /// Returns a point on the rectangle at the specified angle from the given point
-    ///
-    /// From: https://math.stackexchange.com/a/717699
-    /// - Parameters:
-    ///   - point: Point of origin for the angle
-    ///   - theta: Angle
-    public func rayIntersection(origin point: Vector, theta: Radians) -> Vector? {
-        let relPoint = relativePoint(point)
-
-        if (theta == 0) {
-            relPoint.x = width / 2
-            let point = reverseRelativePoint(relPoint)
-
-            return point
-        }
-
-        let halfWidth = width / 2
-        let halfHeight = height / 2
-
-        let t1 = (halfWidth - relPoint.x) / cos(theta)
-        let t2 = (-halfWidth - relPoint.x) / cos(theta)
-        let t3 = (halfHeight - relPoint.y) / sin(theta)
-        let t4 = (-halfHeight - relPoint.y) / sin(theta)
-
-        var options = [t1, t2, t3, t4]
-
-        options = options.filter { $0 > 0 }
-        options.sort()
-        
-        guard options.count > 0 else {
-//            print("Could not find intersection for \(theta.toDegrees())")
-            return nil
-        }
-
-        // console.log(options)
-        let t5 = options[0]
-        relPoint.x = relPoint.x + t5 * cos(theta)
-        relPoint.y = relPoint.y + t5 * sin(theta)
-
-        return reverseRelativePoint(relPoint)
+    public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
+        return nil
     }
+    
+//    /// Returns a point on the rectangle at the specified angle from the given point
+//    ///
+//    /// From: https://math.stackexchange.com/a/717699
+//    /// - Parameters:
+//    ///   - point: Point of origin for the angle
+//    ///   - theta: Angle
+//    public func rayIntersection(origin point: Vector, theta: Radians) -> Vector? {
+//        let relPoint = relativePoint(point)
+//
+//        if (theta == 0) {
+//            relPoint.x = width / 2
+//            let point = reverseRelativePoint(relPoint)
+//
+//            return point
+//        }
+//
+//        let halfWidth = width / 2
+//        let halfHeight = height / 2
+//
+//        let t1 = (halfWidth - relPoint.x) / cos(theta)
+//        let t2 = (-halfWidth - relPoint.x) / cos(theta)
+//        let t3 = (halfHeight - relPoint.y) / sin(theta)
+//        let t4 = (-halfHeight - relPoint.y) / sin(theta)
+//
+//        var options = [t1, t2, t3, t4]
+//
+//        options = options.filter { $0 > 0 }
+//        options.sort()
+//
+//        guard options.count > 0 else {
+////            print("Could not find intersection for \(theta.toDegrees())")
+//            return nil
+//        }
+//
+//        // console.log(options)
+//        let t5 = options[0]
+//        relPoint.x = relPoint.x + t5 * cos(theta)
+//        relPoint.y = relPoint.y + t5 * sin(theta)
+//
+//        return reverseRelativePoint(relPoint)
+//    }
 
     /// Determine whether the specified point is in the rectangle
     ///
