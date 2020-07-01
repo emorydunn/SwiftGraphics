@@ -97,6 +97,22 @@ final class RectangleTests: XCTestCase {
         
     }
     
+    func testBoundingBox() {
+        let rect = Rectangle(x: 100, y: 200, width: 100, height: 200)
+        
+        XCTAssertEqual(
+            rect,
+            rect.boundingBox
+        )
+    }
+    
+    func testContainsPoint() {
+        let rect = Rectangle(x: 100, y: 200, width: 100, height: 200)
+        
+        XCTAssertTrue(rect.contains(Vector(x: 142, y: 330)))
+        XCTAssertFalse(rect.contains(Vector(x: 400, y: 330)))
+    }
+    
     func testEquality() {
         
         XCTAssertEqual(
@@ -104,6 +120,8 @@ final class RectangleTests: XCTestCase {
             Rectangle(centerX: 150, centerY: 300, width: 100, height: 200)
         )
     }
+    
+    
     
     
     

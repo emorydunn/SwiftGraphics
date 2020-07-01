@@ -188,9 +188,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     /// Tests whether the point is between the left and right edges, and top and bottom edges
     /// - Parameter point: Whether the point is inside the rectangle
     public func contains(_ point: Vector) -> Bool {
-        // Test X Coord
-        let withinX = point.x < topLeft.x && point.x > topRight.x
-        let withinY = point.y > bottomLeft.y && point.y < topLeft.y
+        let withinX = point.x > minX && point.x < maxX
+        let withinY = point.y > minY && point.y < maxY
 
         return withinX && withinY
     }
