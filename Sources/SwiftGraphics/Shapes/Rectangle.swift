@@ -56,7 +56,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     /// Returns the coordinates of the center of the Rectangle
     public var center: Vector {
         get {
-            Vector(self.x + width / 2, self.y + height / 2)
+            Vector(self.x + width / 2,
+                   self.y + height / 2)
         }
         set {
             self.x = newValue.x - width / 2
@@ -86,27 +87,33 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     
     /// Coordinate of the top-left corner
     public var topLeft: Vector {
-        Vector(center.x + width / 2,
-               center.y + height / 2)
+        Vector(minX,
+               minY)
     }
     
     /// Coordinate of the top-right corner
     public var topRight: Vector {
-        Vector(center.x - width / 2,
-               center.y + height / 2)
+        Vector(maxX,
+               minY)
     }
     
     /// Coordinate of the bottom-left corner
     public var bottomLeft: Vector {
-        Vector(center.x + width / 2,
-               center.y - height / 2)
+        Vector(minX,
+               maxY)
     }
     
     /// Coordinate of the botom-left corner
     public var bottomRight: Vector {
-        Vector(center.x - width / 2,
-               center.y - height / 2)
+        Vector(maxX,
+               maxY)
     }
+    
+    public var minX: Double { x }
+    public var minY: Double { y }
+    
+    public var maxX: Double { x + width }
+    public var maxY: Double { y + height }
     
     /// Shift a point to have coordinates relative to the rectangle
     /// - Parameter point: Point to shift
@@ -132,10 +139,6 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     public func rayIntersection(_ theta: Radians) -> Vector {
         return rayIntersection(origin: self.center, theta: theta)!
 
-    }
-    
-    public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
-        return nil
     }
     
 //    /// Returns a point on the rectangle at the specified angle from the given point
@@ -253,6 +256,60 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 }
 
 extension Rectangle: Intersectable {
+    public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
+        let context = SwiftGraphicsContext.current as! CGContext
+
+        let invDir = Vector(
+            1 / dir.x,
+            1 / dir.y,
+            1 / dir.z
+        )
+        
+        let signX = invDir.x < 0 ? 1 : 0
+        let signY = invDir.y < 0 ? 1 : 0
+
+        let bounds = [
+            Vector(minX, minY),
+            Vector(maxX, maxY),
+        ]
+//        let bounds = [topLeft, bottomRight]
+//        let bounds = [topRight, bottomLeft]
+        bounds.forEach {
+            $0.debugDraw(in: context)
+        }
+        
+        var tmin = (bounds[signX].x - origin.x) * invDir.x
+        var tmax = (bounds[1 - signX].x) * invDir.x
+        let tymin = (bounds[signY].y - origin.y) * invDir.y
+        let tymax = (bounds[1 - signY].y - origin.y) * invDir.y
+        
+        if ((tmin > tymax) || (tymin > tmax)) {
+            return nil
+        }
+        
+        if tymin > tmin {
+            tmin = tymin
+        }
+        if tymax < tmax {
+            tmax = tymax
+        }
+        
+        var t = tmin
+        if t < 0 {
+            print("Swapping t")
+            t = tmax
+            if t < 0 {
+                return nil
+            }
+        }
+
+        
+        print(t)
+        return origin + dir * t
+        
+        
+    }
+    
     
     /// Determine where the specified line intersects with the rectangle
     ///
