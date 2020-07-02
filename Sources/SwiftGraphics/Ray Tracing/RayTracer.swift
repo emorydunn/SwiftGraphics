@@ -25,11 +25,12 @@ extension RayTracer {
         
         let intersections: [Vector] = objects.compactMap {
             return $0.rayIntersection(origin: origin, theta: angle)
-            
         }
+        let sorted = intersections.sortedByDistance(from: origin)
+        guard !sorted.isEmpty else { return [] }
         
-        return intersections.map { Line(origin, $0) }
-
+        return [Line(origin, sorted[0])]
+        
     }
     
     public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
