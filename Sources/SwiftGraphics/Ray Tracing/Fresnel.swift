@@ -18,7 +18,7 @@ public class Fresnel: Line, RayTracer {
 
     /// Find all intersecting points for a ray of a specified angle, terminating on a `BoundingBox`
     ///
-    /// A `Fresnel` modyfies the specified angle to return lines perpendicular to the line
+    /// A `Fresnel` modifies the specified angle to return lines parallel to the normal. 
     ///
     /// - Parameters:
     ///   - angle: The angle of the ray being cast
