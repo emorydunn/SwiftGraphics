@@ -24,6 +24,8 @@ public class SVGContext: DrawingContext {
         svg.addAttribute(height, forKey: "height")
         svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
         
+        addBlendMode()
+        
     }
     
     public convenience init(sketch: SketchView) {
@@ -61,6 +63,20 @@ public class SVGContext: DrawingContext {
         
         svg.setChildren(xmlGroups)
         
+    }
+    
+    func addBlendMode() {
+        let blendMode = SwiftGraphicsContext.blendMode.rawValue
+        let style = """
+        
+            line { mix-blend-mode: \(blendMode); }
+            circle { mix-blend-mode: \(blendMode); }
+            .vector { mix-blend-mode: \(blendMode); }
+            
+        """
+        let styleElement = XMLElement(name: "style", stringValue: style)
+        
+        svg.addChild(styleElement)
     }
     
     public func makeDoc() -> XMLDocument {

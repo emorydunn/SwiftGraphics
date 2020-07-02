@@ -20,6 +20,10 @@ public class SwiftGraphicsContext {
     
     /// Weight of the outline of the shape
     public static var strokeWeight: Double = 1
+    
+    /// Color blending mode
+    public static var blendMode: BlendMode = .normal
+    
 }
 
 public protocol DrawingContext {
@@ -29,3 +33,5 @@ public protocol DrawingContext {
 extension CGContext: DrawingContext {
     
 }
+
+
