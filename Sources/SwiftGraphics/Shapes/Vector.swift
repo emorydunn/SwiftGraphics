@@ -341,6 +341,10 @@ extension Vector {
         lhs.z /= n
     }
     
+    public static func / (n: Double, v: Vector) -> Vector {
+        Vector(n / v.x, n / v.y, n / v.z)
+    }
+    
     public static prefix func - (vector: Vector) -> Vector {
         return Vector(-vector.x, -vector.y, -vector.z)
     }
