@@ -21,6 +21,16 @@ public protocol RayTracer: AnyObject, Shape {
 
 extension RayTracer {
     
+    /// Find all intersecting points for a ray of a specified angle.
+    ///
+    /// If no object is hit by a ray no point is returned. 
+    ///
+    /// The result always includes the intersection on the bounding box.
+    /// - Parameters:
+    ///   - angle: The angle of the ray being cast
+    ///   - origin: The origin of the ray being cast
+    ///   - bb: The `BoundingBox` to terminate the ray on
+    ///   - objects: Objects to test for intersection, sorted by distance from the origin
     func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         
         let intersections: [Vector] = objects.compactMap {
