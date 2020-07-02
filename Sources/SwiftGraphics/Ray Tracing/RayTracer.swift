@@ -45,11 +45,14 @@ extension RayTracer {
     /// - Returns: Lines representing the path taken by the ray
     func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         
+        // Remove self to prevent recursion
+        var nonSelfObjects = objects
+        nonSelfObjects.removeAll { ($0 as? RayTracer) === self }
         
         var segments = [Line]()
         var clostestPoint = Double.infinity
         
-        objects.forEach {
+        nonSelfObjects.forEach {
             guard let intersection = $0.rayIntersection(origin: origin, theta: angle) else {
                 return
             }
@@ -67,13 +70,10 @@ extension RayTracer {
                 return
             }
             
-            // Make a copy of the objects
-            var rayCasters = objects
-            // Remove self to prevent recursion and replace with a copy of the core circle
-            rayCasters.removeAll { ($0 as? RayTracer) === self }
-            
             // Add the new intersecting segments to the array
-            let castSegments = tracer.intersections(for: angle, origin: intersection, objects: rayCasters)
+            let castSegments = tracer.intersections(for: angle,
+                                                    origin: intersection,
+                                                    objects: objects)
             segments.append(contentsOf: castSegments)
             
             
