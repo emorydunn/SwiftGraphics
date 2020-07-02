@@ -115,73 +115,12 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     public var maxX: Double { x + width }
     public var maxY: Double { y + height }
     
-    /// Shift a point to have coordinates relative to the rectangle
-    /// - Parameter point: Point to shift
-    func relativePoint(_ point: Vector) -> Vector {
-        let relX = point.x - center.x
-        let relY = point.y - center.y
-        
-        return Vector(relX, relY)
-    }
-    
-    /// Undo the shift of a point to have coordinates relative to the rectangle
-    /// - Parameter point: Point to shift
-    func reverseRelativePoint(_ point: Vector) -> Vector {
-        let relX = point.x + center.x
-        let relY = point.y + center.y
-        
-        return Vector(relX, relY)
-    }
-    
-    
     /// Returns the point on the rectangle where the specified angle originating from the center intersects
     /// - Parameter theta: Angle in radians
     public func rayIntersection(_ theta: Radians) -> Vector {
         return rayIntersection(origin: self.center, theta: theta)!
 
     }
-    
-//    /// Returns a point on the rectangle at the specified angle from the given point
-//    ///
-//    /// From: https://math.stackexchange.com/a/717699
-//    /// - Parameters:
-//    ///   - point: Point of origin for the angle
-//    ///   - theta: Angle
-//    public func rayIntersection(origin point: Vector, theta: Radians) -> Vector? {
-//        let relPoint = relativePoint(point)
-//
-//        if (theta == 0) {
-//            relPoint.x = width / 2
-//            let point = reverseRelativePoint(relPoint)
-//
-//            return point
-//        }
-//
-//        let halfWidth = width / 2
-//        let halfHeight = height / 2
-//
-//        let t1 = (halfWidth - relPoint.x) / cos(theta)
-//        let t2 = (-halfWidth - relPoint.x) / cos(theta)
-//        let t3 = (halfHeight - relPoint.y) / sin(theta)
-//        let t4 = (-halfHeight - relPoint.y) / sin(theta)
-//
-//        var options = [t1, t2, t3, t4]
-//
-//        options = options.filter { $0 > 0 }
-//        options.sort()
-//
-//        guard options.count > 0 else {
-////            print("Could not find intersection for \(theta.toDegrees())")
-//            return nil
-//        }
-//
-//        // console.log(options)
-//        let t5 = options[0]
-//        relPoint.x = relPoint.x + t5 * cos(theta)
-//        relPoint.y = relPoint.y + t5 * sin(theta)
-//
-//        return reverseRelativePoint(relPoint)
-//    }
 
     /// Determine whether the specified point is in the rectangle
     ///
@@ -255,33 +194,40 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 }
 
 extension Rectangle: Intersectable {
+    
+    /// Calculate the intersection point of a ray and the the Rectangle
+    ///
+    /// Adapted from [Amy Williams et al.](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection)
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
+    /// - Returns: The point of intersection, if the ray intersections the line
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
-        let context = SwiftGraphicsContext.current as! CGContext
 
-        let invDir = Vector(
-            1 / dir.x,
-            1 / dir.y,
-            1 / dir.z
-        )
+        let invDir = 1 / dir
         
-        let signX = invDir.x < 0 ? 1 : 0
-        let signY = invDir.y < 0 ? 1 : 0
-
-        let bounds = [
-            Vector(minX, minY),
-            Vector(maxX, maxY),
-        ]
-//        let bounds = [topLeft, bottomRight]
-//        let bounds = [topRight, bottomLeft]
-        bounds.forEach {
-            $0.debugDraw(in: context)
+        // Calculate X Coordinate
+        var tmin: Double
+        var tmax: Double
+        if invDir.x >= 0 {
+            tmin = (minX - origin.x) * invDir.x
+            tmax = (maxX - origin.x) * invDir.x
+        } else {
+            tmin = (maxX - origin.x) * invDir.x
+            tmax = (minX - origin.x) * invDir.x
         }
         
-        var tmin = (bounds[signX].x - origin.x) * invDir.x
-        var tmax = (bounds[1 - signX].x) * invDir.x
-        let tymin = (bounds[signY].y - origin.y) * invDir.y
-        let tymax = (bounds[1 - signY].y - origin.y) * invDir.y
-        
+        // Calculate Y Coordinate
+        let tymin: Double
+        let tymax: Double
+        if invDir.y >= 0 {
+            tymin = (minY - origin.y) * invDir.y
+            tymax = (maxY - origin.y) * invDir.y
+        } else {
+            tymin = (maxY - origin.y) * invDir.y
+            tymax = (minY - origin.y) * invDir.y
+        }
+
         if ((tmin > tymax) || (tymin > tmax)) {
             return nil
         }
@@ -295,17 +241,11 @@ extension Rectangle: Intersectable {
         
         var t = tmin
         if t < 0 {
-            print("Swapping t")
             t = tmax
-            if t < 0 {
-                return nil
-            }
+            if t < 0 { return nil }
         }
 
-        
-        print(t)
         return origin + dir * t
-        
         
     }
     
