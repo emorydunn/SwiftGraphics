@@ -49,7 +49,7 @@ public class CircleEmitter: Circle, Emitter {
     /// - Parameters:
     ///   - boundingBox: `BoundingBox` for ray termination
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(boundingBox: BoundingBox, objects: [Intersectable]) {
+    public func draw(objects: [Intersectable]) {
         
         // Draw the circle
         if case .line = style {

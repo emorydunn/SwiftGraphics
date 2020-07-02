@@ -50,7 +50,6 @@ final class SVGContextTests: XCTestCase {
         let e = DirectionalEmitter(x: 600, y: 300, direction: 125)
         e.draw()
         e.draw(
-            boundingBox: bb,
             objects: [
                 rect,
                 circle,

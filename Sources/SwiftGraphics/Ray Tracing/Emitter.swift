@@ -13,7 +13,7 @@ public protocol Emitter: RayTracer {
     
     var style: RayTraceStyle { get set }
     
-    func draw(boundingBox: BoundingBox, objects: [Intersectable])
+    func draw(objects: [Intersectable])
 }
 
 

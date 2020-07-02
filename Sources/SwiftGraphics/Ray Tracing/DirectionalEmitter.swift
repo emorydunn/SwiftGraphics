@@ -42,7 +42,7 @@ public class DirectionalEmitter: Circle, Emitter {
     /// - Parameters:
     ///   - boundingBox: `BoundingBox` for ray termination
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(boundingBox: BoundingBox, objects: [Intersectable]) {
+    public func draw(objects: [Intersectable]) {
 
         let intersections = self.intersections(for: direction.toRadians(),
                            origin: center,
