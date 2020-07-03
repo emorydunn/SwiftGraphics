@@ -14,13 +14,21 @@ open class SketchView: NSView {
     override open var isFlipped: Bool { true }
     
     /// The `Sketch` to display
-    open var sketch: Sketch?
+    open var sketch: Sketch? {
+        didSet {
+            firstRun = true
+            canDrawConcurrently = true
+            needsDisplay = true
+            displayIfNeeded()
+        }
+    }
     
     /// Whether this is the first run of the sketch, controls whether `.setup()` is called on `.draw(_:)`
     open var firstRun = true
     
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
+        guard sketch != nil else { return }
         
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
