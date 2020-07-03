@@ -13,6 +13,8 @@ import AppKit
 public protocol Sketch {
     
     var title: String { get set }
+    
+    init()
 
     func setup()
     func draw()
