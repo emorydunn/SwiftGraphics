@@ -10,8 +10,7 @@ import Foundation
 
 /// An circular emitter that emits rays along its perimiter
 public class CircleEmitter: Circle, Emitter {
-    
-    
+
     /// Angle of the step between emitted rays
     ///
     /// The value is clamped to a minimum of `0`
@@ -56,28 +55,14 @@ public class CircleEmitter: Circle, Emitter {
             super.draw()
         }
         
-        // Make a mutable copy
-        var objects = objects
-        
-        // Remove this raycaster from the list
-        objects.removeAll { ($0 as? CircleEmitter) === self }
-        
         // Nothing to do if there are no rays
         guard rayStep > 0 else { return }
-        
-//        pointsDistributed(every: rayStep).forEach { origin in
-//
-//            let intersections = self.intersections(for: rAngle, origin: origin, objects: objects)
-//
-//            drawIntersections(intersections)
-//        }
 
         // Stride through the circle, stepping by degree
         stride(from: rayStep, through: 360, by: rayStep).forEach { angle in
             let rAngle = Double(angle).toRadians()
 
             let origin = rayIntersection(rAngle)
-//            let intersections = self.intersections(for: rAngle, origin: origin, bb: boundingBox, objects: objects)
             let intersections = self.intersections(for: rAngle, origin: origin, objects: objects)
 
             drawIntersections(intersections)
