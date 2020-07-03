@@ -47,7 +47,7 @@ extension RayTracer {
         
         // Remove self to prevent recursion
         var nonSelfObjects = objects
-        nonSelfObjects.removeAll { ($0 as? RayTracer) === self }
+        nonSelfObjects.removeAll { $0 as? RayTracer === self }
         
         var segments = [Line]()
         var clostestPoint = Double.infinity
@@ -56,20 +56,21 @@ extension RayTracer {
             guard let intersection = $0.rayIntersection(origin: origin, theta: angle) else {
                 return
             }
+            
             let dist = intersection.dist(origin)
             if dist < clostestPoint {
                 clostestPoint = dist
                 segments = [Line(origin, intersection)]
-
             } else {
                 return
             }
             
-            // Test is the object is a RayTracer, to continue adding lines
-            guard let tracer = $0 as? RayTracer, ($0 as? Emitter) == nil else {
+            // Test if the object is a RayTracer and continue to add lines
+            // Unless the object is an Emitter
+            guard let tracer = $0 as? RayTracer, !(tracer is Emitter) else {
                 return
             }
-            
+
             // Add the new intersecting segments to the array
             let castSegments = tracer.intersections(for: angle,
                                                     origin: intersection,
