@@ -51,8 +51,7 @@ public class LinearEmitter: Line, Emitter {
         
         stride(from: 0, to: 1 + percentStep, by: percentStep).forEach { percent in
             let origin = start + ((end - start) * percent)
-//            origin.debugDraw(in: SwiftGraphicsContext.current as! CGContext)
-            
+
             let intersections = self.intersections(
                 for: angle,
                 origin: origin,

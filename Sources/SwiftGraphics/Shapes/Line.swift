@@ -174,6 +174,13 @@ public class Line: Shape, Intersectable {
         return point
     }
     
+    ///  Linear interpolate the vector to another vector
+    /// - Parameter percent: the amount of interpolation; some value between 0.0 and 1.0
+    /// - Returns: A Vector between the original two
+    public func lerp(_ percent: Double) -> Vector {
+        return start + ((end - start) * percent)
+    }
+    
     func slope() -> Double {
         return (end.y - start.y) / (end.x - start.x)
     }
