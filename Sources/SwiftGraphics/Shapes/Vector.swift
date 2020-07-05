@@ -307,6 +307,20 @@ extension Vector {
         lhs.z += rhs.z
     }
     
+    public static func + (v: Vector, n: Double) -> Vector {
+        Vector(
+            v.x + n,
+            v.y + n,
+            v.z + n
+        )
+    }
+    
+    public static func += (v: Vector, n: Double) {
+        v.x += n
+        v.y += n
+        v.z += n
+    }
+    
     public static func - (lhs: Vector, rhs: Vector) -> Vector {
         Vector(
             lhs.x - rhs.x,
@@ -319,6 +333,20 @@ extension Vector {
         lhs.x -= rhs.x
         lhs.y -= rhs.y
         lhs.z -= rhs.z
+    }
+    
+    public static func - (v: Vector, n: Double) -> Vector {
+        Vector(
+            v.x - n,
+            v.y - n,
+            v.z - n
+        )
+    }
+    
+    public static func -= (v: Vector, n: Double) {
+        v.x -= n
+        v.y -= n
+        v.z -= n
     }
     
     public static func * (lhs: Vector, n: Double) -> Vector {
