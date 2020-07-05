@@ -13,6 +13,8 @@ open class SketchView: NSView {
     /// Use top-left origin
     override open var isFlipped: Bool { true }
     
+    public private(set) var fileName: String?
+    
     /// The `Sketch` to display
     open var sketch: Sketch? {
         didSet {
@@ -38,6 +40,7 @@ open class SketchView: NSView {
             firstRun = false
         }
         sketch?.draw()
+        fileName = sketch?.hashedFileName()
         
     }
     
