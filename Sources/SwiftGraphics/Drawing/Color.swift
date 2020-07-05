@@ -48,6 +48,10 @@ public struct Color: Equatable {
         )
     }
     
+    /// Create a grey
+    /// - Parameters:
+    ///   - grey: Decimal grey value
+    ///   - a: Alpha value, from 0 to 1
     public init(grey: Float, _ a: Float) {
         self.init(red: grey, green: grey, blue: grey, alpha: a)
     }
