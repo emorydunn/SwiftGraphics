@@ -56,8 +56,37 @@ public struct Color: Equatable {
         self.init(red: grey, green: grey, blue: grey, alpha: a)
     }
     
-    // Convert to a hex string
-    // From: https://stackoverflow.com/a/26341062
+    /// Create  a color from a hex string
+    /// From: https://stackoverflow.com/a/26341062
+    public init(hexString: String) {
+        var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
+        colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
+
+        self.alpha = 1.0
+        self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
+        self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
+        self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
+    }
+
+    static func colorComponentFrom(colorString: String, start: Int, length: Int) -> Float {
+
+        let startIndex = colorString.index(colorString.startIndex, offsetBy: start)
+        let endIndex = colorString.index(startIndex, offsetBy: length)
+        let subString = colorString[startIndex..<endIndex]
+        let fullHexString = length == 2 ? subString : "\(subString)\(subString)"
+        var hexComponent: UInt32 = 0
+
+        guard Scanner(string: String(fullHexString)).scanHexInt32(&hexComponent) else {
+            return 0
+        }
+        let hexFloat = Float(hexComponent)
+        let floatValue = Float(hexFloat / 255.0)
+        return floatValue
+    }
+
+    
+    /// Convert to a hex string
+    /// From: https://stackoverflow.com/a/26341062
     public func toHex() -> String {
         
         let r = lroundf(red * 255)
