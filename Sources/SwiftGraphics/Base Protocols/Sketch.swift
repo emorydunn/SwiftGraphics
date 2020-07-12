@@ -14,6 +14,8 @@ public protocol Sketch {
     
     var title: String { get set }
     
+    var size: Size { get set }
+    
     init()
 
     func setup()

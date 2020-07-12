@@ -35,6 +35,13 @@ public class SVGContext: DrawingContext {
         )
     }
     
+    public convenience init(sketch: Sketch) {
+        self.init(
+            width: Int(sketch.size.width),
+            height: Int(sketch.size.height)
+        )
+    }
+    
     
     public func addShape(_ shape: SVGDrawable) {
         let xml = shape.svgElement()
