@@ -169,9 +169,7 @@ public class Line: Shape, Intersectable {
         v.normalize()
         v *= distance
         
-        let point = end.copy()
-        point += v
-        return point
+        return start + v
     }
     
     ///  Linear interpolate the vector to another vector
