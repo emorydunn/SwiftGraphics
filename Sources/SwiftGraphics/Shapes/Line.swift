@@ -9,7 +9,7 @@
 import Foundation
 
 /// Represents a line between two points
-public class Line: Shape, Intersectable {
+open class Line: Shape, Intersectable {
     
     /// The starting point of the line
     public var start: Vector
