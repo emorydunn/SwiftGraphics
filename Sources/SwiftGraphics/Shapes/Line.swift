@@ -136,6 +136,7 @@ open class Line: Shape, Intersectable {
         guard t >= 0 else { return nil }
         let pHit = origin + (dir * t)
 
+        // FIXME: A point is returned when ray is parallel to line
         return pHit
 
     }
