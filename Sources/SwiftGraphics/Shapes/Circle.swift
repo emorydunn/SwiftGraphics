@@ -133,7 +133,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
                 line.start.z + mu * (line.end.z - line.start.z)
             )
             
-            if line.pointIsOnLine(p1) {
+            if line.contains(p1) {
                 intersections.append(p1)
             }
             
@@ -148,7 +148,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
             )
             
             
-            if line.pointIsOnLine(p1) {
+            if line.contains(p1) {
                 intersections.append(p1)
             }
             
@@ -162,7 +162,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
             )
 
             
-            if line.pointIsOnLine(p2) {
+            if line.contains(p2) {
                 intersections.append(p2)
             }
             

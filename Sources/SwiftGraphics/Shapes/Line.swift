@@ -49,18 +49,12 @@ open class Line: Shape, Intersectable {
     }
     
     /// Determine whether a point is on the line
+    ///
+    /// From https://gamedev.stackexchange.com/a/57746
+    ///
     /// - Parameter point: Whether the point is on the line
-    public func pointIsOnLine(_ point: Vector) -> Bool {
-        let lineDot = start.x * -end.y + start.y * end.x
-        let dot = start.x * -point.y + start.y * point.x
-        
-        if (lineDot > 0 && dot > 0) {
-            return true
-        } else if (lineDot < 0 && dot < 0) {
-            return true
-        } else {
-            return false
-        }
+    public func contains(_ point: Vector) -> Bool {
+        return start + (end - start) * (start.dist(point)) / end.dist(start) == point
     }
     
     /// A Rectangle that contains the receiver
@@ -87,8 +81,9 @@ open class Line: Shape, Intersectable {
         return normal
     }
     
+    /// Returns the angle of the line based on the slope
     public func angle() -> Radians {
-        end.angleBetween(start)
+        return atan(slope())
     }
     
 
@@ -165,8 +160,8 @@ open class Line: Shape, Intersectable {
     
     /// Return a point at the specified distance of the line
     /// - Parameter distance: Distance from the end point
-    public func pointAlongLine(at distance: Double) -> Vector {
-        let v = end - start //Vector.sub(end, start)
+    public func point(at distance: Double) -> Vector {
+        let v = end - start
         v.normalize()
         v *= distance
         
