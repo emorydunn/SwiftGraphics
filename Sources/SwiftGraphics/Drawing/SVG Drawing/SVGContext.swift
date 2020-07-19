@@ -49,6 +49,12 @@ public class SVGContext: DrawingContext {
         svg.addChild(xml)
     }
     
+    /// Group top-level elements by the specified attribute's value.
+    ///
+    /// This method is useful for generating plottable multi-color SVGs. By using `stroke` as the attribute
+    /// all elements will be grouped by their stroke color for easy pen switching. 
+    ///
+    /// - Parameter attributeName: Grouping attribute name
     public func groupElements(by attributeName: String) {
         guard let children = svg.children as? [XMLElement] else { return }
     
@@ -70,6 +76,29 @@ public class SVGContext: DrawingContext {
         
         svg.setChildren(xmlGroups)
         
+    }
+    
+    /// Ungroup top-level elements.
+    ///
+    /// If a shape draws itself as a group this method can be used to break the group apart before calling `groupElements(by:)`.
+    ///
+    public func removeGroups() {
+        guard let children = svg.children as? [XMLElement] else { return }
+        
+        var newChildren: [XMLNode] = []
+        
+        children.forEach { node in
+            if node.name == "g" {
+                let groupNodes = node.children ?? []
+                
+                groupNodes.forEach { $0.detach() }
+                newChildren.append(contentsOf: groupNodes)
+            } else {
+                newChildren.append(node)
+            }
+        }
+        
+        svg.setChildren(newChildren)
     }
     
     func addBlendMode() {
