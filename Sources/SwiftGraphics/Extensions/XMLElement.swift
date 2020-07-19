@@ -28,7 +28,7 @@ extension XMLElement {
     func addAttribute(_ value: Color, forKey key: String) {
         let attr = XMLNode(kind: .attribute)
         attr.name = key
-        attr.stringValue = value.toRGBA()
+        attr.stringValue = value.toHex()
         
         addAttribute(attr)
     }

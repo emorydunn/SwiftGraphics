@@ -23,7 +23,8 @@ public class SVGContext: DrawingContext {
         svg.addAttribute(width, forKey: "width")
         svg.addAttribute(height, forKey: "height")
         svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
-        
+        svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
+
         addBlendMode()
         
     }
@@ -52,23 +53,30 @@ public class SVGContext: DrawingContext {
     /// Group top-level elements by the specified attribute's value.
     ///
     /// This method is useful for generating plottable multi-color SVGs. By using `stroke` as the attribute
-    /// all elements will be grouped by their stroke color for easy pen switching. 
+    /// all elements will be grouped by their stroke color for easy pen switching.
     ///
     /// - Parameter attributeName: Grouping attribute name
     public func groupElements(by attributeName: String) {
         guard let children = svg.children as? [XMLElement] else { return }
     
-        let grouped: [String?: [XMLElement]] = Dictionary(grouping: children) {
+        let grouped: [String: [XMLElement]] = Dictionary(grouping: children) {
             $0.detach()
-            return $0.attribute(forName: attributeName)?.stringValue
+            return ($0.attribute(forName: attributeName)?.stringValue) ?? ""
         }
         
-        let xmlGroups: [XMLElement] = grouped.map { (arg) in
+        let xmlGroups: [XMLElement] = grouped.enumerated().compactMap { (index, arg) in
             
             let (key, value) = arg
             
+            // Don't create empty groups
+            guard !value.isEmpty else { return nil }
+            
             let groupNode = XMLElement(name: "g")
-            groupNode.addAttribute(key ?? "", forKey: "id")
+            groupNode.addAttribute(key, forKey: "id")
+            
+            // Inkscape compatibility
+            groupNode.addAttribute("layer", forKey: "inkscape:groupmode")
+            groupNode.addAttribute("\(index + 1)-\(key)", forKey: "inkscape:label")
             
             groupNode.setChildren(value)
             return groupNode
@@ -82,7 +90,7 @@ public class SVGContext: DrawingContext {
     ///
     /// If a shape draws itself as a group this method can be used to break the group apart before calling `groupElements(by:)`.
     ///
-    public func removeGroups() {
+    public func breakGroups() {
         guard let children = svg.children as? [XMLElement] else { return }
         
         var newChildren: [XMLNode] = []
