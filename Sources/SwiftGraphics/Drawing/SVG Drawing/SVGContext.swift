@@ -98,6 +98,29 @@ public class SVGContext: DrawingContext {
 
         return doc
     }
+    
+    /// Returns the string representation of the receiver as it would appear in an XML document, with one or more output options specified.
+    ///
+    /// The returned string includes the string representations of all children.
+    ///
+    /// - Parameter options: One or more enum constants identifying an output option; bit-OR multiple constants together.
+    /// See [Constants](apple-reference-documentation://hs0Nn4fB4Z) for a list of valid constants for specifying output options.
+    public func svgString(options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) -> String {
+        let doc = makeDoc()
+        
+        return doc.xmlString(options: options)
+    }
+    
+    /// Attempt to write the SVG to the specified location
+    /// - Parameter url: URL of the location to write the SVG
+    /// - Parameter options: One or more enum constants identifying an output option; bit-OR multiple constants together.
+    /// See [Constants](apple-reference-documentation://hs0Nn4fB4Z) for a list of valid constants for specifying output options.
+    /// - Throws: Errors related to writing the SVG to disk
+    public func writeSVG(to url: URL, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
+        let svg = svgString()
+        
+        try svg.write(to: url, atomically: true, encoding: .utf8)
+    }
 
 }
 
