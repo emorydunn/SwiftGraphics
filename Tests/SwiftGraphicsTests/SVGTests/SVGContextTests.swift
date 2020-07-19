@@ -59,17 +59,22 @@ final class SVGContextTests: XCTestCase {
         let svgTest = """
         <?xml version="1.0" encoding="UTF-8"?>
         <svg width="1000" height="1000" xmlns="http://www.w3.org/2000/svg">
+            <style>
+            line { mix-blend-mode: normal; }
+            circle { mix-blend-mode: normal; }
+            .vector { mix-blend-mode: normal; }
+            </style>
             <rect x="50.0" y="50.0" width="900.0" height="900.0" stroke="rgba(0,0,0,0.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)"></rect>
             <rect x="200.0" y="300.0" width="150.0" height="300.0" stroke="rgba(51,51,51,1.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)"></rect>
             <circle cx="400.0" cy="600.0" r="150.0" stroke="rgba(0,0,0,0.0)" stroke-width="1.0" fill="rgba(155,160,240,1.0)"></circle>
             <line x1="600.0" y1="800.0" x2="500.0" y2="200.0" stroke="rgba(51,51,51,1.0)" stroke-width="10.0"></line>
             <circle cx="600.0" cy="300.0" r="10.0" stroke="rgba(255,0,0,1.0)" stroke-width="1.0" fill="rgba(0,0,0,0.0)"></circle>
-            <line x1="600.0" y1="300.0" x2="532.6884709962459" y2="396.13082597747547" stroke="rgba(255,0,0,1.0)" stroke-width="1.0"></line>
-            <line x1="532.6884709962459" y1="396.13082597747547" x2="350.0" y2="426.57890447684986" stroke="rgba(255,0,0,1.0)" stroke-width="1.0"></line>
+            <line x1="600.0" y1="300.0" x2="532.6884709962459" y2="396.1308259774755" stroke="rgba(255,0,0,1.0)" stroke-width="1.0"></line>
+            <line x1="532.6884709962459" y1="396.1308259774755" x2="350.0" y2="426.57890447684986" stroke="rgba(255,0,0,1.0)" stroke-width="1.0"></line>
         </svg>
         """.trimmingCharacters(in: .newlines)
         
-        let svg = context.makeDoc().xmlString(options: [.documentTidyXML, .nodePreserveAttributeOrder, .nodePrettyPrint])//.canonicalXMLStringPreservingComments(true)
+        let svg = context.makeDoc().xmlString(options: [.documentTidyXML, .nodePreserveAttributeOrder, .nodePrettyPrint])
         
         XCTAssertEqual(svg, svgTest)
         
