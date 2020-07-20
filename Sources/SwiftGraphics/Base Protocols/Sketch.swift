@@ -47,5 +47,27 @@ extension Sketch {
         return fileName
     }
     
+    
+    /// Draw a solid rectangle over the sketch
+    /// - Parameter fillColor: Color of the background to draw
+    /// - Parameter drawInSVG: Draw the background in `SVGContext`
+    public func drawBackground(fillColor: Color = .white, drawInSVG: Bool = false) {
+        
+        switch SwiftGraphicsContext.current {
+        case is SVGContext:
+            if drawInSVG {
+                fallthrough
+            }
+        case is CGContext:
+            SwiftGraphicsContext.fillColor = fillColor
+            SwiftGraphicsContext.strokeColor = .clear
+            
+            BoundingBox(inset: 0).draw()
+        default:
+            break
+        }
+        
+    }
+    
 }
 
