@@ -12,7 +12,7 @@ import AppKit
 
 public protocol Sketch {
     
-    var title: String { get set }
+    static var title: String { get set }
     
     var size: Size { get set }
     
