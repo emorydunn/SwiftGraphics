@@ -63,6 +63,10 @@ public class LinearEmitter: Line, Emitter {
 
     }
     
+    public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return defaultIntersections(for: angle, origin: origin, objects: objects)
+    }
+    
     
 
 }

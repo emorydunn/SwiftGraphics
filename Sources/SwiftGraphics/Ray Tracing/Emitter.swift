@@ -9,7 +9,7 @@
 import Foundation
 
 /// Indicates an object emits rays
-public protocol Emitter: RayTracer {
+public protocol Emitter: AnyObject {
     
     var style: RayTraceStyle { get set }
     

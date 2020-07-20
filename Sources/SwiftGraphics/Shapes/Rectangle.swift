@@ -270,6 +270,10 @@ extension Rectangle: Intersectable {
 
     }
     
+    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return []
+    }
+    
     
 }
 

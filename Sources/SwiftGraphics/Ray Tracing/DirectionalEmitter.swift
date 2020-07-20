@@ -63,4 +63,8 @@ public class DirectionalEmitter: Circle, Emitter {
         dirPoint.debugDraw(in: context)
     }
     
+    public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return defaultIntersections(for: angle, origin: origin, objects: objects)
+    }
+    
 }

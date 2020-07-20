@@ -9,7 +9,7 @@
 import Foundation
 
 /// A specialized `RayTracer` that collimates intersecting rays and casts them along the vector normal of the lens
-public class Fresnel: Line, RayTracer {
+public class Fresnel: Line {
     
     /// The angle at which rays are reflected, relative to the normal
     public var reflectionAngle: Degrees = 180
@@ -25,7 +25,7 @@ public class Fresnel: Line, RayTracer {
     ///   - origin: The origin of the ray being cast
     ///   - bb: The `BoundingBox` to terminate the ray on
     ///   - objects: Objects to test for intersection, sorted by distance from the origin
-    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+    public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         
         // Make a mutable copy
         var angle = angle

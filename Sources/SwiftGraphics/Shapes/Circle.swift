@@ -104,6 +104,10 @@ public class Circle: Polygon, Intersectable, CGDrawable {
 
     }
     
+    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return []
+    }
+    
     
     /// Determine the points where the specified `Line` intersects the `Circle`
     ///

@@ -158,6 +158,10 @@ open class Line: Shape, Intersectable {
         return nil
     }
     
+    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+        return []
+    }
+    
     /// Return a point at the specified distance of the line
     /// - Parameter distance: Distance from the end point
     public func point(at distance: Double) -> Vector {
