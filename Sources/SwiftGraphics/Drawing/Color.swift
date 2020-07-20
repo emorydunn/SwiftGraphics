@@ -8,12 +8,12 @@
 import Foundation
 
 public struct Color: Equatable {
-    
+
     public let red: Float
     public let green: Float
     public let blue: Float
     public let alpha: Float
-    
+
     /// Instantiate a new Color
     ///
     /// /// This method expects color values between `0` and `1`
@@ -29,7 +29,7 @@ public struct Color: Equatable {
         self.blue = blue.clamped(to: 0...1)
         self.alpha = alpha.clamped(to: 0...1)
     }
-    
+
     /// Instantiate a new Color
     ///
     /// This method expects color values between `0` and `255`
@@ -39,23 +39,23 @@ public struct Color: Equatable {
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(_ r: Int, _ g: Int, _ b: Int, _ a: Float) {
+    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Float) {
         self.init(
-            red: Float(r) / 255,
-            green: Float(g) / 255,
-            blue: Float(b) / 255,
-            alpha: a
+            red: Float(red) / 255,
+            green: Float(green) / 255,
+            blue: Float(blue) / 255,
+            alpha: alpha
         )
     }
-    
+
     /// Create a grey
     /// - Parameters:
     ///   - grey: Decimal grey value
     ///   - a: Alpha value, from 0 to 1
-    public init(grey: Float, _ a: Float) {
-        self.init(red: grey, green: grey, blue: grey, alpha: a)
+    public init(grey: Float, _ alpha: Float) {
+        self.init(red: grey, green: grey, blue: grey, alpha: alpha)
     }
-    
+
     /// Create  a color from a hex string
     /// From: https://stackoverflow.com/a/26341062
     public init(hexString: String) {
@@ -84,19 +84,18 @@ public struct Color: Equatable {
         return floatValue
     }
 
-    
     /// Convert to a hex string
     /// From: https://stackoverflow.com/a/26341062
     public func toHex() -> String {
-        
-        let r = lroundf(red * 255)
-        let g = lroundf(green * 255)
-        let b = lroundf(blue * 255)
+
+        let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
+        let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
+        let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
 
         let hexString = String.init(format: "#%02lX%02lX%02lX", r, g, b)
         return hexString
     }
-    
+
     public func toCGColor() -> CGColor {
         return CGColor(
             red: CGFloat(red),
@@ -105,21 +104,21 @@ public struct Color: Equatable {
             alpha: CGFloat(alpha)
         )
     }
-    
+
     public func toRGBA() -> String {
-        let r = lroundf(red * 255)
-        let g = lroundf(green * 255)
-        let b = lroundf(blue * 255)
-        
+        let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
+        let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
+        let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
+
         return "rgba(\(r),\(g),\(b),\(alpha))"
     }
-    
-    public static var black : Color { Color(red : 0, green : 0, blue : 0, alpha : 1) }
-    public static var white : Color { Color(red : 1, green : 1, blue : 1, alpha : 1) }
-    public static var clear : Color { Color(red : 0, green : 0, blue : 0, alpha : 0) }
-    
-    public static var red   : Color { Color(red : 1, green : 0, blue : 0, alpha : 1) }
-    public static var green : Color { Color(red : 0, green : 1, blue : 0, alpha : 1) }
-    public static var blue  : Color { Color(red : 0, green : 0, blue : 1, alpha : 1) }
-    
+
+    public static var black: Color { Color(red: 0, green: 0, blue: 0, alpha: 1) }
+    public static var white: Color { Color(red: 1, green: 1, blue: 1, alpha: 1) }
+    public static var clear: Color { Color(red: 0, green: 0, blue: 0, alpha: 0) }
+
+    public static var red: Color { Color(red: 1, green: 0, blue: 0, alpha: 1) }
+    public static var green: Color { Color(red: 0, green: 1, blue: 0, alpha: 1) }
+    public static var blue: Color { Color(red: 0, green: 0, blue: 1, alpha: 1) }
+
 }

@@ -10,7 +10,7 @@ import Foundation
 public protocol SVGDrawable {
 
     func svgElement() -> XMLElement
-    
+
 }
 
 extension SVGDrawable {

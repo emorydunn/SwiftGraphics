@@ -12,7 +12,7 @@ public typealias Degrees = Double
 public typealias Radians = Double
 
 extension Degrees {
-    
+
     /// Convert an angle to radians
     public func toRadians() -> Radians {
         return self * Double.pi / 180
@@ -20,10 +20,9 @@ extension Degrees {
 }
 
 extension Radians {
-    
+
     /// Convert an angle to degrees
     public func toDegrees() -> Degrees {
         return self * 180 / Double.pi
     }
 }
-

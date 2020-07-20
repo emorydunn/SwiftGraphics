@@ -10,28 +10,27 @@ import Foundation
 
 /// Indicates an object emits rays
 public protocol Emitter: AnyObject {
-    
+
     var style: RayTraceStyle { get set }
-    
+
     func draw(objects: [Intersectable])
 }
 
-
 extension Emitter {
-    
+
     /// Draw the specified array of lines using the emitter's style
     /// - Parameter intersections: Lines to draw
     func drawIntersections(_ intersections: [Line]) {
-        
+
         intersections.forEach {
             drawLine($0)
         }
     }
-    
+
     /// Draw the specified line using the emitter's style
     /// - Parameter line: Line to draw
     func drawLine(_ line: Line) {
-        
+
         switch style {
         case .line:
             line.draw()
@@ -48,4 +47,3 @@ extension Emitter {
 public enum RayTraceStyle: String, Codable, CaseIterable {
     case line, point
 }
-

@@ -8,32 +8,28 @@
 
 import Foundation
 
-
 public struct Math {
-    
+
     /// Square the specified number
     /// - Parameter n: Number to square
-    public static func square(_ n: inout Double) {
-        return n.square()
+    public static func square(_ num: inout Double) {
+        return num.square()
     }
-    
+
     /// Return a new instance of a number which has been squared
-    public static func squared(_ n: Double) -> Double {
-        return n.squared()
+    public static func squared(_ num: Double) -> Double {
+        return num.squared()
     }
-    
+
 }
 
-
-
 extension Double {
-    
+
     /// Return a new Double that has been squared
     public func squared() -> Double {
         return pow(self, 2)
     }
-    
-    
+
     /// Square the receiver
     public mutating func square() {
         self = pow(self, 2)

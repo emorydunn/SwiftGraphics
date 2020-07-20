@@ -8,7 +8,7 @@
 import Foundation
 
 extension XMLElement {
-    
+
     /// Adds an attribute node to the receiver.
     /// - Parameters:
     ///   - value: The value to be converted into a string
@@ -17,10 +17,10 @@ extension XMLElement {
         let attr = XMLNode(kind: .attribute)
         attr.name = key
         attr.stringValue = String(describing: value)
-        
+
         addAttribute(attr)
     }
-    
+
     /// Adds an attribute node to the receiver.
     /// - Parameters:
     ///   - value: The value to be converted into a string
@@ -29,7 +29,7 @@ extension XMLElement {
         let attr = XMLNode(kind: .attribute)
         attr.name = key
         attr.stringValue = value.toHex()
-        
+
         addAttribute(attr)
     }
 }

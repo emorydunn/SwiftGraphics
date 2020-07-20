@@ -26,7 +26,7 @@ public enum BlendMode: String {
     case saturation
     case color
     case luminosity
-    
+
     public var cgBlendMode: CGBlendMode {
         switch self {
         case .normal: return .normal
@@ -47,7 +47,7 @@ public enum BlendMode: String {
         case .luminosity: return .luminosity
         }
     }
-    
+
     public func setCGBlenMode() {
         NSGraphicsContext.current?.cgContext.setBlendMode(cgBlendMode)
     }

@@ -15,6 +15,6 @@ public protocol InteractiveSketch {
 }
 
 /// Allows a sketch to modify SketchView behavior
-public protocol SketchViewDelegate {
+public protocol SketchViewDelegate: AnyObject {
     func willWriteToSVG(with context: SVGContext)
 }

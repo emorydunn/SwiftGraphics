@@ -10,30 +10,30 @@ import Foundation
 
 /// An emiiter that casts a single ray at a given angle
 public class DirectionalEmitter: Circle, Emitter {
-    
+
     /// Direction of the ray
     public var direction: Degrees
-    
+
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
-    
+
     public var passStyle: Bool = true
-    
+
     /// Instantiate a new emitter
     /// - Parameters:
     ///   - origin: The emitter's origin
     ///   - direction: Direction of the emitter's ray
     public init(_ origin: Vector, _ direction: Degrees) {
         self.direction = direction
-        
+
         super.init(center: origin, radius: 10)
 
     }
-    
+
     public convenience init(x: Double, y: Double, direction: Degrees) {
         self.init(Vector(x, y), direction)
     }
-    
+
     required init(from decoder: Decoder) throws {
         fatalError("init(from:) has not been implemented")
     }
@@ -48,23 +48,23 @@ public class DirectionalEmitter: Circle, Emitter {
                            origin: center,
                            objects: objects
         )
-        
+
         drawIntersections(intersections)
-        
+
     }
-    
+
     public override func debugDraw(in context: CGContext) {
         super.debugDraw(in: context)
 
         let dirPoint = Vector(angle: direction.toRadians())
         dirPoint *= 20
         dirPoint += center
-        
+
         dirPoint.debugDraw(in: context)
     }
-    
+
     public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return defaultIntersections(for: angle, origin: origin, objects: objects)
     }
-    
+
 }

@@ -1,0 +1,11 @@
+excluded:
+  - Tests
+
+identifier_name:
+  excluded:
+    - x
+    - y
+    - z
+    # - v
+    - bb
+
