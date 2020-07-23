@@ -191,6 +191,30 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 
         return element
     }
+    
+    /// Create a grid of rectangles contained by the receiver.
+    /// - Parameters:
+    ///   - rows: Number of rows
+    ///   - columns: Number of columns
+    ///   - margin: Margin between frames
+    /// - Returns: An array of the new `Rectangle`s
+    public func frames(rows: Int, columns: Int, margin: Int = 50) -> [Rectangle] {
+        let margin = Double(margin)
+        let columns = Double(columns)
+        let rows = Double(rows)
+        
+        let frameWidth = (width - (margin * (columns - 1))) / columns
+        let frameHeight = (height - (margin * (rows - 1))) / rows
+        
+        return stride(from: 0, to: rows, by: 1).reduce(into: [Rectangle]()) { (frames, rowNum) in
+            let y = (frameHeight + margin) * rowNum + minY
+            frames = stride(from: 0, to: columns, by: 1).reduce(into: frames) { (columns, colNum) in
+                let x = (frameWidth + margin) * colNum + minX
+                columns.append(Rectangle(x: x, y: y, width: frameWidth, height: frameHeight))
+            }
+        }
+        
+    }
 }
 
 extension Rectangle: Intersectable {
