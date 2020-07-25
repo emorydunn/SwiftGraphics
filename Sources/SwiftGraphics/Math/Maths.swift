@@ -34,4 +34,11 @@ extension Double {
     public mutating func square() {
         self = pow(self, 2)
     }
+    
+    mutating func negate(ifLessThan num: Double) {
+        if self < num {
+            self.negate()
+        }
+    }
 }
+
