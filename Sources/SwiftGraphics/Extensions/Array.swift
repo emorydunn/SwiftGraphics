@@ -84,3 +84,7 @@ extension Array where Element: Vector {
         }
     }
 }
+
+extension Array where Element == Bool {
+    public func allTrue() -> Bool { allSatisfy { $0 } }
+}
