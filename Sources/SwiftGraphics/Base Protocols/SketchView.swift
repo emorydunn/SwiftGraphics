@@ -30,18 +30,18 @@ open class SketchView: NSView {
 
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
-        guard sketch != nil else { return }
+        guard let sketch = sketch else { return }
 
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
 
         if firstRun {
-            sketch?.setup()
+            sketch.setup()
             firstRun = false
         }
-        sketch?.draw()
-        fileName = sketch?.hashedFileName()
-
+        sketch.draw()
+        fileName = sketch.hashedFileName()
+        
     }
 
     /// Draws the sketch to an image

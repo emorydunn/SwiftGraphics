@@ -14,12 +14,23 @@ public protocol Sketch {
     static var title: String { get set }
 
     var size: Size { get set }
+    
+    var loop: SketchAnimation { get set }
 
     init()
 
     func setup()
     func draw()
 
+}
+
+public enum SketchAnimation {
+    case none
+    case animate(frameRate: Int)
+    
+    public func frameRateInterval(_ frameRate: Int) -> Double {
+        return 1 / Double(frameRate)
+    }
 }
 
 extension Sketch {
