@@ -19,7 +19,7 @@ public protocol Sketch {
 
     init()
 
-    func setup()
+//    func setup()
     func draw()
 
 }

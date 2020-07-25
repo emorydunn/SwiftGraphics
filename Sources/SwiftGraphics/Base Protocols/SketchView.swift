@@ -18,15 +18,11 @@ open class SketchView: NSView {
     /// The `Sketch` to display
     open var sketch: Sketch? {
         didSet {
-            firstRun = true
             canDrawConcurrently = true
             needsDisplay = true
             displayIfNeeded()
         }
     }
-
-    /// Whether this is the first run of the sketch, controls whether `.setup()` is called on `.draw(_:)`
-    open var firstRun = true
 
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
@@ -35,10 +31,6 @@ open class SketchView: NSView {
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
 
-        if firstRun {
-            sketch.setup()
-            firstRun = false
-        }
         sketch.draw()
         fileName = sketch.hashedFileName()
         
@@ -52,9 +44,6 @@ open class SketchView: NSView {
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
 
-        if firstRun {
-            sketch?.setup()
-        }
         sketch?.draw()
         image.unlockFocus()
 
@@ -67,9 +56,6 @@ open class SketchView: NSView {
 
         SwiftGraphicsContext.current = context
 
-        if firstRun {
-            sketch?.setup()
-        }
         sketch?.draw()
 
         (sketch as? SketchViewDelegate)?.willWriteToSVG(with: context)
