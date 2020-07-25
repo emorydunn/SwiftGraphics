@@ -31,5 +31,11 @@ extension XMLElement {
         attr.stringValue = value.toHex()
 
         addAttribute(attr)
+        
+        let alpha = XMLNode(kind: .attribute)
+        alpha.name = "\(key)-opacity"
+        alpha.stringValue = String(describing: value.alpha)
+        
+        addAttribute(alpha)
     }
 }
