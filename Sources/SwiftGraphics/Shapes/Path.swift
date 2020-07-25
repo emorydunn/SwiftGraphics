@@ -162,6 +162,7 @@ extension Path: CGDrawable {
 
     /// Create a `NSBezierPath` drawn with a Bézier curve
     func smoothLine() -> NSBezierPath {
+        
         let path = NSBezierPath()
         path.lineJoinStyle = .bevel
 
@@ -261,4 +262,12 @@ extension Path: SVGDrawable {
         return element
     }
 
+}
+
+extension Path: Equatable {
+    public static func == (lhs: Path, rhs: Path) -> Bool {
+        lhs.points == rhs.points
+    }
+    
+    
 }
