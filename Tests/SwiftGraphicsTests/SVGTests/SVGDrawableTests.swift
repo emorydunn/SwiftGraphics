@@ -33,7 +33,7 @@ final class SVGDrawableTests: XCTestCase {
 
         XCTAssertEqual(
             makeXMLString(xml),
-            ##"<circle cx="100.0" cy="200.0" r="75.0" stroke="#000000" stroke-width="1.0" fill="#000000"></circle>"##
+            ##"<circle cx="100.0" cy="200.0" r="75.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></circle>"##
             )
 
     }
@@ -47,7 +47,7 @@ final class SVGDrawableTests: XCTestCase {
 
         XCTAssertEqual(
             makeXMLString(xml),
-            ##"<rect x="100.0" y="200.0" width="300.0" height="400.0" stroke="#000000" stroke-width="1.0" fill="#000000"></rect>"##
+            ##"<rect x="100.0" y="200.0" width="300.0" height="400.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></rect>"##
         )
 
     }
@@ -61,7 +61,7 @@ final class SVGDrawableTests: XCTestCase {
 
         XCTAssertEqual(
             makeXMLString(xml),
-            ##"<line x1="100.0" y1="200.0" x2="300.0" y2="400.0" stroke="#000000" stroke-width="1.0"></line>"##
+            ##"<line x1="100.0" y1="200.0" x2="300.0" y2="400.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0"></line>"##
         )
 
     }
@@ -76,7 +76,7 @@ final class SVGDrawableTests: XCTestCase {
 
         XCTAssertEqual(
             makeXMLString(xml),
-            ##"<rect x="100.0" y="100.0" width="300.0" height="300.0" stroke="#000000" stroke-width="1.0" fill="#000000"></rect>"##
+            ##"<rect x="100.0" y="100.0" width="300.0" height="300.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></rect>"##
         )
 
     }
@@ -90,7 +90,7 @@ final class SVGDrawableTests: XCTestCase {
 
         XCTAssertEqual(
             makeXMLString(xml),
-            ##"<rect x="100.0" y="100.0" width="1.0" height="1.0" stroke="#000000" stroke-width="1.0" fill="#000000" class="vector"></rect>"##
+            ##"<rect x="100.0" y="100.0" width="1.0" height="1.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0" class="vector"></rect>"##
         )
 
     }

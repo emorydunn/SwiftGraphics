@@ -64,13 +64,13 @@ final class SVGContextTests: XCTestCase {
             circle { mix-blend-mode: normal; }
             .vector { mix-blend-mode: normal; }
         </style>
-            <rect x="50.0" y="50.0" width="900.0" height="900.0" stroke="#000000" stroke-width="1.0" fill="#000000"></rect>
-            <rect x="200.0" y="300.0" width="150.0" height="300.0" stroke="#333333" stroke-width="1.0" fill="#000000"></rect>
-            <circle cx="400.0" cy="600.0" r="150.0" stroke="#000000" stroke-width="1.0" fill="#9BA0F0"></circle>
-            <line x1="600.0" y1="800.0" x2="500.0" y2="200.0" stroke="#333333" stroke-width="10.0"></line>
-            <circle cx="600.0" cy="300.0" r="10.0" stroke="#FF0000" stroke-width="1.0" fill="#000000"></circle>
-            <line x1="600.0" y1="300.0" x2="532.6884709962459" y2="396.1308259774755" stroke="#FF0000" stroke-width="1.0"></line>
-            <line x1="532.6884709962459" y1="396.1308259774755" x2="350.0" y2="426.57890447684986" stroke="#FF0000" stroke-width="1.0"></line>
+            <rect x="50.0" y="50.0" width="900.0" height="900.0" stroke="#000000" stroke-opacity="0.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></rect>
+            <rect x="200.0" y="300.0" width="150.0" height="300.0" stroke="#333333" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></rect>
+            <circle cx="400.0" cy="600.0" r="150.0" stroke="#000000" stroke-opacity="0.0" stroke-width="1.0" fill="#9BA0F0" fill-opacity="1.0"></circle>
+            <line x1="600.0" y1="800.0" x2="500.0" y2="200.0" stroke="#333333" stroke-opacity="1.0" stroke-width="10.0"></line>
+            <circle cx="600.0" cy="300.0" r="10.0" stroke="#FF0000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></circle>
+            <line x1="600.0" y1="300.0" x2="532.6884709962459" y2="396.1308259774755" stroke="#FF0000" stroke-opacity="1.0" stroke-width="1.0"></line>
+            <line x1="532.6884709962459" y1="396.1308259774755" x2="350.0" y2="426.57890447684986" stroke="#FF0000" stroke-opacity="1.0" stroke-width="1.0"></line>
         </svg>
         """.trimmingCharacters(in: .newlines)
 
