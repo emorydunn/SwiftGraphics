@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Intersectable Protocol Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Protocol/Intersectable" class="dashAnchor"></a>
+    <a title="Intersectable Protocol Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Intersectable Protocol Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/BoundingBox.html">BoundingBox</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Circle.html">Circle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CircleEmitter.html">CircleEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DirectionalEmitter.html">DirectionalEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Fresnel.html">Fresnel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Line.html">Line</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinearEmitter.html">LinearEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path.html">Path</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path.html#/s:13SwiftGraphics4PathC11BezierPointV">– BezierPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path/Style.html">– Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PerlinGenerator.html">PerlinGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Rectangle.html">Rectangle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SVGContext.html">SVGContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SketchView.html">SketchView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SwiftGraphicsContext.html">SwiftGraphicsContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Vector.html">Vector</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/BlendMode.html">BlendMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RayTraceStyle.html">RayTraceStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SketchAnimation.html">SketchAnimation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Comparable.html">Comparable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Degrees.html">Degrees</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Radians.html">Radians</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Strideable.html">Strideable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/XMLElement.html">XMLElement</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/CGDrawable.html">CGDrawable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:13SwiftGraphics14DrawingContextP">DrawingContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Emitter.html">Emitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InteractiveSketch.html">InteractiveSketch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Intersectable.html">Intersectable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Polygon.html">Polygon</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SVGDrawable.html">SVGDrawable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Shape.html">Shape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Sketch.html">Sketch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SketchViewDelegate.html">SketchViewDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Color.html">Color</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Size.html">Size</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:13SwiftGraphics7Degreesa">Degrees</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Intersectable</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">Intersectable</span> <span class="p">:</span> <span class="kt">AnyObject</span><span class="p">,</span> <span class="kt"><a href="../Protocols/Shape.html">Shape</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>Any shape that can calculate points of intersection between itself and a <code><a href="../Classes/Line.html">Line</a></code></p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectableP16lineIntersectionySayAA6VectorCGAA4LineCF"></a>
+                    <a name="//apple_ref/swift/Method/lineIntersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectableP16lineIntersectionySayAA6VectorCGAA4LineCF">lineIntersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find any intersection points between the receiver and the specified line</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">lineIntersection</span><span class="p">(</span><span class="n">_</span> <span class="nv">line</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Line to intersect</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectableP12lineSegments_9firstOnlySayAA4LineCGAG_SbtF"></a>
+                    <a name="//apple_ref/swift/Method/lineSegments(_:firstOnly:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectableP12lineSegments_9firstOnlySayAA4LineCGAG_SbtF">lineSegments(_:firstOnly:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns  <code><a href="../Classes/Line.html">Line</a></code> segments made of paired points where the specified line intersects</p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">lineSegments</span><span class="p">(</span><span class="n">_</span> <span class="nv">line</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">,</span> <span class="nv">firstOnly</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The line to test for intersection</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>firstOnly</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Return only a <code><a href="../Classes/Line.html">Line</a></code> to the closest intersection point</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectableP15rayIntersection6origin3dirAA6VectorCSgAH_AHtF"></a>
+                    <a name="//apple_ref/swift/Method/rayIntersection(origin:dir:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectableP15rayIntersection6origin3dirAA6VectorCSgAH_AHtF">rayIntersection(origin:dir:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return the intersection of a ray</p>
+
+<p>From <a href="https://math.stackexchange.com/a/311956">https://math.stackexchange.com/a/311956</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">rayIntersection</span><span class="p">(</span><span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">dir</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>origin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dir</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Direction of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectableP15rayIntersection6origin5thetaAA6VectorCSgAH_SdtF"></a>
+                    <a name="//apple_ref/swift/Method/rayIntersection(origin:theta:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectableP15rayIntersection6origin5thetaAA6VectorCSgAH_SdtF">rayIntersection(origin:theta:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Default implementation
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return the intersection of a ray</p>
+
+<p>From <a href="https://math.stackexchange.com/a/311956">https://math.stackexchange.com/a/311956</a></p>
+
+                      </div>
+                      <h4>Default Implementation</h4>
+                      <div class="default_impl abstract">
+                        
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">rayIntersection</span><span class="p">(</span><span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">theta</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>origin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>theta</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Direction of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectableP13intersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAaB_pGtF"></a>
+                    <a name="//apple_ref/swift/Method/intersections(for:origin:objects:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectableP13intersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAaB_pGtF">intersections(for:origin:objects:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find intersections for a ray cast from the specified origin.</p>
+
+<p>Each <code><a href="../Classes/Line.html">Line</a></code> represents one segment of the path of the ray.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">intersections</span><span class="p">(</span><span class="k">for</span> <span class="nv">angle</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a></span><span class="p">,</span> <span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">Intersectable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>angle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Angle, in radians, of the ray.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>origin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin of the ray.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>objects</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Objects to test for intersection.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of line segments representing intersections and interactions.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectablePA2A7PolygonRzrlE17pointsDistributed5every8starting6endingSayAA6VectorCGSd_S2dtF"></a>
+                    <a name="//apple_ref/swift/Method/pointsDistributed(every:starting:ending:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectablePA2A7PolygonRzrlE17pointsDistributed5every8starting6endingSayAA6VectorCGSd_S2dtF">pointsDistributed(every:starting:ending:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Return an array of points at the specified angular distance apart</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">pointsDistributed</span><span class="p">(</span><span class="n">every</span> <span class="nv">angle</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Degreesa">Degrees</a></span><span class="p">,</span> <span class="nv">starting</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Degreesa">Degrees</a></span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">ending</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Degreesa">Degrees</a></span> <span class="o">=</span> <span class="mi">360</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>angle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Angle in degrees</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Convenience%20Methods"></a>
+                <a name="//apple_ref/swift/Section/Convenience Methods" class="dashAnchor"></a>
+                <a href="#/Convenience%20Methods">
+                  <h3 class="section-name">Convenience Methods</h3>
+                </a>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectablePAAE16lineIntersection10startPoint03endG0SayAA6VectorCGAH_AHtF"></a>
+                    <a name="//apple_ref/swift/Method/lineIntersection(startPoint:endPoint:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectablePAAE16lineIntersection10startPoint03endG0SayAA6VectorCGAH_AHtF">lineIntersection(startPoint:endPoint:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find any intersection points between the receiver and the specified line</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lineIntersection</span><span class="p">(</span><span class="nv">startPoint</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">endPoint</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>startPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Starting point of the Line</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>endPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Ending point of the Line</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of intersection points</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectablePAAE12lineSegments10startPoint03endG09firstOnlySayAA4LineCGAA6VectorC_ALSbtF"></a>
+                    <a name="//apple_ref/swift/Method/lineSegments(startPoint:endPoint:firstOnly:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectablePAAE12lineSegments10startPoint03endG09firstOnlySayAA4LineCGAA6VectorC_ALSbtF">lineSegments(startPoint:endPoint:firstOnly:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns  <code><a href="../Classes/Line.html">Line</a></code> segments made of paired points where the specified line intersects</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lineSegments</span><span class="p">(</span><span class="nv">startPoint</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">endPoint</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">firstOnly</span><span class="p">:</span> <span class="kt">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>startPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Starting point of the Line</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>endPoint</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Ending point of the Line</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics13IntersectablePAAE20defaultIntersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAaB_pGtF"></a>
+                    <a name="//apple_ref/swift/Method/defaultIntersections(for:origin:objects:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics13IntersectablePAAE20defaultIntersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAaB_pGtF">defaultIntersections(for:origin:objects:)</a>
+                    </code>
+                      <span class="declaration-note">
+                        Extension method
+                      </span>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Find all intersecting points for a ray of a specified angle.</p>
+
+<p>Each object is tested for intersection and is asked for its own intersections
+which may modify the path of the ray.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p>This method provides ray tracing logic and can be called by <code><a href="../Protocols/Intersectable.html#/s:13SwiftGraphics13IntersectableP13intersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAaB_pGtF">intersections(for:origin:objects:)</a></code> if
+further cusomization is not needed.</p>
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">defaultIntersections</span><span class="p">(</span><span class="k">for</span> <span class="nv">angle</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a></span><span class="p">,</span> <span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt">Intersectable</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>angle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The angle of the ray being cast</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>origin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The origin of the ray being cast</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>objects</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Objects to test for intersection, sorted by distance from the origin</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Lines representing the path taken by the ray</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-07-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Rectangle Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/Rectangle" class="dashAnchor"></a>
+    <a title="Rectangle Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html"> Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        Rectangle Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/BoundingBox.html">BoundingBox</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Circle.html">Circle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/CircleEmitter.html">CircleEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/DirectionalEmitter.html">DirectionalEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Fresnel.html">Fresnel</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Line.html">Line</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/LinearEmitter.html">LinearEmitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path.html">Path</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path.html#/s:13SwiftGraphics4PathC11BezierPointV">– BezierPoint</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Path/Style.html">– Style</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/PerlinGenerator.html">PerlinGenerator</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Rectangle.html">Rectangle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SVGContext.html">SVGContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SketchView.html">SketchView</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/SwiftGraphicsContext.html">SwiftGraphicsContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/Vector.html">Vector</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/BlendMode.html">BlendMode</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/RayTraceStyle.html">RayTraceStyle</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Enums/SketchAnimation.html">SketchAnimation</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/Array.html">Array</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Comparable.html">Comparable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Degrees.html">Degrees</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Double.html">Double</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Radians.html">Radians</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/Strideable.html">Strideable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Extensions/XMLElement.html">XMLElement</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/CGDrawable.html">CGDrawable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols.html#/s:13SwiftGraphics14DrawingContextP">DrawingContext</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Emitter.html">Emitter</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/InteractiveSketch.html">InteractiveSketch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Intersectable.html">Intersectable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Polygon.html">Polygon</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SVGDrawable.html">SVGDrawable</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Shape.html">Shape</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/Sketch.html">Sketch</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/SketchViewDelegate.html">SketchViewDelegate</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Color.html">Color</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Structs/Size.html">Size</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Typealiases.html">Type Aliases</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:13SwiftGraphics7Degreesa">Degrees</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Rectangle</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">class</span> <span class="kt">Rectangle</span> <span class="p">:</span> <span class="kt"><a href="../Protocols/Polygon.html">Polygon</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/CGDrawable.html">CGDrawable</a></span><span class="p">,</span> <span class="kt"><a href="../Protocols/SVGDrawable.html">SVGDrawable</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A rectangle</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC1xSdvp"></a>
+                    <a name="//apple_ref/swift/Property/x" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC1xSdvp">x</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Origin X coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">x</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC1ySdvp"></a>
+                    <a name="//apple_ref/swift/Property/y" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC1ySdvp">y</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Origin Y coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC5widthSdvp"></a>
+                    <a name="//apple_ref/swift/Property/width" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC5widthSdvp">width</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Width of the rectangle</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC6heightSdvp"></a>
+                    <a name="//apple_ref/swift/Property/height" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC6heightSdvp">height</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Height of the rectangle</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Double</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC1x1y5width6heightACSd_S3dtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(x:y:width:height:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC1x1y5width6heightACSd_S3dtcfc">init(x:y:width:height:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate a new <code>Rectangle</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">x</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">y</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>x</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin X coordinate</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>y</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin Y coordinate</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Width of the rectangle</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Height of the rectangle</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC7centerX0D1Y5width6heightACSd_S3dtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(centerX:centerY:width:height:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC7centerX0D1Y5width6heightACSd_S3dtcfc">init(centerX:centerY:width:height:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Instantiate a new <code>Rectangle</code></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">centerX</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">centerY</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">width</span><span class="p">:</span> <span class="kt">Double</span><span class="p">,</span> <span class="nv">height</span><span class="p">:</span> <span class="kt">Double</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>x</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin X coordinate</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>y</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin Y coordinate</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>width</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Width of the rectangle</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>height</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Height of the rectangle</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC11boundingBoxACvp"></a>
+                    <a name="//apple_ref/swift/Property/boundingBox" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC11boundingBoxACvp">boundingBox</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A Rectangle that contains the receiver</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">boundingBox</span><span class="p">:</span> <span class="kt">Rectangle</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC6centerAA6VectorCvp"></a>
+                    <a name="//apple_ref/swift/Property/center" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC6centerAA6VectorCvp">center</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the coordinates of the center of the Rectangle</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">center</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span> <span class="p">{</span> <span class="k">get</span> <span class="k">set</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC7topEdgeAA4LineCvp"></a>
+                    <a name="//apple_ref/swift/Property/topEdge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC7topEdgeAA4LineCvp">topEdge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code><a href="../Classes/Line.html">Line</a></code> representing the top edge</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">topEdge</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC10bottomEdgeAA4LineCvp"></a>
+                    <a name="//apple_ref/swift/Property/bottomEdge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC10bottomEdgeAA4LineCvp">bottomEdge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code><a href="../Classes/Line.html">Line</a></code> representing the bottom edge</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bottomEdge</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC8leftEdgeAA4LineCvp"></a>
+                    <a name="//apple_ref/swift/Property/leftEdge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC8leftEdgeAA4LineCvp">leftEdge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code><a href="../Classes/Line.html">Line</a></code> representing the left edge</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">leftEdge</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC9rightEdgeAA4LineCvp"></a>
+                    <a name="//apple_ref/swift/Property/rightEdge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC9rightEdgeAA4LineCvp">rightEdge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A <code><a href="../Classes/Line.html">Line</a></code> representing the right edge</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">rightEdge</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC7topLeftAA6VectorCvp"></a>
+                    <a name="//apple_ref/swift/Property/topLeft" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC7topLeftAA6VectorCvp">topLeft</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Coordinate of the top-left corner</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">topLeft</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC8topRightAA6VectorCvp"></a>
+                    <a name="//apple_ref/swift/Property/topRight" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC8topRightAA6VectorCvp">topRight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Coordinate of the top-right corner</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">topRight</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC10bottomLeftAA6VectorCvp"></a>
+                    <a name="//apple_ref/swift/Property/bottomLeft" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC10bottomLeftAA6VectorCvp">bottomLeft</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Coordinate of the bottom-left corner</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bottomLeft</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC11bottomRightAA6VectorCvp"></a>
+                    <a name="//apple_ref/swift/Property/bottomRight" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC11bottomRightAA6VectorCvp">bottomRight</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Coordinate of the botom-left corner</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">bottomRight</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC4minXSdvp"></a>
+                    <a name="//apple_ref/swift/Property/minX" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC4minXSdvp">minX</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The minimum <code><a href="../Classes/Rectangle.html#/s:13SwiftGraphics9RectangleC1xSdvp">x</a></code> coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">minX</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC4minYSdvp"></a>
+                    <a name="//apple_ref/swift/Property/minY" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC4minYSdvp">minY</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The minimum <code><a href="../Classes/Rectangle.html#/s:13SwiftGraphics9RectangleC1ySdvp">y</a></code> coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">minY</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC4maxXSdvp"></a>
+                    <a name="//apple_ref/swift/Property/maxX" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC4maxXSdvp">maxX</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum <code><a href="../Classes/Rectangle.html#/s:13SwiftGraphics9RectangleC1xSdvp">x</a></code> coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">maxX</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC4maxYSdvp"></a>
+                    <a name="//apple_ref/swift/Property/maxY" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC4maxYSdvp">maxY</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The maximum <code><a href="../Classes/Rectangle.html#/s:13SwiftGraphics9RectangleC1ySdvp">y</a></code> coordinate</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">maxY</span><span class="p">:</span> <span class="kt">Double</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC15rayIntersectionyAA6VectorCSdF"></a>
+                    <a name="//apple_ref/swift/Method/rayIntersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC15rayIntersectionyAA6VectorCSdF">rayIntersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns the point on the rectangle where the specified angle originating from the center intersects</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rayIntersection</span><span class="p">(</span><span class="n">_</span> <span class="nv">theta</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>theta</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Angle in radians</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC8containsySbAA6VectorCF"></a>
+                    <a name="//apple_ref/swift/Method/contains(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC8containsySbAA6VectorCF">contains(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determine whether the specified point is in the rectangle</p>
+
+<p>Tests whether the point is between the left and right edges, and top and bottom edges</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">contains</span><span class="p">(</span><span class="n">_</span> <span class="nv">point</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>point</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Whether the point is inside the rectangle</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC4draw2inySo12CGContextRefa_tF"></a>
+                    <a name="//apple_ref/swift/Method/draw(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC4draw2inySo12CGContextRefa_tF">draw(in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Draw the receiver in the specified context</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">draw</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">CGContext</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Context in which to draw</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC9debugDraw2inySo12CGContextRefa_tF"></a>
+                    <a name="//apple_ref/swift/Method/debugDraw(in:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC9debugDraw2inySo12CGContextRefa_tF">debugDraw(in:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Draw a representation of the receiver meant for debugging the shape in the specified context</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">debugDraw</span><span class="p">(</span><span class="k">in</span> <span class="nv">context</span><span class="p">:</span> <span class="kt">CGContext</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>context</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Context in which to draw</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC10svgElementSo12NSXMLElementCyF"></a>
+                    <a name="//apple_ref/swift/Method/svgElement()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC10svgElementSo12NSXMLElementCyF">svgElement()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a <code>XMLElement</code> representing the receiver</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">open</span> <span class="kd">func</span> <span class="nf">svgElement</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">XMLElement</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC6frames4rows7columns6marginSayACGSi_S2itF"></a>
+                    <a name="//apple_ref/swift/Method/frames(rows:columns:margin:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC6frames4rows7columns6marginSayACGSi_S2itF">frames(rows:columns:margin:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Create a grid of rectangles contained by the receiver.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">frames</span><span class="p">(</span><span class="nv">rows</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">columns</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">margin</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">50</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">Rectangle</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>rows</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Number of rows</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>columns</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Number of columns</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>margin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Margin between frames</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of the new <code>Rectangle</code>s</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC15rayIntersection6origin3dirAA6VectorCSgAH_AHtF"></a>
+                    <a name="//apple_ref/swift/Method/rayIntersection(origin:dir:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC15rayIntersection6origin3dirAA6VectorCSgAH_AHtF">rayIntersection(origin:dir:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Calculate the intersection point of a ray and the the Rectangle</p>
+
+<p>Adapted from <a href="https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-box-intersection">Amy Williams et al.</a></p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">rayIntersection</span><span class="p">(</span><span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">dir</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">?</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>origin</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Origin of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dir</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Direction of the ray</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The point of intersection, if the ray intersections the line</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC16lineIntersectionySayAA6VectorCGAA4LineCF"></a>
+                    <a name="//apple_ref/swift/Method/lineIntersection(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC16lineIntersectionySayAA6VectorCGAA4LineCF">lineIntersection(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Determine where the specified line intersects with the rectangle</p>
+
+<p>The rectangle tests whether the line intersects with each of its four edges</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">lineIntersection</span><span class="p">(</span><span class="n">_</span> <span class="nv">line</span><span class="p">:</span> <span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>line</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The line to test</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC13intersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAA13Intersectable_pGtF"></a>
+                    <a name="//apple_ref/swift/Method/intersections(for:origin:objects:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC13intersections3for6origin7objectsSayAA4LineCGSd_AA6VectorCSayAA13Intersectable_pGtF">intersections(for:origin:objects:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns an empty array, which causes the receiver to terminate the ray.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">intersections</span><span class="p">(</span><span class="k">for</span> <span class="nv">angle</span><span class="p">:</span> <span class="kt"><a href="../Typealiases.html#/s:13SwiftGraphics7Radiansa">Radians</a></span><span class="p">,</span> <span class="nv">origin</span><span class="p">:</span> <span class="kt"><a href="../Classes/Vector.html">Vector</a></span><span class="p">,</span> <span class="nv">objects</span><span class="p">:</span> <span class="p">[</span><span class="kt"><a href="../Protocols/Intersectable.html">Intersectable</a></span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt"><a href="../Classes/Line.html">Line</a></span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:13SwiftGraphics9RectangleC2eeoiySbAC_ACtFZ"></a>
+                    <a name="//apple_ref/swift/Method/==(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:13SwiftGraphics9RectangleC2eeoiySbAC_ACtFZ">==(_:_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Returns a Boolean value indicating whether two values are equal.</p>
+
+<p>Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="o">==</span> <span class="p">(</span><span class="nv">lhs</span><span class="p">:</span> <span class="kt">Rectangle</span><span class="p">,</span> <span class="nv">rhs</span><span class="p">:</span> <span class="kt">Rectangle</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2020 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-07-27)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
