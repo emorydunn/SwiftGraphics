@@ -85,6 +85,19 @@ open class SketchView: NSView {
         let image = drawToImage()
         try saveImage(image, to: url)
     }
+    
+    open func saveSVG(to url: URL) throws {
+        let context = SVGContext(sketch: self)
+        
+        SwiftGraphicsContext.current = context
+        
+        sketch?.draw()
+        
+        (sketch as? SketchViewDelegate)?.willWriteToSVG(with: context)
+        
+        try context.writeSVG(to: url)
+
+    }
 
     /// Passes clicks to the sketch
     @IBAction open func clickGestureAction(_ sender: NSClickGestureRecognizer) {
