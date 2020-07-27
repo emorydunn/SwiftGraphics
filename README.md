@@ -1,8 +1,12 @@
 # SwiftGraphics
 
+![Documentation badge](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/docs/badge.svg)
+
 SwiftGraphics is a library for creative coding and generative art tailored towards rending SVGs meant for pen plotting.
 
 Please see the [example repo](https://github.com/emorydunn/SwiftGraphics-Example) for a working reference.
+
+![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/Examples/20200705-144332-7d04fc1d.png)
 
 # 2D Primiatives
 
