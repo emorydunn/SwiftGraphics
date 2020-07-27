@@ -23,7 +23,7 @@ public struct Color: Equatable {
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(red: Float, green: Float, blue: Float, alpha: Float) {
+    public init(red: Float, green: Float, blue: Float, alpha: Float = 1) {
         self.red = red.clamped(to: 0...1)
         self.green = green.clamped(to: 0...1)
         self.blue = blue.clamped(to: 0...1)
@@ -39,7 +39,7 @@ public struct Color: Equatable {
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Float) {
+    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Float = 1) {
         self.init(
             red: Float(red) / 255,
             green: Float(green) / 255,
@@ -52,7 +52,7 @@ public struct Color: Equatable {
     /// - Parameters:
     ///   - grey: Decimal grey value
     ///   - a: Alpha value, from 0 to 1
-    public init(grey: Float, _ alpha: Float) {
+    public init(grey: Float, _ alpha: Float = 1) {
         self.init(red: grey, green: grey, blue: grey, alpha: alpha)
     }
 
