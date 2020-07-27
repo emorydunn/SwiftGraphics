@@ -425,13 +425,19 @@ extension Vector {
     }
 }
 
-extension Vector: Equatable {
+extension Vector: Hashable {
     
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Vector, rhs: Vector) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+        hasher.combine(z)
     }
 
 }

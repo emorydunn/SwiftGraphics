@@ -308,7 +308,7 @@ extension Rectangle: Intersectable {
 
 }
 
-extension Rectangle: Equatable {
+extension Rectangle: Hashable {
     
     /// Returns a Boolean value indicating whether two values are equal.
     ///
@@ -318,6 +318,13 @@ extension Rectangle: Equatable {
             lhs.y == rhs.y &&
             lhs.width == rhs.width &&
             lhs.height == rhs.height
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(x)
+        hasher.combine(y)
+        hasher.combine(width)
+        hasher.combine(height)
     }
 
 }

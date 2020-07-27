@@ -288,13 +288,18 @@ extension Circle: SVGDrawable {
     }
 }
 
-extension Circle: Equatable {
+extension Circle: Hashable {
     
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Circle, rhs: Circle) -> Bool {
         lhs.center == rhs.center && lhs.radius == rhs.radius
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(center)
+        hasher.combine(radius)
     }
 
 }

@@ -264,7 +264,7 @@ extension Path: SVGDrawable {
 
 }
 
-extension Path: Equatable {
+extension Path: Hashable {
     
     /// Returns a Boolean value indicating whether two values are equal.
     ///
@@ -273,5 +273,8 @@ extension Path: Equatable {
         lhs.points == rhs.points
     }
     
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(points)
+    }
     
 }

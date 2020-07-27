@@ -243,13 +243,18 @@ extension Line: CustomStringConvertible {
     }
 }
 
-extension Line: Equatable {
+extension Line: Hashable {
     
     /// Returns a Boolean value indicating whether two values are equal.
     ///
     /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Line, rhs: Line) -> Bool {
         lhs.start == rhs.start && lhs.end == rhs.end
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(start)
+        hasher.combine(end)
     }
 
 }
