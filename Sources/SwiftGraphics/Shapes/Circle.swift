@@ -76,7 +76,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     /// From https://math.stackexchange.com/a/311956
     /// - Parameters:
     ///   - origin: Origin of the ray
-    ///   - dir: Direction of the way
+    ///   - dir: Direction of the ray
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
 
         let relativeDir = dir + origin
