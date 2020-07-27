@@ -12,7 +12,8 @@ open class SketchView: NSView {
 
     /// Use top-left origin
     override open var isFlipped: Bool { true }
-
+    
+    /// The file name of the current drawing
     public private(set) var fileName: String?
 
     /// The `Sketch` to display
@@ -49,7 +50,8 @@ open class SketchView: NSView {
 
         return image
     }
-
+    
+    /// Creates an SVG document
     open func drawToSVG() -> XMLDocument {
 
         let context = SVGContext(sketch: self)
@@ -86,6 +88,8 @@ open class SketchView: NSView {
         try saveImage(image, to: url)
     }
     
+    /// Generates an SVG and attempts to write it to the specified URL
+    /// - Parameter url: URL to write to
     open func saveSVG(to url: URL) throws {
         let context = SVGContext(sketch: self)
         

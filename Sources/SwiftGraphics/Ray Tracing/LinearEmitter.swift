@@ -8,10 +8,13 @@
 
 import Foundation
 
+/// A Line that emitts evenly spaced rays parallel to its normal. 
 public class LinearEmitter: Line, Emitter {
 
+    /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
 
+    /// Distance between each ray
     public var rayStep: Double
 
     /// Instantiate a new `Line`
@@ -35,6 +38,9 @@ public class LinearEmitter: Line, Emitter {
         super.init(x1, y1, x2, y2)
     }
 
+    /// Draw the emitter and ray trace using the specified objects
+    /// - Parameters:
+    ///   - objects: Objects to test for intersection when casting rays
     public func draw(objects: [Intersectable]) {
         // Draw the circle
         if case .line = style {
@@ -62,6 +68,15 @@ public class LinearEmitter: Line, Emitter {
 
     }
 
+    /// Find intersections for a ray cast from the specified origin.
+    ///
+    /// Each `Line` represents one segment of the path of the ray.
+    ///
+    /// - Parameters:
+    ///   - angle: Angle, in radians, of the ray.
+    ///   - origin: Origin of the ray.
+    ///   - objects: Objects to test for intersection.
+    /// - Returns: An array of line segments representing intersections and interactions.
     public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return defaultIntersections(for: angle, origin: origin, objects: objects)
     }

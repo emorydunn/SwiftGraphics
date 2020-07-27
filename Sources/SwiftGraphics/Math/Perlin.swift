@@ -9,6 +9,8 @@
 import Foundation
 
 
+/// Generate Perlin noise. 
+///
 /// Implemented from p5.js
 public class PerlinGenerator {
     
@@ -18,11 +20,15 @@ public class PerlinGenerator {
     lazy var zWrap = 1 << zWrapB
     let size = 4095
     
+    /// The number of noise samples to blend together
     public var octives = 2
-    public var ampFalloff = 0.5
+    
+    /// The amount each octave loses influence
+    var ampFalloff = 0.5
     
     var perlin = [Double]()
     
+    /// Instantiate a new generator
     public init() {
         self.perlin = (0..<(size + 1)).map { _ in Double.random(in: 0...1) }
     }
@@ -31,6 +37,11 @@ public class PerlinGenerator {
         return 0.5 * (1 - cos(num * Double.pi))
     }
     
+    /// Calculate the Perlin noise values for the specified coordinates
+    /// - Parameters:
+    ///   - x: `x` coordinate
+    ///   - y: `y` coordinate
+    ///   - z: `z` coordinate
     public func noise(_ x: Double, _ y: Double = 0, _ z: Double = 0) -> Double {
         
         // Create mutable copies

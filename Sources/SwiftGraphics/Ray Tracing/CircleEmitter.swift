@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// An circular emitter that emits rays along its perimiter
+/// A circle that emits rays radiating out from its perimiter
 public class CircleEmitter: Circle, Emitter {
 
     /// Angle of the step between emitted rays
@@ -25,12 +25,6 @@ public class CircleEmitter: Circle, Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
 
-    public var passStyle: Bool = true
-
-    enum CodingKeys: String, CodingKey {
-        case rayStep, style
-    }
-
     /// Instantiate a new emitter at the specified coordinates
     /// - Parameters:
     ///   - x: Center X coordinate
@@ -43,9 +37,8 @@ public class CircleEmitter: Circle, Emitter {
 
     }
 
-    /// Draw the emitter and ray trace using the specified `BoundingBox` and objects
+    /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
-    ///   - boundingBox: `BoundingBox` for ray termination
     ///   - objects: Objects to test for intersection when casting rays
     public func draw(objects: [Intersectable]) {
 
@@ -69,7 +62,16 @@ public class CircleEmitter: Circle, Emitter {
         }
 
     }
-
+    
+    /// Find intersections for a ray cast from the specified origin.
+    ///
+    /// Each `Line` represents one segment of the path of the ray.
+    ///
+    /// - Parameters:
+    ///   - angle: Angle, in radians, of the ray.
+    ///   - origin: Origin of the ray.
+    ///   - objects: Objects to test for intersection.
+    /// - Returns: An array of line segments representing intersections and interactions.
     public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return defaultIntersections(for: angle, origin: origin, objects: objects)
     }

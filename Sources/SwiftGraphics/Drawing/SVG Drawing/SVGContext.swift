@@ -7,12 +7,24 @@
 
 import Foundation
 
+/// A drawing context which creates SVG files
 public class SVGContext: DrawingContext {
-
+    
+    /// The root SVG element
     public var svg: XMLElement
+    
+    
+    /// Width of the SVG
     public let width: Int
+    
+    
+    /// Height of the SVG
     public let height: Int
-
+    
+    /// Create a new SVG with the specified dimensions
+    /// - Parameters:
+    ///   - width: Width of the SVG
+    ///   - height: Height of the SVG
     public init(width: Int, height: Int) {
         self.width = width
         self.height = height
@@ -28,7 +40,8 @@ public class SVGContext: DrawingContext {
         addBlendMode()
 
     }
-
+    
+    /// Create a new SVG from a `SketchView`
     public convenience init(sketch: SketchView) {
         self.init(
             width: Int(sketch.bounds.width),
@@ -36,13 +49,16 @@ public class SVGContext: DrawingContext {
         )
     }
 
+    /// Create a new SVG from a `Sketch`
     public convenience init(sketch: Sketch) {
         self.init(
             width: Int(sketch.size.width),
             height: Int(sketch.size.height)
         )
     }
-
+    
+    /// Append a shape to the SVG
+    /// - Parameter shape: Shape to add
     public func addShape(_ shape: SVGDrawable) {
         let xml = shape.svgElement()
 
@@ -108,7 +124,8 @@ public class SVGContext: DrawingContext {
 
         svg.setChildren(newChildren)
     }
-
+    
+    /// Add a `style` element with the blend mode
     func addBlendMode() {
         let blendMode = SwiftGraphicsContext.blendMode.rawValue
         let style = """
@@ -122,7 +139,9 @@ public class SVGContext: DrawingContext {
 
         svg.addChild(styleElement)
     }
-
+    
+    /// Create an SVG document
+    /// - Returns: An `XMLDocument` representing the SVG
     public func makeDoc() -> XMLDocument {
 
         let doc = XMLDocument(kind: .document)

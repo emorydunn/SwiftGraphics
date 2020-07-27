@@ -159,6 +159,7 @@ open class Line: Shape, Intersectable {
         return nil
     }
 
+    /// Returns an empty array, which causes the receiver to terminate the ray.
     public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return []
     }
@@ -235,12 +236,18 @@ extension Line: SVGDrawable {
 }
 
 extension Line: CustomStringConvertible {
+    
+    /// A textual representation of this instance.
     public var description: String {
         "Line (\(start.x), \(start.y)) → (\(end.x), \(end.y))"
     }
 }
 
 extension Line: Equatable {
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Line, rhs: Line) -> Bool {
         lhs.start == rhs.start && lhs.end == rhs.end
     }

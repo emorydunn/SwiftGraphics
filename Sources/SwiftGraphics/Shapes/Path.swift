@@ -50,7 +50,7 @@ public class Path: Shape {
     /// Whether to close the path
     ///
     /// This is done by appending the first point to the end of `points` while drawing
-    public var close: Bool = true
+    public var close: Bool = false
 
     /// Instantiate a new Path from an array of Vectors
     /// - Parameter points: Points in the path
@@ -265,6 +265,10 @@ extension Path: SVGDrawable {
 }
 
 extension Path: Equatable {
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Path, rhs: Path) -> Bool {
         lhs.points == rhs.points
     }

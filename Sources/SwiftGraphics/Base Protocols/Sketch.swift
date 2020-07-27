@@ -9,26 +9,40 @@
 import Foundation
 import AppKit
 
+/// An object which can draw shapes to a `DrawingContext`
 public protocol Sketch {
-
+    
+    /// Title of the sketch
     static var title: String { get set }
 
+    
+    /// Size of the sketch
     var size: Size { get set }
     
+    /// Whether to repeatedly call `.draw()`
     var loop: SketchAnimation { get set }
 
+    /// Instantiate a new sketch
     init()
 
-//    func setup()
+    /// Draw all objects to the current `DrawingContext`
     func draw()
 
 }
 
+/// Controls `Sketch` animation
 public enum SketchAnimation {
+    
+    /// Only call `.draw()` once
     case none
+    
+    /// Repeatedly call `.draw()` at the specified framerate
     case animate(frameRate: Int)
     
-    public func frameRateInterval(_ frameRate: Int) -> Double {
+    /// The amount of time each frame takes
+    /// - Parameter frameRate: The framerate.
+    /// - Returns: The number of seconds each frame takes.
+    public func frameRateInterval(_ frameRate: Int) -> TimeInterval {
         return 1 / Double(frameRate)
     }
 }

@@ -91,47 +91,7 @@ public class Vector: Shape {
 
 // MARK: - Static Vector Math Functions
 extension Vector {
-
-//    /// Add two `Vector`s
-//    /// - Parameters:
-//    ///   - v1: The first `Vector`
-//    ///   - v2: the second `Vector`
-//    @available(*, unavailable, message: "Use +")
-//    public static func add(_ v1: Vector, _ v2: Vector) -> Vector {
-//        return Vector(
-//            v1.x + v2.x,
-//            v1.y + v2.y,
-//            v1.z + v2.z
-//        )
-//    }
-
-//    /// Subtract the second `Vector` from the first
-//    /// - Parameters:
-//    ///   - v1: The first `Vector`
-//    ///   - v2: the second `Vector`
-//    @available(*, unavailable, message: "Use -")
-//    public static func sub (_ v1: Vector, _ v2: Vector) -> Vector {
-//        return Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z)
-//    }
-
-//    /// Multiply two `Vector`s
-//    /// - Parameters:
-//    ///   - v1: The first `Vector`
-//    ///   - v2: the second `Vector`
-//    @available(*, unavailable, message: "Use *")
-//    public static func mult(_ vector: Vector, _ num: Double) -> Vector {
-//        return Vector(vector.x * n, vector.y * n, vector.z * n)
-//    }
-
-//    /// Divide the specified `Vector` by a constant
-//    /// - Parameters:
-//    ///   - v1: The first `Vector`
-//    ///   - v2: the second `Vector`
-//    @available(*, unavailable, message: "Use /")
-//    public static func div(_ vector: Vector, _ num: Double) -> Vector {
-//        return Vector(vector.x / n, vector.y / n, vector.z / n)
-//    }
-
+    
     /// Return the distance between two `Vector`s
     /// - Parameters:
     ///   - v1: The first `Vector`
@@ -184,34 +144,49 @@ extension Vector {
 
 // MARK: - Vector Math Functions
 extension Vector {
-
+    
+    /// Calculates the magnitude (length) of the vector and returns the result as a float
+    ///
+    /// This is simply the equation `sqrt(x*x + y*y + z*z)`.
     public func mag() -> Double {
         return sqrt(self.magSq())
     }
-
+    
+    /// Calculates the squared magnitude of the vector and returns the result as a float
+    ///
+    /// This is simply the equation `(x*x + y*y + z*z)`.
+    ///
+    /// - Note: Faster if the real length is not required in the case of comparing vectors, etc.
     public func magSq() -> Double {
         return x * x + y * y + z * z
     }
-
+    
+    /// Return the distance to another vector
+    /// - Parameter vector: Another vector
+    /// - Returns: Distance to the second vector
     public func dist(_ vector: Vector) -> Double {
         return Vector.dist(vector, self)
     }
 
+    /// Calculates the dot product of two vectors.
     public func dot(_ vector: Vector) -> Double {
         return Vector.dot(self, vector)
     }
 
+    /// Calculates and returns a vector composed of the cross product between two vectors
     public func cross(_ vector: Vector) -> Vector {
         return Vector.cross(self, vector)
     }
-
+    
+    /// Normalize the vector to length 1 (make it a unit vector).
     public func normalize() {
         let len = self.mag()
         if len != 0 {
             self *= 1 / len
         }
     }
-
+    
+    /// Calculates and returns the angle (in radians) between two vectors.
     public func angleBetween(_ vector: Vector) -> Double {
         let dotmagmag = self.dot(vector) / (self.mag() * vector.mag())
         // Mathematically speaking: the dotmagmag variable will be between -1 and 1
@@ -227,7 +202,7 @@ extension Vector {
 
     }
 
-    func sign(_ num: Double) -> Double {
+    private func sign(_ num: Double) -> Double {
         return num >= 0 ? 1 : -1
     }
 
@@ -282,12 +257,19 @@ extension Vector: SVGDrawable {
 }
 
 extension Vector: CustomStringConvertible {
+    /// A textual representation of this instance.
     public var description: String {
         "Vector (\(x), \(y))"
     }
 }
 
 extension Vector {
+    
+    /// Adds two values and produces their sum.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to add.
+    ///   - rhs: The second value to add.
     public static func + (lhs: Vector, rhs: Vector) -> Vector {
         Vector(
             lhs.x + rhs.x,
@@ -295,13 +277,24 @@ extension Vector {
             lhs.z + rhs.z
         )
     }
-
+    
+    /// Adds two values and stores the result in the left-hand-side variable
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to add.
+    ///   - rhs: The second value to add.
     public static func += (lhs: Vector, rhs: Vector) {
         lhs.x += rhs.x
         lhs.y += rhs.y
         lhs.z += rhs.z
     }
 
+    
+    /// Add the specified value to a vector
+    ///
+    /// - Parameters:
+    ///   - vector: The first value to add.
+    ///   - num: The second value to add.
     public static func + (vector: Vector, num: Double) -> Vector {
         Vector(
             vector.x + num,
@@ -310,12 +303,22 @@ extension Vector {
         )
     }
 
+    /// Add the specified value to a vector
+    ///
+    /// - Parameters:
+    ///   - vector: The first value to add.
+    ///   - num: The second value to add.
     public static func += (vector: Vector, num: Double) {
         vector.x += num
         vector.y += num
         vector.z += num
     }
 
+    /// Subtracts one vector from another and produces their difference
+    ///
+    /// - Parameters:
+    ///   - lhs: A numeric value.
+    ///   - rhs: The value to subtract from lhs.
     public static func - (lhs: Vector, rhs: Vector) -> Vector {
         Vector(
             lhs.x - rhs.x,
@@ -324,12 +327,22 @@ extension Vector {
         )
     }
 
+    /// Subtracts the second vector from the first and stores the difference in the left-hand-side variable
+    ///
+    /// - Parameters:
+    ///   - lhs: The first vector to subtract.
+    ///   - rhs: The second vector to subtract.
     public static func -= (lhs: Vector, rhs: Vector) {
         lhs.x -= rhs.x
         lhs.y -= rhs.y
         lhs.z -= rhs.z
     }
 
+    /// Subtracts one value from another and produces their difference, rounded to a representable value.
+    ///
+    /// - Parameters:
+    ///   - lhs: A numeric value.
+    ///   - rhs: The value to subtract from lhs.
     public static func - (vector: Vector, num: Double) -> Vector {
         Vector(
             vector.x - num,
@@ -337,43 +350,86 @@ extension Vector {
             vector.z - num
         )
     }
-
+    
+    /// Subtracts the second value from the first and stores the difference in the left-hand-side variable.
+    /// - Parameters:
+    ///   - lhs: A numeric value.
+    ///   - rhs: The value to subtract from lhs.
     public static func -= (vector: Vector, num: Double) {
         vector.x -= num
         vector.y -= num
         vector.z -= num
     }
-
+    
+    /// Multiplies two values and produces their product
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to multiply.
+    ///   - num: The second value to multiply.
     public static func * (lhs: Vector, num: Double) -> Vector {
         Vector(lhs.x * num, lhs.y * num, lhs.z * num)
     }
-
+    
+    /// Multiplies two values and stores the result in the left-hand-side variable.
+    /// - Parameters:
+    ///   - lhs: The first value to multiply.
+    ///   - num: The second value to multiply.
     public static func *= (lhs: Vector, num: Double) {
         lhs.x *= num
         lhs.y *= num
         lhs.z *= num
     }
-
+    
+    /// Multiplies two values and produces their product
+    ///
+    /// Multiplying two `Vector`s calculates the dot product.
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to multiply.
+    ///   - num: The second value to multiply.
+    public static func * (lhs: Vector, rhs: Vector) -> Double {
+        lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z
+    }
+    
+    /// Returns the quotient of dividing the first value by the second.
+    /// - Parameters:
+    ///   - lhs: The value to divide.
+    ///   - num: The value to divide lhs by.
     public static func / (lhs: Vector, num: Double) -> Vector {
         Vector(lhs.x / num, lhs.y / num, lhs.z / num)
     }
-
+    
+    /// Divides the first value by the second and stores the quotient in the left-hand-side variable.
+    /// - Parameters:
+    ///   - lhs: The value to divide.
+    ///   - num: The value to divide lhs by.
     public static func /= (lhs: Vector, num: Double) {
         lhs.x /= num
         lhs.y /= num
         lhs.z /= num
     }
 
+    /// Returns the quotient of dividing the first value by the second.
+    /// - Parameters:
+    ///   - lhs: The value to divide.
+    ///   - num: The value to divide lhs by.
     public static func / (num: Double, vector: Vector) -> Vector {
         Vector(num / vector.x, num / vector.y, num / vector.z)
     }
-
+    
+    /// Negate a Vector.
+    ///
+    /// - Parameter vector: The vector to negate
     public static prefix func - (vector: Vector) -> Vector {
         return Vector(-vector.x, -vector.y, -vector.z)
     }
 }
 
 extension Vector: Equatable {
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Vector, rhs: Vector) -> Bool {
         lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z
     }

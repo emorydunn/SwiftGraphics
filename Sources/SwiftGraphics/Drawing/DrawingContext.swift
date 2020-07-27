@@ -7,7 +7,10 @@
 
 import Foundation
 
+/// Holds values related to how objects should be drawn
 public class SwiftGraphicsContext {
+    
+    /// Returns the current `DrawingContext`, if any
     public static var current: DrawingContext?
 
     /// Color of the outline of the shape
@@ -24,6 +27,7 @@ public class SwiftGraphicsContext {
 
 }
 
+/// A 2D drawing environment
 public protocol DrawingContext {
 
 }

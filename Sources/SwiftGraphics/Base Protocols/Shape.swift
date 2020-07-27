@@ -3,14 +3,21 @@ import AppKit
 
 /// The base protocol for any shape that is drawable on screen
 public protocol Shape {
-
+    
+    /// Draw the shape
+    ///
+    /// The default implementation of this method automatically draws into the current  context of `SwiftGraphicsContext`
     func draw()
-
+    
+    /// A Rectangle that contains the receiver
     var boundingBox: Rectangle { get }
 }
 
 extension Shape {
 
+    /// Draw the shape
+    ///
+    /// The default implementation of this method automatically draws into the current  context of `SwiftGraphicsContext`
     public func draw() {
         // Important: Classes that directly conform to `DrawingContext`
         // must be listed first.
@@ -27,11 +34,4 @@ extension Shape {
         }
     }
 
-//    /// Copy the style from another shape
-//    /// - Parameter shape: The shape whose style will be copied
-//    public mutating func copyStyle(from shape: Shape) {
-//        self.fillColor = shape.fillColor
-//        self.strokeColor = shape.strokeColor
-//        self.strokeWeight = shape.strokeWeight
-//    }
 }

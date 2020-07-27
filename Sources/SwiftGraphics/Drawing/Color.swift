@@ -7,11 +7,19 @@
 
 import Foundation
 
+/// A set of components that define a color. The color space is defined by the drawing context.
 public struct Color: Equatable {
-
+    
+    /// Red value
     public let red: Float
+    
+    /// Green value
     public let green: Float
+    
+    /// Blue value
     public let blue: Float
+    
+    /// Alpha value
     public let alpha: Float
 
     /// Instantiate a new Color
@@ -95,7 +103,8 @@ public struct Color: Equatable {
         let hexString = String.init(format: "#%02lX%02lX%02lX", r, g, b)
         return hexString
     }
-
+    
+    /// Createa CGColor
     public func toCGColor() -> CGColor {
         return CGColor(
             red: CGFloat(red),
@@ -104,7 +113,8 @@ public struct Color: Equatable {
             alpha: CGFloat(alpha)
         )
     }
-
+    
+    /// Returns an RGBA string
     public func toRGBA() -> String {
         let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
         let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
@@ -112,13 +122,23 @@ public struct Color: Equatable {
 
         return "rgba(\(r),\(g),\(b),\(alpha))"
     }
-
+    
+    /// The color black
     public static var black: Color { Color(red: 0, green: 0, blue: 0, alpha: 1) }
+    
+    /// The color white
     public static var white: Color { Color(red: 1, green: 1, blue: 1, alpha: 1) }
+    
+    /// A clear color
     public static var clear: Color { Color(red: 0, green: 0, blue: 0, alpha: 0) }
 
+    /// The color red
     public static var red: Color { Color(red: 1, green: 0, blue: 0, alpha: 1) }
+    
+    /// The color green
     public static var green: Color { Color(red: 0, green: 1, blue: 0, alpha: 1) }
+    
+    /// The color blue
     public static var blue: Color { Color(red: 0, green: 0, blue: 1, alpha: 1) }
 
 }

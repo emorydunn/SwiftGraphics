@@ -14,8 +14,6 @@ public class Fresnel: Line {
     /// The angle at which rays are reflected, relative to the normal
     public var reflectionAngle: Degrees = 180
 
-    public var passStyle: Bool = false
-
     /// Find all intersecting points for a ray of a specified angle, terminating on a `BoundingBox`
     ///
     /// A `Fresnel` modifies the specified angle to return lines parallel to the normal. 

@@ -10,13 +10,43 @@ import Foundation
 
 /// Any shape that can calculate points of intersection between itself and a `Line`
 public protocol Intersectable: AnyObject, Shape {
+    
+    
+    /// Find any intersection points between the receiver and the specified line
+    /// - Parameter line: Line to intersect
     func lineIntersection(_ line: Line) -> [Vector]
-
+    
+    /// Returns  `Line` segments made of paired points where the specified line intersects
+    ///
+    /// - Parameter line: The line to test for intersection
+    /// - Parameter firstOnly: Return only a `Line` to the closest intersection point
     func lineSegments(_ line: Line, firstOnly: Bool) -> [Line]
 
+    /// Return the intersection of a ray
+    ///
+    /// From https://math.stackexchange.com/a/311956
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
     func rayIntersection(origin: Vector, dir: Vector) -> Vector?
+    
+    /// Return the intersection of a ray
+    ///
+    /// From https://math.stackexchange.com/a/311956
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - theta: Direction of the ray
     func rayIntersection(origin: Vector, theta: Radians) -> Vector?
 
+    /// Find intersections for a ray cast from the specified origin.
+    ///
+    /// Each `Line` represents one segment of the path of the ray.
+    ///
+    /// - Parameters:
+    ///   - angle: Angle, in radians, of the ray.
+    ///   - origin: Origin of the ray.
+    ///   - objects: Objects to test for intersection.
+    /// - Returns: An array of line segments representing intersections and interactions.
     func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line]
 
 }
@@ -32,70 +62,60 @@ extension Intersectable where Self: Polygon {
     }
 }
 
+// MARK: - Default Implementations
 extension Intersectable {
 
-    public func rayIntersection(origin: Vector, theta: Radians) -> Vector? {
-        let vector = Vector(angle: theta)
-
-        return rayIntersection(origin: origin, dir: vector)
-
-    }
-
-    public func lineIntersection(startPoint: Vector, endPoint: Vector) -> [Vector] {
-        return lineIntersection(Line(startPoint, endPoint))
-    }
-
-    /// Returns  `Line` segments made of paired points where the specified line intersects
-    ///
-    /// - Parameter line: The line to test for intersection
-    /// - Parameter firstOnly: Return only a `Line` to the closest intersection point
     public func lineSegments(_ line: Line, firstOnly: Bool) -> [Line] {
         var intersections = self.lineIntersection(line)
-
+        
         guard intersections.count > 0 else {
             return []
         }
         intersections.insert(line.start, at: 0)
         intersections.append(line.end)
-
+        
         var segments = intersections
             .sortedByDistance(from: line.start)
             .paired()
             .map { Line($0.0, $0.1) }
-
+        
         if firstOnly {
             segments.removeLast(segments.count - 1)
         }
-
+        
         return segments
     }
+    
+    public func rayIntersection(origin: Vector, theta: Radians) -> Vector? {
+        let vector = Vector(angle: theta)
+        
+        return rayIntersection(origin: origin, dir: vector)
+        
+    }
+    
+}
 
+// MARK: - Convenience Methods
+extension Intersectable {
+
+    
+    /// Find any intersection points between the receiver and the specified line
+    /// - Parameters:
+    /// - Parameter startPoint: Starting point of the Line
+    /// - Parameter endPoint: Ending point of the Line
+    /// - Returns: An array of intersection points
+    public func lineIntersection(startPoint: Vector, endPoint: Vector) -> [Vector] {
+        return lineIntersection(Line(startPoint, endPoint))
+    }
+
+ 
+    /// Returns  `Line` segments made of paired points where the specified line intersects
+    ///
+    /// - Parameter startPoint: Starting point of the Line
+    /// - Parameter endPoint: Ending point of the Line
     public func lineSegments(startPoint: Vector, endPoint: Vector, firstOnly: Bool) -> [Line] {
         return lineSegments(Line(startPoint, endPoint), firstOnly: firstOnly)
     }
-
-//    /// Find all intersecting points for a ray of a specified angle.
-//    ///
-//    /// - Note: This method calls `defaultIntersections(for:origin:objects:)` and only
-//    /// needs to be customized by `RayTracers` that want to modify the path of the ray.
-//    ///
-//    /// - Parameters:
-//    ///   - angle: The angle of the ray being cast
-//    ///   - origin: The origin of the ray being cast
-//    ///   - objects: Objects to test for intersection, sorted by distance from the origin
-//    /// - Returns: Lines representing the path taken by the ray
-//    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
-//
-//        switch self {
-//        case is RayTracer:
-//            return self.intersections(for: angle, origin: origin, objects: objects)
-////            return defaultIntersections(for: angle, origin: origin, objects: objects)
-//        default:
-//            return []
-//        }
-//        
-////        return defaultIntersections(for: angle, origin: origin, objects: objects)
-//    }
 
     /// Find all intersecting points for a ray of a specified angle.
     ///
@@ -131,19 +151,7 @@ extension Intersectable {
             } else {
                 return
             }
-
-//            // Test if the object is a RayTracer and continue to add lines
-//            // Unless the object is an Emitter
-//            guard $0 is RayTracer, !($0 is Emitter) else {
-//                return
-//            }
-
-//            // Add the new intersecting segments to the array
-//            let castSegments = $0.intersections(for: angle,
-//                                                    origin: intersection,
-//                                                    objects: objects)
-//            segments.append(contentsOf: castSegments)
-
+            
             // Ask the object for its own intersections, unless the object is an Emitter
             guard !($0 is Emitter) else { return }
 

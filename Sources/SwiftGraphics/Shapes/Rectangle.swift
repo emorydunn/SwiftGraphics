@@ -108,11 +108,17 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         Vector(maxX,
                maxY)
     }
-
+    
+    /// The minimum `x` coordinate
     public var minX: Double { x }
+    
+    /// The minimum `y` coordinate
     public var minY: Double { y }
 
+    /// The maximum `x` coordinate
     public var maxX: Double { x + width }
+    
+    /// The maximum `y` coordinate
     public var maxY: Double { y + height }
 
     /// Returns the point on the rectangle where the specified angle originating from the center intersects
@@ -295,6 +301,7 @@ extension Rectangle: Intersectable {
 
     }
 
+    /// Returns an empty array, which causes the receiver to terminate the ray.
     public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return []
     }
@@ -302,6 +309,10 @@ extension Rectangle: Intersectable {
 }
 
 extension Rectangle: Equatable {
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Rectangle, rhs: Rectangle) -> Bool {
         lhs.x == rhs.x &&
             lhs.y == rhs.y &&

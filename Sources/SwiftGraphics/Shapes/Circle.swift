@@ -17,7 +17,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     /// Center point of the circle
     public var center: Vector
 
-    // The offset radius, used when calculating intersections with the circle
+    /// The offset radius, used when calculating intersections with the circle
     public var radiusOffset: Double = 0
 
     /// The diameter of the circle
@@ -100,10 +100,10 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         )
 
         return pHit
-//        return origin + (relativeDir * t)
 
     }
-
+    
+    /// Returns an empty array, which causes the receiver to terminate the ray.
     public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return []
     }
@@ -177,8 +177,8 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         //    Math.square(line.end.x - line.start.x) +
         //    Math.square(line.end.y - line.start.y) +
         //    Math.square(line.end.z ?? 0 - line.start.z ?? 0)
-        return Math.squared(line.end.x - line.start.x) +
-            Math.squared(line.end.y - line.start.y) + Math.squared(line.end.z - line.start.z)
+        return (line.end.x - line.start.x).squared() +
+            (line.end.y - line.start.y).squared() + (line.end.z - line.start.z).squared()
 
     }
 
@@ -221,10 +221,10 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         //        Math.square(r)
         //    )
 
-        let part1 = Math.squared(center.x) +
-            Math.squared(center.y) +
-            Math.squared(line.start.x) +
-            Math.squared(line.start.y) +
+        let part1 = center.x.squared() +
+            center.y.squared() +
+            line.start.x.squared() +
+            line.start.y.squared() +
             center.z.squared() +
             line.start.z.squared()
 
@@ -289,6 +289,10 @@ extension Circle: SVGDrawable {
 }
 
 extension Circle: Equatable {
+    
+    /// Returns a Boolean value indicating whether two values are equal.
+    ///
+    /// Equality is the inverse of inequality. For any values a and b, a == b implies that a != b is false.
     public static func == (lhs: Circle, rhs: Circle) -> Bool {
         lhs.center == rhs.center && lhs.radius == rhs.radius
     }

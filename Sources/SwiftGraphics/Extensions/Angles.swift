@@ -8,7 +8,10 @@
 
 import Foundation
 
+/// An number representing degrees
 public typealias Degrees = Double
+
+/// An number representing radians
 public typealias Radians = Double
 
 extension Degrees {

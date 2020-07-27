@@ -8,11 +8,15 @@
 
 import Foundation
 
-/// Indicates an object emits rays
+/// An object that can calculate and draw ray intersections.
 public protocol Emitter: AnyObject {
 
+    /// Visual style for the emitter's rays
     var style: RayTraceStyle { get set }
 
+    /// Draw the emitter and ray trace using the specified objects
+    /// - Parameters:
+    ///   - objects: Objects to test for intersection when casting rays
     func draw(objects: [Intersectable])
 }
 
@@ -41,9 +45,11 @@ extension Emitter {
 }
 
 /// Represnts the style to draw rays
-///
-/// - `.line` draws a line between the starting and endoing points
-/// - `.point` draws only the end point of a line
 public enum RayTraceStyle: String, Codable, CaseIterable {
-    case line, point
+    
+    /// draws a line between the starting and endoing points
+    case line
+    
+    /// Draws only the end point of a line
+    case point
 }

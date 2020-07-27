@@ -17,7 +17,6 @@ public class DirectionalEmitter: Circle, Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
 
-    public var passStyle: Bool = true
 
     /// Instantiate a new emitter
     /// - Parameters:
@@ -29,18 +28,18 @@ public class DirectionalEmitter: Circle, Emitter {
         super.init(center: origin, radius: 10)
 
     }
-
+    
+    /// Instantiate a new emitter
+    /// - Parameters:
+    ///   - x: `x` coordinate of the origin
+    ///   - y: `y` coordinate of the origin
+    ///   - direction: Direction of the emitter's ray
     public convenience init(x: Double, y: Double, direction: Degrees) {
         self.init(Vector(x, y), direction)
     }
 
-    required init(from decoder: Decoder) throws {
-        fatalError("init(from:) has not been implemented")
-    }
-
-    /// Draw the emitter and ray trace using the specified `BoundingBox` and objects
+    /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
-    ///   - boundingBox: `BoundingBox` for ray termination
     ///   - objects: Objects to test for intersection when casting rays
     public func draw(objects: [Intersectable]) {
 
@@ -52,7 +51,9 @@ public class DirectionalEmitter: Circle, Emitter {
         drawIntersections(intersections)
 
     }
-
+    
+    /// Draws a representation of the emitter suitable for debugging.
+    /// - Parameter context: Context in which to draw
     public override func debugDraw(in context: CGContext) {
         super.debugDraw(in: context)
 
@@ -63,6 +64,15 @@ public class DirectionalEmitter: Circle, Emitter {
         dirPoint.debugDraw(in: context)
     }
 
+    /// Find intersections for a ray cast from the specified origin.
+    ///
+    /// Each `Line` represents one segment of the path of the ray.
+    ///
+    /// - Parameters:
+    ///   - angle: Angle, in radians, of the ray.
+    ///   - origin: Origin of the ray.
+    ///   - objects: Objects to test for intersection.
+    /// - Returns: An array of line segments representing intersections and interactions.
     public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
         return defaultIntersections(for: angle, origin: origin, objects: objects)
     }
