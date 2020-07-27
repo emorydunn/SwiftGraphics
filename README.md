@@ -1,6 +1,6 @@
 # SwiftGraphics
 
-![Documentation badge](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/docs/badge.svg)
+![Swift](https://github.com/emorydunn/SwiftGraphics/workflows/Swift/badge.svg) ![Documentation badge](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/docs/badge.svg)
 
 SwiftGraphics is a library for creative coding and generative art tailored towards rending SVGs meant for pen plotting.
 
