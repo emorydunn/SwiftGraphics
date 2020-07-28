@@ -4,7 +4,7 @@
 
 SwiftGraphics is a library for creative coding and generative art tailored towards rending SVGs meant for pen plotting.
 
-Please see the [example repo](https://github.com/emorydunn/SwiftGraphics-Example) for a working reference.
+Take a look at the [documentation](https://emorydunn.github.io/SwiftGraphics/) and visit the [example repo](https://github.com/emorydunn/SwiftGraphics-Example) for a working reference.
 
 ![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/Examples/20200705-144332-7d04fc1d.png)
 
