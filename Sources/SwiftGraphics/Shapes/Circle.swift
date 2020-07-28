@@ -110,131 +110,43 @@ public class Circle: Polygon, Intersectable, CGDrawable {
 
     /// Determine the points where the specified `Line` intersects the `Circle`
     ///
-    /// Adapted from http://paulbourke.net/geometry/circlesphere/
+    /// Adapted from the C version by [Paul Bourke](http://paulbourke.net/geometry/circlesphere/).
     /// - Parameter line: Intersecting line
     public func lineIntersection(_ line: Line) -> [Vector] {
+        
+        let deltaLine = line.end - line.start
+        
+        let a = deltaLine.magSq()
+        let b = 2 * (deltaLine.x * (line.start.x - center.x) +
+                     deltaLine.y * (line.start.y - center.y) +
+                     deltaLine.z * (line.start.z - center.z))
+        var c = center.magSq()
+        
+        c += line.start.magSq()
+        c -= 2 * (line.start.dot(center))
+        c -= radius.squared()
+        
+        let bb4ac = b * b - 4 * a * c
+        
+        let eps: Double = 0.00001
 
-        let a = calculateA(line) // swiftlint:disable:this identifier_name
-        let b = calculateB(line) // swiftlint:disable:this identifier_name
-        let c = calculateC(line) // swiftlint:disable:this identifier_name
-
-        let i = b * b - 4.0 * a * c // swiftlint:disable:this identifier_name
-
-        var intersections = [Vector]()
-        if i < 0.0 {
-            // no intersections
-        } else if i == 0.0 {
-            // one intersection
-            // p[0] = 1.0
-            // p2 = 1.0
-
-            let mu = -b / (2.0 * a) // swiftlint:disable:this identifier_name
-
-            let p1 = Vector( // swiftlint:disable:this identifier_name
-                line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y),
-                line.start.z + mu * (line.end.z - line.start.z)
-            )
-
-            if line.contains(p1) {
-                intersections.append(p1)
-            }
-
-        } else if i > 0.0 {
-            // first intersection
-            var mu = (-b + sqrt(i)) / (2.0 * a) // swiftlint:disable:this identifier_name
-
-            let p1 = Vector( // swiftlint:disable:this identifier_name
-                line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y),
-                line.start.z + mu * (line.end.z - line.start.z)
-            )
-
-            if line.contains(p1) {
-                intersections.append(p1)
-            }
-
-            // # second intersection
-            mu = (-b - sqrt(i)) / (2.0 * a)
-
-            let p2 = Vector( // swiftlint:disable:this identifier_name
-                line.start.x + mu * (line.end.x - line.start.x),
-                line.start.y + mu * (line.end.y - line.start.y),
-                line.start.z + mu * (line.end.z - line.start.z)
-            )
-
-            if line.contains(p2) {
-                intersections.append(p2)
-            }
-
+        guard abs(a) > eps || bb4ac > 0  else {
+            return []
         }
 
-        return intersections
-
-    }
-
-    private func calculateA(_ line: Line) -> Double {
-        //    Math.square(line.end.x - line.start.x) +
-        //    Math.square(line.end.y - line.start.y) +
-        //    Math.square(line.end.z ?? 0 - line.start.z ?? 0)
-        return (line.end.x - line.start.x).squared() +
-            (line.end.y - line.start.y).squared() + (line.end.z - line.start.z).squared()
-
-    }
-
-    private func calculateB(_ line: Line) -> Double {
-        //    2.0 * (
-        //        (line.end.x - line.start.x) *
-        //            (line.start.x - center.x) +
-        //            (line.end.y - line.start.y) *
-        //            (line.start.y - center.y) +
-        //            (line.end.z ?? 0 - line.start.z ?? 0) *
-        //            (line.start.z ?? 0 - center.z ?? 0)
-        //    )
-        var b = // swiftlint:disable:this identifier_name
-            (line.end.x - line.start.x) *
-                (line.start.x - center.x) +
-                (line.end.y - line.start.y) *
-                (line.start.y - center.y) +
-                (line.end.z - line.start.z) * (line.start.z - center.z)
-
-        b *= 2
-
-        return b
-    }
-
-    private func calculateC(_ line: Line) -> Double {
-        //    Math.square(center.x) +
-        //        Math.square(center.y) +
-        //        Math.square(center.z ?? 0) +
-        //        Math.square(line.start.x) +
-        //        Math.square(line.start.y) +
-        //        Math.square(line.start.z ?? 0) -
-        //        2.0 * (
-        //            center.x *
-        //                line.start.x +
-        //                center.y *
-        //                line.start.y +
-        //                center.z ?? 0 *
-        //                line.start.z ?? 0
-        //        ) -
-        //        Math.square(r)
-        //    )
-
-        let part1 = center.x.squared() +
-            center.y.squared() +
-            line.start.x.squared() +
-            line.start.y.squared() +
-            center.z.squared() +
-            line.start.z.squared()
-
-        let part2 = center.x *
-            line.start.x +
-            center.y *
-            line.start.y +
-            center.z * line.start.z
-
-        return part1 - 2 * part2 - offsetRadius.squared()
+        var points = [Vector]()
+        
+        let mu1 = (-b + sqrt(bb4ac)) / (2 * a)
+        if mu1 > 0 && mu1 < 1 {
+            points.append(line.start + deltaLine * mu1)
+        }
+        
+        let mu2 = (-b - sqrt(bb4ac)) / (2 * a)
+        if mu2 > 0 && mu2 < 1 {
+            points.append(line.start + deltaLine * mu2)
+        }
+        
+        return points
 
     }
 

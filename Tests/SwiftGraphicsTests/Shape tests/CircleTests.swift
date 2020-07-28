@@ -56,10 +56,13 @@ final class CircleTests: XCTestCase {
     }
     
     func testLineIntersection() {
-        let line = Line(0, 0, 200, 200)
-        let points = Circle.defaultCircle.lineIntersection(line)
+        let points = Circle.defaultCircle.lineIntersection(Line(0, 0, 200, 200))
         
         XCTAssertEqual(points.count, 2)
+        
+        let points2 = Circle.defaultCircle.lineIntersection(Line(0, 500, 200, 500))
+        
+        XCTAssertEqual(points2.count, 0)
     }
     
     func testContainsPoint() {
