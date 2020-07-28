@@ -105,8 +105,8 @@ open class SketchView: NSView {
 
     /// Passes clicks to the sketch
     @IBAction open func clickGestureAction(_ sender: NSClickGestureRecognizer) {
-        let point = sender.location(in: self)
-        let vector = Vector(point.x, point.y)
+        
+        let vector = Vector(sender.location(in: self))
         (sketch as? InteractiveSketch)?.mouseDown(at: vector)
 
         self.needsDisplay = true
@@ -115,8 +115,8 @@ open class SketchView: NSView {
 
     /// Passes pan gestures to the sketch
     @IBAction open func panGestureAction(_ sender: NSPanGestureRecognizer) {
-        let point = sender.location(in: self)
-        let vector = Vector(point.x, point.y)
+        
+        let vector = Vector(sender.location(in: self))
         (sketch as? InteractiveSketch)?.mousePan(at: vector)
 
         self.needsDisplay = true
@@ -128,7 +128,7 @@ open class SketchView: NSView {
 
         let windowPoint = event.locationInWindow
         let localPoint = self.convert(windowPoint, to: nil)
-        let vector = Vector(localPoint.x, localPoint.y)
+        let vector = Vector(localPoint)
 
         (sketch as? InteractiveSketch)?.scrolled(
             deltaX: Double(event.scrollingDeltaX),

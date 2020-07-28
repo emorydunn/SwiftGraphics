@@ -184,8 +184,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 
     /// Create a `XMLElement` representing the receiver
     open func svgElement() -> XMLElement {
-        let element = XMLElement(kind: .element)
-        element.name = "rect"
+        let element = XMLElement(name: "rect")
+        
         element.addAttribute(x, forKey: "x")
         element.addAttribute(y, forKey: "y")
         element.addAttribute(width, forKey: "width")

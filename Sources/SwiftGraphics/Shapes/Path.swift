@@ -12,7 +12,7 @@ import AppKit
 public class Path: Shape {
 
     /// A point used to draw a Bézier curve
-    public struct BezierPoint {
+    public struct BezierPoint: Hashable {
         /// Anchor point
         let point: Vector
 
@@ -35,6 +35,7 @@ public class Path: Shape {
 
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
+        // FIXME: This needs to be implemented
         Rectangle(x: 0, y: 0, width: 0, height: 0)
     }
 
@@ -215,8 +216,7 @@ extension Path: SVGDrawable {
 
     /// Create a `XMLElement` drawn with straight lines
     func sharpLine() -> XMLElement {
-        let element = XMLElement(kind: .element)
-        element.name = "path"
+        let element = XMLElement(name: "path")
 
         let lines = points.map({
             "L \($0.x) \($0.y)"
@@ -231,8 +231,7 @@ extension Path: SVGDrawable {
 
     /// Create a `XMLElement` drawn with a Bézier curve
     func smoothLine() -> XMLElement {
-        let element = XMLElement(kind: .element)
-        element.name = "path"
+        let element = XMLElement(name: "path")
 
         let bezPoints = smoothLine().map({
             "C \($0.control1.x),\($0.control1.y) \($0.control2.x),\($0.control2.y) \($0.point.x),\($0.point.y)"

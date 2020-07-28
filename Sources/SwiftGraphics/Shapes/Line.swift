@@ -221,8 +221,8 @@ extension Line: SVGDrawable {
 
     /// Create a `XMLElement` representing the receiver
     public func svgElement() -> XMLElement {
-        let element = XMLElement(kind: .element)
-        element.name = "line"
+        let element = XMLElement(name: "line")
+        
         element.addAttribute(start.x, forKey: "x1")
         element.addAttribute(start.y, forKey: "y1")
         element.addAttribute(end.x, forKey: "x2")

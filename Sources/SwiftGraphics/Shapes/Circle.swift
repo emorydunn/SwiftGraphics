@@ -186,8 +186,8 @@ extension Circle: SVGDrawable {
 
     /// Create a `XMLElement` representing the receiver
     public func svgElement() -> XMLElement {
-        let element = XMLElement(kind: .element)
-        element.name = "circle"
+        let element = XMLElement(name: "circle")
+
         element.addAttribute(center.x, forKey: "cx")
         element.addAttribute(center.y, forKey: "cy")
         element.addAttribute(radius, forKey: "r")
