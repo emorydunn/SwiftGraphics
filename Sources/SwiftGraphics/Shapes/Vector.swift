@@ -25,6 +25,7 @@ public class Vector: Shape {
     ///   - x: The `x` position of the vector
     ///   - y: The `y` position of the vector
     ///   - z: The `z` position of the vector
+    @available(*, deprecated, renamed: "init(_:_:_:)")
     public init(x: Double, y: Double, z: Double = 0) {
         self.x = x
         self.y = y
@@ -42,16 +43,14 @@ public class Vector: Shape {
         self.z = z
     }
 
-    /// Instantiate a new `Vector` at the specified coordinates
-    /// - Parameters:
-    ///   - x: The `x` position of the vector
-    ///   - y: The `y` position of the vector
-    ///   - z: The `z` position of the vector
-    public init(_ x: CGFloat, _ y: CGFloat, _ z: CGFloat = 0) {
-        self.x = Double(x)
-        self.y = Double(y)
-        self.z = Double(z)
+    /// Instantiate a new `Vector` from the specified point
+    /// - Parameter point: Point to use as coordinates
+    public init(_ point: NSPoint) {
+        self.x = Double(point.x)
+        self.y = Double(point.y)
+        self.z = 0
     }
+    
 
     /// Instantiate a new `Vector` with the specified angle
     /// - Parameter angle: The angle, in Radians, of the vector

@@ -44,10 +44,10 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     ///   - y: Center Y coordinate
     ///   - radius: Radius of the circle
     public init(x: Double, y: Double, radius: Double) {
-        self.center = Vector(x: 0, y: 0)
+        self.center = Vector(0, 0)
         self.radius = radius
 
-        self.center = Vector(x: x, y: y)
+        self.center = Vector(x, y)
 
     }
 
@@ -68,7 +68,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         let x = center.x + radius * cos(theta)
         let y = center.y + radius * sin(theta)
 
-        return Vector(x: x, y: y)
+        return Vector(x, y)
     }
 
     /// Return the intersection of a ray

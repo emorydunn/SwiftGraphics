@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  CircleTests.swift
 //  
 //
 //  Created by Emory Dunn on 7/28/20.
@@ -36,23 +36,23 @@ final class CircleTests: XCTestCase {
     func testRayIntersection() {
         let circle = Circle.defaultCircle
         
-        XCTAssertEqual(circle.rayIntersection(0), Vector(x: 200, y: 100))
+        XCTAssertEqual(circle.rayIntersection(0), Vector(200, 100))
     }
     
     func testRayIntersectionOrigin() {
         let circle = Circle.defaultCircle
         
         XCTAssertEqual(
-            circle.rayIntersection(origin: Vector(x: 300, y: 300), dir: Vector(angle: 225.toRadians())),
+            circle.rayIntersection(origin: Vector(300, 300), dir: Vector(angle: 225.toRadians())),
             
-            Vector(x: 170.71067811865476, y: 170.71067811865476)
+            Vector(170.71067811865476, 170.71067811865476)
         )
         
-        XCTAssertNil(circle.rayIntersection(origin: Vector(x: 300, y: 300), dir: Vector(angle: 0.toRadians())))
+        XCTAssertNil(circle.rayIntersection(origin: Vector(300, 300), dir: Vector(angle: 0.toRadians())))
     }
     
     func testRayIntersectionObjects() {
-        XCTAssertTrue(Circle.defaultCircle.intersections(for: 0, origin: Vector(x: 300, y: 300), objects: []).isEmpty)
+        XCTAssertTrue(Circle.defaultCircle.intersections(for: 0, origin: Vector(300, 300), objects: []).isEmpty)
     }
     
     func testLineIntersection() {

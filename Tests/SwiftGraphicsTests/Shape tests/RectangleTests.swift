@@ -37,7 +37,7 @@ final class RectangleTests: XCTestCase {
         XCTAssertEqual(rect.center.x, 150)
         XCTAssertEqual(rect.center.y, 300)
 
-        rect.center = Vector(x: 20, y: 20)
+        rect.center = Vector(20, 20)
 
         XCTAssertEqual(rect.x, -30)
         XCTAssertEqual(rect.y, -80)
@@ -108,8 +108,8 @@ final class RectangleTests: XCTestCase {
     func testContainsPoint() {
         let rect = Rectangle(x: 100, y: 200, width: 100, height: 200)
 
-        XCTAssertTrue(rect.contains(Vector(x: 142, y: 330)))
-        XCTAssertFalse(rect.contains(Vector(x: 400, y: 330)))
+        XCTAssertTrue(rect.contains(Vector(142, 330)))
+        XCTAssertFalse(rect.contains(Vector(400, 330)))
     }
 
     func testEquality() {

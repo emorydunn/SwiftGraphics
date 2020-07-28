@@ -14,7 +14,7 @@ import AppKit
 final class LineTests: XCTestCase {
 
     func testLength() {
-        let line = Line(Vector(x: 0, y: 0), Vector(x: 0, y: 100))
+        let line = Line(Vector(0, 0), Vector(0, 100))
 
         XCTAssertEqual(line.length, 100)
     }
@@ -22,7 +22,7 @@ final class LineTests: XCTestCase {
     func testCenter() {
         let line = Line(0, 0, 100, 0)
 
-        XCTAssertEqual(line.center, Vector(x: 50, y: 0))
+        XCTAssertEqual(line.center, Vector(50, 0))
     }
 
     func testPointOnLine() {
@@ -32,7 +32,7 @@ final class LineTests: XCTestCase {
         XCTAssertTrue(line.contains(line.start))
         XCTAssertTrue(line.contains(line.end))
 
-        XCTAssertFalse(line.contains(Vector(x: 50, y: 10)))
+        XCTAssertFalse(line.contains(Vector(50, 10)))
 
     }
 
@@ -50,7 +50,7 @@ final class LineTests: XCTestCase {
 
         XCTAssertEqual(
             line.normal(),
-            Vector(x: -0.7071067811865476, y: 0.7071067811865476)
+            Vector(-0.7071067811865476, 0.7071067811865476)
         )
     }
 
@@ -70,7 +70,7 @@ final class LineTests: XCTestCase {
 
         XCTAssertEqual(
             line.lerp(0.5),
-            Vector(x: 50, y: 50)
+            Vector(50, 50)
         )
     }
 
@@ -79,7 +79,7 @@ final class LineTests: XCTestCase {
 
         XCTAssertEqual(
             line.point(at: 50),
-            Vector(x: 35.35533905932738, y: 35.35533905932738)
+            Vector(35.35533905932738, 35.35533905932738)
         )
 
     }
@@ -99,7 +99,7 @@ final class LineTests: XCTestCase {
 
         XCTAssertEqual(
             line1.lineIntersection(line2),
-            [Vector(x: 50, y: 50)]
+            [Vector(50, 50)]
         )
     }
 
@@ -107,23 +107,35 @@ final class LineTests: XCTestCase {
         let line1 = Line(0, 0, 100, 100)
 
         XCTAssertEqual(
-            line1.rayIntersection(origin: Vector(x: 0, y: 100), dir: Vector(angle: -45.toRadians())),
-            Vector(x: 50.00000000000001, y: 50)
+            line1.rayIntersection(origin: Vector(0, 100), dir: Vector(angle: -45.toRadians())),
+            Vector(50.00000000000001, 50)
         )
 
-        XCTAssertNil(line1.rayIntersection(origin: Vector(x: 0, y: 100), dir: Vector(angle: 45.toRadians())))
+        XCTAssertNil(line1.rayIntersection(origin: Vector(0, 100), dir: Vector(angle: 45.toRadians())))
     }
 
     func testRayPlaneIntersection() {
         let line1 = Line(0, 0, 100, 100)
-        let origin = Vector(x: 0, y: 100)
+        let origin = Vector(0, 100)
 
         XCTAssertEqual(
             line1.rayPlaneIntersection(origin: origin, dir: Vector(angle: -45.toRadians())),
-            Vector(x: 50.00000000000001, y: 50)
+            Vector(50.00000000000001, 50)
         )
 
         XCTAssertNil(line1.rayPlaneIntersection(origin: origin, dir: Vector(angle: 50.toRadians())))
+    }
+    
+    func testRayIntersectionObjects() {
+        XCTAssertTrue(Line(0, 0, 100, 100).intersections(for: 0, origin: Vector(300, 300), objects: []).isEmpty)
+    }
+    
+    func testDescription() {
+        XCTAssertEqual(Line(0, 0, 100, 100).description, "Line (0.0, 0.0) → (100.0, 100.0)")
+    }
+    
+    func testHashable() {
+        XCTAssertEqual(Line(0, 0, 100, 100).hashValue, Line(0, 0, 100, 100).hashValue)
     }
 
 }
