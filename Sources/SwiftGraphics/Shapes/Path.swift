@@ -13,6 +13,7 @@ public class Path: Shape {
 
     /// A point used to draw a Bézier curve
     public struct BezierPoint: Hashable {
+        
         /// Anchor point
         let point: Vector
 
@@ -21,6 +22,12 @@ public class Path: Shape {
 
         /// Second control point
         let control2: Vector
+        
+        public init(point: Vector, control1: Vector, control2: Vector) {
+            self.point = point
+            self.control1 = control1
+            self.control2 = control2
+        }
     }
 
     /// Drawing style of the Path
@@ -172,6 +179,7 @@ extension Path: CGDrawable {
         path.move(to: CGPoint(x: points[0].x, y: points[0].y))
 
         bezPoints.forEach {
+//            path.cur
             path.curve(
                 to: $0.point.nsPoint(),
                 controlPoint1: $0.control1.nsPoint(),
