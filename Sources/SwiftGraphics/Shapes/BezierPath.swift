@@ -17,12 +17,12 @@ public class BezierPath: Shape {
         let point: Vector
 
         /// First control point
-        let control1: Vector
+        let control1: Vector?
 
         /// Second control point
-        let control2: Vector
+        let control2: Vector?
         
-        public init(point: Vector, control1: Vector, control2: Vector) {
+        public init(point: Vector, control1: Vector? = nil, control2: Vector? = nil) {
             self.point = point
             self.control1 = control1
             self.control2 = control2
@@ -63,11 +63,16 @@ extension BezierPath: CGDrawable {
         path.move(to: CGPoint(x: start.x, y: start.y))
 
         points.forEach {
-            path.curve(
-                to: $0.point.nsPoint(),
-                controlPoint1: $0.control1.nsPoint(),
-                controlPoint2: $0.control2.nsPoint()
-            )
+            if let control1 = $0.control1?.nsPoint(), let control2 = $0.control2?.nsPoint() {
+                path.curve(
+                    to: $0.point.nsPoint(),
+                    controlPoint1: control1,
+                    controlPoint2: control2
+                )
+            } else {
+                path.line(to: $0.point.nsPoint())
+            }
+            
         }
         path.stroke()
 
@@ -91,7 +96,12 @@ extension BezierPath: SVGDrawable {
         let element = XMLElement(name: "path")
 
         let bezPoints = points.map({
-            "C \($0.control1.x),\($0.control1.y) \($0.control2.x),\($0.control2.y) \($0.point.x),\($0.point.y)"
+            if let control1 = $0.control1, let control2 = $0.control2 {
+                return "C \(control1.x),\(control1.y) \(control2.x),\(control2.y) \($0.point.x),\($0.point.y)"
+            } else {
+                return "L \($0.point.x),\($0.point.y)"
+            }
+
             }).joined(separator: " ")
 
         let command = "M \(start.x),\(start.y) \(bezPoints)"
