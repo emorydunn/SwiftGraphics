@@ -15,7 +15,7 @@ extension Array {
     /// let a = ["zero", "one", "two", "three", "four"]
     /// let p = array.paired() // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
     /// ```
-    func paired() -> [(Element, Element)] {
+    public func paired() -> [(Element, Element)] {
         var pairedItems = [(Element, Element)]()
 
         self.enumerated().forEach { offset, item in
@@ -89,4 +89,7 @@ extension Array where Element == Bool {
     
     /// Returns a boolean indicating whether all elements of the array are `true`
     public func allTrue() -> Bool { allSatisfy { $0 } }
+    
+    /// Returns a boolean indicating whether all elements of the array are `false`
+    public func allFalse() -> Bool { allSatisfy { !$0 } }
 }
