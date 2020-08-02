@@ -70,6 +70,11 @@ public class Circle: Polygon, Intersectable, CGDrawable {
 
         return Vector(x, y)
     }
+    
+    public func angle(ofPoint point: Vector) -> Radians {
+        let unitInt = point - center
+        return atan2(unitInt.y, unitInt.x)
+    }
 
     /// Return the intersection of a ray
     ///
@@ -140,6 +145,49 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     /// - Parameter context: Context in which to draw
     public func debugDraw(in context: CGContext) {
         draw(in: context)
+    }
+    
+    /// Generate a cubic Bézier representing an arc around a circle.
+    ///
+    /// Adapted from [Joe Cridge](https://www.joecridge.me/bezier.pdf)
+    /// - Note: Bézier approximations of circles only work up to ~90º
+    /// - Parameters:
+    ///   - start: Starting angle of the arc, in radians
+    ///   - size: Size of the arc, in radians
+    ///   - circle: Circle to make the arc on
+    public func acuteArc(start: Radians, size: Radians) -> BezierPath {
+        
+        let alpha = size / 2
+        let cosAlpha = cos(alpha)
+        let sinAlpha = sin(alpha)
+        let cotAlpha = 1 / tan(alpha)
+        
+        let phi = start + alpha  // This is how far the arc needs to be rotated.
+        let cosPhi = cos(phi)
+        let sinPhi = sin(phi)
+        
+        let lambda = (4 - cosAlpha) / 3
+        // swiftlint:disable:next identifier_name
+        let mu = sinAlpha + (cosAlpha - lambda) * cotAlpha
+        
+        let pointA = Vector(cos(start), sin(start)) * radius + center
+        let pointB = Vector(
+            lambda * cosPhi + mu * sinPhi,
+            lambda * sinPhi - mu * cosPhi
+            ) * radius + center
+        let pointC = Vector(
+            lambda * cosPhi - mu * sinPhi,
+            lambda * sinPhi + mu * cosPhi
+            ) * radius + center
+        let pointD = Vector(cos(start + size), sin(start + size)) * radius + center
+        
+        let points = [
+            BezierPath.Point(point: pointD,
+                             control1: pointB,
+                             control2: pointC)
+        ]
+        
+        return BezierPath(start: pointA, points: points)
     }
 }
 
