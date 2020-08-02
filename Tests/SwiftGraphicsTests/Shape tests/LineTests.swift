@@ -98,7 +98,7 @@ final class LineTests: XCTestCase {
         let line2 = Line(0, 100, 100, 0)
 
         XCTAssertEqual(
-            line1.lineIntersection(line2),
+            line1.intersection(with: line2),
             [Vector(50, 50)]
         )
     }
