@@ -14,6 +14,8 @@ import Foundation
 /// Implemented from p5.js
 public class PerlinGenerator {
     
+    public static let shared = PerlinGenerator()
+    
     let yWrapB = 4
     lazy var yWrap = 1 << yWrapB
     let zWrapB = 8
