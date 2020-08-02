@@ -108,54 +108,15 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         return []
     }
 
-    /// Determine the points where the specified `Line` intersects the `Circle`
-    ///
-    /// Adapted from the C version by [Paul Bourke](http://paulbourke.net/geometry/circlesphere/).
-    /// - Parameter line: Intersecting line
-    public func lineIntersection(_ line: Line) -> [Vector] {
-        
-        let deltaLine = line.end - line.start
-        
-        let a = deltaLine.magSq()
-        let b = 2 * (deltaLine.x * (line.start.x - center.x) +
-                     deltaLine.y * (line.start.y - center.y) +
-                     deltaLine.z * (line.start.z - center.z))
-        var c = center.magSq()
-        
-        c += line.start.magSq()
-        c -= 2 * (line.start.dot(center))
-        c -= radius.squared()
-        
-        let bb4ac = b * b - 4 * a * c
-        
-        let eps: Double = 0.00001
-
-        guard abs(a) > eps || bb4ac > 0  else {
-            return []
-        }
-
-        var points = [Vector]()
-        
-        let mu1 = (-b + sqrt(bb4ac)) / (2 * a)
-        if mu1 > 0 && mu1 < 1 {
-            points.append(line.start + deltaLine * mu1)
-        }
-        
-        let mu2 = (-b - sqrt(bb4ac)) / (2 * a)
-        if mu2 > 0 && mu2 < 1 {
-            points.append(line.start + deltaLine * mu2)
-        }
-        
-        return points
-
-    }
 
     /// Determine whether teh specified point is inside the circle
     ///
     /// This method compares the distance between the center and point to the radius of the circle.
     /// - Parameter point: Whether the point is inside the circle
     public func contains(_ point: Vector) -> Bool {
-        return point.dist(center) < radius
+        let unitPoint = point - center
+        return sqrt(unitPoint.x.squared() + unitPoint.y.squared()) < radius
+//        return point.dist(center)
     }
 
     /// Draw the receiver in the specified context

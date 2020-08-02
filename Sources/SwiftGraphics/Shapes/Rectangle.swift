@@ -125,7 +125,13 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     /// - Parameter theta: Angle in radians
     public func rayIntersection(_ theta: Radians) -> Vector {
         return rayIntersection(origin: self.center, theta: theta)!
-
+    }
+    
+    public func angle(ofPoint point: Vector) -> Radians {
+        let hypot = sqrt(width.squared() + height.squared())
+        let circle = Circle(center: center, radius: hypot)
+        
+        return circle.angle(ofPoint: point)
     }
 
     /// Determine whether the specified point is in the rectangle
@@ -278,26 +284,6 @@ extension Rectangle: Intersectable {
         }
 
         return origin + dir * t
-
-    }
-
-    /// Determine where the specified line intersects with the rectangle
-    ///
-    /// The rectangle tests whether the line intersects with each of its four edges
-    /// - Parameter line: The line to test
-    public func lineIntersection(_ line: Line) -> [Vector] {
-        // Collect the edges
-        let edges = [
-            topEdge,
-            bottomEdge,
-            leftEdge,
-            rightEdge
-        ]
-
-        return edges.reduce(into: [Vector]()) { (intersections, edge) in
-            intersections.append(contentsOf: edge.lineIntersection(line))
-
-        }
 
     }
 

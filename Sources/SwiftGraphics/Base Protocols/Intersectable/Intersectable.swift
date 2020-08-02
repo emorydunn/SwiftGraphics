@@ -14,7 +14,7 @@ public protocol Intersectable: AnyObject, Shape {
     
     /// Find any intersection points between the receiver and the specified line
     /// - Parameter line: Line to intersect
-    func lineIntersection(_ line: Line) -> [Vector]
+    func intersections(with otherShape: Intersectable) -> [Vector]
     
     /// Returns  `Line` segments made of paired points where the specified line intersects
     ///
@@ -66,7 +66,7 @@ extension Intersectable where Self: Polygon {
 extension Intersectable {
 
     public func lineSegments(_ line: Line, firstOnly: Bool) -> [Line] {
-        var intersections = self.lineIntersection(line)
+        var intersections = self.intersections(with: line)
         
         guard intersections.count > 0 else {
             return []
@@ -105,7 +105,7 @@ extension Intersectable {
     /// - Parameter endPoint: Ending point of the Line
     /// - Returns: An array of intersection points
     public func lineIntersection(startPoint: Vector, endPoint: Vector) -> [Vector] {
-        return lineIntersection(Line(startPoint, endPoint))
+        return intersections(with: Line(startPoint, endPoint))
     }
 
  

@@ -86,38 +86,6 @@ open class Line: Shape, Intersectable {
         return atan(slope())
     }
 
-    /// Find any intersecting points with the specified line
-    ///
-    /// Adapted from https://stackoverflow.com/a/1968345
-    /// - Parameter line: Other line to intersect
-    public func lineIntersection(_ line: Line) -> [Vector] {
-        // p0 -> self.start
-        // p1 -> self.end
-        // p2 -> line.start
-        // p3 -> line.end
-        let s1X = self.end.x - self.start.x
-        let s1Y = self.end.y - self.start.y
-        let s2X = line.end.x - line.start.x
-        let s2Y = line.end.y - line.start.y
-
-         // swiftlint:disable:next identifier_name
-        let s = (-s1Y * (self.start.x - line.start.x) + s1X * (self.start.y - line.start.y)) / (-s2X * s1Y + s1X * s2Y)
-         // swiftlint:disable:next identifier_name
-        let t = ( s2X * (self.start.y - line.start.y) - s2Y * (self.start.x - line.start.x)) / (-s2X * s1Y + s1X * s2Y)
-
-        var intersections = [Vector]()
-        if s >= 0 && s <= 1 && t >= 0 && t <= 1 {
-            // Collision detected
-            let intX = self.start.x + (t * s1X)
-            let intY = self.start.y + (t * s1Y)
-
-            intersections.append(Vector(intX, intY))
-
-        }
-
-        return intersections
-    }
-
     /// Calculate the intersection point of a ray and a plane defined by the Line
     /// - Parameters:
     ///   - origin: Origin of the ray
