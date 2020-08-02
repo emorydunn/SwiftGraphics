@@ -28,4 +28,11 @@ extension Radians {
     public func toDegrees() -> Degrees {
         return self * 180 / Double.pi
     }
+    
+    public static let twoPi = Double.pi * 2
+    public static let halfPi = Double.pi / 2
+    
+    public static let fullCircle = Radians.twoPi
+    public static let halfCircle = Radians.pi
+    public static let quarterCircle = Radians.halfPi
 }
