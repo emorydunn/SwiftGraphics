@@ -38,27 +38,29 @@ open class SketchView: NSView {
     }
 
     /// Draws the sketch to an image
-    open func drawToImage() -> NSImage {
-        let image = NSImage(size: self.frame.size)
+    open func drawToImage() -> NSImage? {
+        guard let sketch = sketch else { return nil }
+        let image = NSImage(size: sketch.size.cgSize)
         image.lockFocusFlipped(true)
 
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
 
-        sketch?.draw()
+        sketch.draw()
         image.unlockFocus()
 
         return image
     }
     
     /// Creates an SVG document
-    open func drawToSVG() -> XMLDocument {
+    open func drawToSVG() -> XMLDocument? {
+        guard let sketch = sketch else { return nil }
 
-        let context = SVGContext(sketch: self)
+        let context = SVGContext(sketch: sketch)
 
         SwiftGraphicsContext.current = context
 
-        sketch?.draw()
+        sketch.draw()
 
         (sketch as? SketchViewDelegate)?.willWriteToSVG(with: context)
         let doc = context.makeDoc()
@@ -84,18 +86,20 @@ open class SketchView: NSView {
     /// Draw the sketch to an image and attempt to save it
     /// - Parameter url: URL to write the image to
     open func saveImage(to url: URL) throws {
-        let image = drawToImage()
+        guard let image = drawToImage() else { return }
         try saveImage(image, to: url)
     }
     
     /// Generates an SVG and attempts to write it to the specified URL
     /// - Parameter url: URL to write to
     open func saveSVG(to url: URL) throws {
-        let context = SVGContext(sketch: self)
+        guard let sketch = sketch else { return }
+        
+        let context = SVGContext(sketch: sketch)
         
         SwiftGraphicsContext.current = context
         
-        sketch?.draw()
+        sketch.draw()
         
         (sketch as? SketchViewDelegate)?.willWriteToSVG(with: context)
         

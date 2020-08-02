@@ -42,6 +42,7 @@ public class SVGContext: DrawingContext {
     }
     
     /// Create a new SVG from a `SketchView`
+    @available(*, deprecated, message: "Initialize with a Sketch, rather than SketchView.", renamed: "init(sketch:)")
     public convenience init(sketch: SketchView) {
         self.init(
             width: Int(sketch.bounds.width),
