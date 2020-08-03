@@ -15,7 +15,6 @@ public protocol Sketch {
     /// Title of the sketch
     static var title: String { get set }
 
-    
     /// Size of the sketch
     var size: Size { get set }
     

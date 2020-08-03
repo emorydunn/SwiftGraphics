@@ -27,4 +27,9 @@ public struct Size: Hashable {
     public var cgSize: CGSize {
         CGSize(width: width, height: height)
     }
+    
+    /// Returns a NSSize object
+    public var nsSize: NSSize {
+        NSSize(width: width, height: height)
+    }
 }
