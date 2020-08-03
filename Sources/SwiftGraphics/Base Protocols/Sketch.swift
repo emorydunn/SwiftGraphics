@@ -53,7 +53,7 @@ extension Sketch {
         SwiftGraphicsContext.current
     }
 
-    /// Return a unique file name based on the time and a hash of the time
+    /// Return a unique file name based on a hash of the time and pid.
     ///
     /// The string takes the form of `YYYYMMDD-HHmmss-<short hash>`
     public func hashedFileName() -> String {
@@ -62,9 +62,10 @@ extension Sketch {
 
         let dateString = formatter.string(from: Date())
 
-        let hash = dateString.sha1()
+        let hash = "\(getpid())-\(dateString)".sha1()
         let shortHash = String(hash.dropLast(hash.count - 8))
 
+        getpid()
         let fileName = "\(dateString)-\(shortHash)"
 
         return fileName
