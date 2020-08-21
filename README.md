@@ -8,7 +8,7 @@ Take a look at the [documentation](https://emorydunn.github.io/SwiftGraphics/) a
 
 ![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/Examples/20200705-144332-7d04fc1d.png)
 
-# 2D Primiatives
+# 2D Primatives
 
 - Circle
 - Rectangle
