@@ -130,7 +130,7 @@ extension Intersectable {
     ///   - origin: The origin of the ray being cast
     ///   - objects: Objects to test for intersection, sorted by distance from the origin
     /// - Returns: Lines representing the path taken by the ray
-    func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
+    public func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
 
         // Remove self to prevent recursion
         var nonSelfObjects = objects
