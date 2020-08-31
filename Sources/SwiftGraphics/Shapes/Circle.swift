@@ -84,6 +84,20 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     ///   - dir: Direction of the ray
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
 
+        guard let hitPoints = rayIntersections(origin: origin, dir: dir) else { return nil }
+        
+        return hitPoints.entry
+        
+    }
+    
+    /// Return the entry and exit points for the given ray
+    ///
+    /// From https://math.stackexchange.com/a/311956
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
+    public func rayIntersections(origin: Vector, dir: Vector) -> (entry: Vector, exit: Vector)? {
+
         let relativeDir = dir + origin
 
         // swiftlint:disable all
@@ -94,17 +108,23 @@ public class Circle: Polygon, Intersectable, CGDrawable {
 
         let discr = b.squared() - 4 * a * c
 
-        let t = (2 * c) / (-b + sqrt(discr)) // swiftlint:disable:this identifier_name
+        let tEntry = (2 * c) / (-b + sqrt(discr))
+        let tExit = (2 * c) / (-b - sqrt(discr))
 
         // If t is less than 0 the intersection is behind the ray
-        guard t > 0 else { return nil }
+//        guard tEntry > 0 && tExit > 0 else { return nil }
 
-        let pHit = Vector(
-            (relativeDir.x - origin.x) * t + origin.x,
-            (relativeDir.y - origin.y) * t + origin.y
+        let pEntry = Vector(
+            (relativeDir.x - origin.x) * tEntry + origin.x,
+            (relativeDir.y - origin.y) * tEntry + origin.y
+        )
+        
+        let pExit = Vector(
+            (relativeDir.x - origin.x) * tExit + origin.x,
+            (relativeDir.y - origin.y) * tExit + origin.y
         )
 
-        return pHit
+        return (pEntry, pExit)
 
     }
     
