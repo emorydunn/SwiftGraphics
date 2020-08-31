@@ -47,6 +47,16 @@ open class Line: Shape, Intersectable {
         self.start = Vector(x1, y1)
         self.end = Vector(x2, y2)
     }
+    
+    public convenience init(center: Vector, direction: Radians, length: Double) {
+        let dir = Vector(angle: direction)
+        self.init(
+            center.x - dir.x * (length / 2),
+            center.y - dir.y * (length / 2),
+            center.x + dir.x * (length / 2),
+            center.y + dir.y * (length / 2)
+        )
+    }
 
     /// Determine whether a point is on the line
     ///
