@@ -21,6 +21,10 @@ public struct Color: Equatable {
     
     /// Alpha value
     public let alpha: Float
+    
+    public var grey: Float {
+        return (red + green + blue) / 3
+    }
 
     /// Instantiate a new Color
     ///
