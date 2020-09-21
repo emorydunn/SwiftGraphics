@@ -18,3 +18,22 @@ public protocol CGDrawable: Shape {
     /// - Parameter context: Context in which to draw
     func debugDraw(in context: CGContext)
 }
+
+extension CGDrawable {
+    public func debugDraw() {
+        // Important: Classes that directly conform to `DrawingContext`
+        // must be listed first.
+        // Conformance by extension will always succeed, because the
+        // method doesn't need to know anything beyond the protocol
+        
+        switch SwiftGraphicsContext.current {
+        case is SVGContext:
+            break
+        case let context as CGContext:
+            debugDraw(in: context)
+        default:
+            break
+        }
+        
+    }
+}
