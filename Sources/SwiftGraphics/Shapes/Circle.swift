@@ -85,8 +85,14 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
 
         guard let hitPoints = rayIntersections(origin: origin, dir: dir) else { return nil }
-        
-        return hitPoints.entry
+
+        if hitPoints.entry.inLine {
+            return hitPoints.entry.point
+        } else if hitPoints.exit.inLine {
+            return hitPoints.exit.point
+        }
+
+        return nil
         
     }
     
@@ -96,7 +102,7 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     /// - Parameters:
     ///   - origin: Origin of the ray
     ///   - dir: Direction of the ray
-    public func rayIntersections(origin: Vector, dir: Vector) -> (entry: Vector, exit: Vector)? {
+    public func rayIntersections(origin: Vector, dir: Vector) -> (entry: IntersectionInfo, exit: IntersectionInfo)? {
 
         let relativeDir = dir + origin
 
@@ -107,24 +113,26 @@ public class Circle: Polygon, Intersectable, CGDrawable {
         // swiftlint:enable all
 
         let discr = b.squared() - 4 * a * c
+    
+        guard discr > 0 else { return nil }
 
         let tEntry = (2 * c) / (-b + sqrt(discr))
-        let tExit = (2 * c) / (-b - sqrt(discr))
-
-        // If t is less than 0 the intersection is behind the ray
-//        guard tEntry > 0 && tExit > 0 else { return nil }
+        let tExit =  (2 * c) / (-b - sqrt(discr))
 
         let pEntry = Vector(
             (relativeDir.x - origin.x) * tEntry + origin.x,
             (relativeDir.y - origin.y) * tEntry + origin.y
         )
         
+        let entryInfo = IntersectionInfo(point: pEntry, inLine: tEntry >= 0 )
+        
         let pExit = Vector(
             (relativeDir.x - origin.x) * tExit + origin.x,
             (relativeDir.y - origin.y) * tExit + origin.y
         )
+        let exitInfo = IntersectionInfo(point: pExit, inLine: tExit >= 0 )
 
-        return (pEntry, pExit)
+        return (entryInfo, exitInfo)
 
     }
     
@@ -243,4 +251,16 @@ extension Circle: Hashable {
         hasher.combine(radius)
     }
 
+}
+
+extension Circle {
+    
+    /// Information about ray intersections
+    public struct IntersectionInfo {
+        /// The intersection point
+        public let point: Vector
+        
+        /// Whether the point is in front of the ray
+        public let inLine: Bool
+    }
 }
