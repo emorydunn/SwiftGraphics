@@ -8,6 +8,16 @@
 
 import Foundation
 
+struct LensIntersections {
+    let entryPoint: Vector
+    let entryDeflection: Vector
+    let entryInterface: Line
+
+    let exitPoint: Vector
+    let exitDeflection: Vector
+    let exitInterface: Line
+}
+
 /// A circle, with an origin and a radius
 public class Circle: Polygon, Intersectable, CGDrawable {
 
@@ -131,6 +141,12 @@ public class Circle: Polygon, Intersectable, CGDrawable {
             (relativeDir.y - origin.y) * tExit + origin.y
         )
         let exitInfo = IntersectionInfo(point: pExit, inLine: tExit >= 0 )
+        
+//        let oldColor = SwiftGraphicsContext.fillColor
+//        SwiftGraphicsContext.fillColor = .blue
+//        pEntry.debugDraw()
+//        pExit.debugDraw()
+//        SwiftGraphicsContext.fillColor = oldColor
 
         return (entryInfo, exitInfo)
 
@@ -138,7 +154,23 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     
     /// Returns an empty array, which causes the receiver to terminate the ray.
     public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
-        return []
+        
+        let angleDir = Vector(angle: angle)
+        
+        // The origin is the hit point on the lens
+        guard let intersection = exitPoint(entryPoint: origin, dir: angleDir) else {
+            return []
+        }
+        
+        var lensLines = defaultIntersections(
+            for: intersection.exitDeflection.heading(),
+            origin: intersection.exitPoint,
+            objects: objects)
+
+        lensLines.append(Line(intersection.entryPoint, intersection.exitPoint))
+
+        return lensLines
+//        return []
     }
 
 
@@ -262,5 +294,71 @@ extension Circle {
         
         /// Whether the point is in front of the ray
         public let inLine: Bool
+        
+        public func debugDraw() {
+            point.debugDraw()
+        }
+    }
+}
+
+extension Circle {
+    /// The interface of the intersection of a ray
+    /// - Parameter intersection: The point of intersection
+    /// - Returns: A line representing the normal
+    func interface(of intersection: Vector) -> Line {
+        var entryAngle = angle(ofPoint: intersection)
+        if entryAngle < 0 {
+            entryAngle = 360.toRadians() + entryAngle
+        }
+
+        let tangentAngle = entryAngle + 90.toRadians()
+
+        return Line(center: intersection, direction: tangentAngle, length: 50)
+    }
+    
+    func deflectionAngle(for dir: Vector, at interface: Line) -> Vector {
+        
+        let refraction = 1.46
+        let extIndex = 1.0
+
+        // Determine the angle from the normal
+        let thetaInc: Radians = dir.angleBetween(interface.normal())
+
+        // Snell's Law of reflection
+        let deflection: Radians = asin((extIndex * sin(thetaInc)) / refraction)
+
+        dir.rotate(by: deflection)
+        print("New heading is:", abs(dir.heading().toDegrees()))
+
+        return dir //Vector(angle: deflection)
+
+    }
+    
+    /// Calculate the deflection geometry of a ray passing through the lens
+    /// - Parameters:
+    ///   - entryPoint: Entry point on the lens of a ray
+    ///   - dir: Direction of the ray
+    /// - Returns: Information about how the ray is deflected in the lens
+    func exitPoint(entryPoint: Vector, dir: Vector) -> LensIntersections? {
+        
+        let entryInterface = self.interface(of: entryPoint)
+        let entryDeflection = deflectionAngle(for: dir, at: entryInterface)
+
+        // Calulcate the exit point
+        // The intersection maths gets weird when the origin is on the circle
+        // so we move the outside the circle
+        let modEntry = entryPoint.copy() - 10
+        guard let intersections = rayIntersections(origin: modEntry, dir: entryDeflection) else { return nil }
+        
+        let exitInterface = self.interface(of: intersections.exit.point)
+        let exitDeflection = deflectionAngle(for: entryDeflection, at: exitInterface)
+
+        return LensIntersections(
+            entryPoint: entryPoint,
+            entryDeflection: entryDeflection,
+            entryInterface: entryInterface,
+            exitPoint: intersections.exit.point,
+            exitDeflection: exitDeflection,
+            exitInterface: exitInterface)
     }
 }
