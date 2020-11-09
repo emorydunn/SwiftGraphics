@@ -40,6 +40,13 @@ public class PerlinGenerator {
     }
     
     /// Calculate the Perlin noise values for the specified coordinates
+    /// - Parameter vector: Position for the noice value
+    public func noise(_ vector: Vector) -> Double {
+        return noise(vector.x, vector.y, vector.z)
+    }
+    
+    
+    /// Calculate the Perlin noise values for the specified coordinates
     /// - Parameters:
     ///   - x: `x` coordinate
     ///   - y: `y` coordinate
