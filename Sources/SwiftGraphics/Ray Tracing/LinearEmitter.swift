@@ -55,7 +55,8 @@ public class LinearEmitter: Line, Emitter {
         let percentStep = (rayStep / length)
 
         stride(from: 0, to: 1 + percentStep, by: percentStep).forEach { percent in
-            let origin = start + ((end - start) * percent)
+//            let origin = start + ((end - start) * percent)
+            let origin = self.lerp(percent)
 
             let intersections = self.intersections(
                 for: angle,
