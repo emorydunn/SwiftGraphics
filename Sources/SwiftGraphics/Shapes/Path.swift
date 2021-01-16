@@ -65,6 +65,12 @@ public class Path: Shape {
     public init(points: [Vector] = []) {
         self.points = points
     }
+    
+    /// Instantiate a new Path from an array of Vectors
+    /// - Parameter points: Points in the path
+    public convenience init(point: Vector) {
+        self.init(points: [point])
+    }
 
     /// Append a point to the path
     /// - Parameter point: New Vector
