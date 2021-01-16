@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Any shape that can calculate points of intersection between itself and a `Line`
+/// Any shape that can calculate points of intersection between itself and a `Line` or `Vector`
 public protocol Intersectable: AnyObject, Shape {
     
     
@@ -130,6 +130,7 @@ extension Intersectable {
     ///   - origin: The origin of the ray being cast
     ///   - objects: Objects to test for intersection, sorted by distance from the origin
     /// - Returns: Lines representing the path taken by the ray
+    @available(*, deprecated, message: "Use RayTracable")
     public func defaultIntersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
 
         // Remove self to prevent recursion
