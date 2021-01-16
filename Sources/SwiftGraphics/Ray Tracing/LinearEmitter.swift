@@ -41,12 +41,13 @@ public class LinearEmitter: Line, Emitter {
     /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(objects: [Intersectable]) {
-        // Draw the circle
+    public func draw(objects: [RayTracable]) {
+        // Draw the line
         if case .line = style {
             super.draw()
         }
 
+        // Ensure there is space between the rays
         guard rayStep > 0 else { return }
 
         let angleVector: Vector = normal()
@@ -55,31 +56,18 @@ public class LinearEmitter: Line, Emitter {
         let percentStep = (rayStep / length)
 
         stride(from: 0, to: 1 + percentStep, by: percentStep).forEach { percent in
-//            let origin = start + ((end - start) * percent)
             let origin = self.lerp(percent)
-
-            let intersections = self.intersections(
-                for: angle,
+            
+            let ray = Ray(
                 origin: origin,
-                objects: objects)
-
-            drawIntersections(intersections)
+                direction: Vector(angle: angle)
+            )
+            ray.run(objects: objects)
+            ray.draw()
 
         }
+        
 
-    }
-
-    /// Find intersections for a ray cast from the specified origin.
-    ///
-    /// Each `Line` represents one segment of the path of the ray.
-    ///
-    /// - Parameters:
-    ///   - angle: Angle, in radians, of the ray.
-    ///   - origin: Origin of the ray.
-    ///   - objects: Objects to test for intersection.
-    /// - Returns: An array of line segments representing intersections and interactions.
-    public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
-        return defaultIntersections(for: angle, origin: origin, objects: objects)
     }
 
 }

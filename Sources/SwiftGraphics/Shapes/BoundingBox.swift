@@ -57,4 +57,8 @@ public class BoundingBox: Rectangle {
         self.width = contextWidth - (inset * 2)
         self.height = contextHeight - (inset * 2)
     }
+    
+    public override func modifyRay(_ ray: Ray) {
+        ray.terminateRay()
+    }
 }

@@ -9,10 +9,10 @@
 import Foundation
 
 /// An emiiter that casts a single ray at a given angle
-public class DirectionalEmitter: Circle, Emitter {
+public class DirectionalEmitter: Emitter {
 
-    /// Direction of the ray
-    public var direction: Degrees
+    public var origin: Vector
+    public var direction: Vector
 
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
@@ -23,9 +23,8 @@ public class DirectionalEmitter: Circle, Emitter {
     ///   - origin: The emitter's origin
     ///   - direction: Direction of the emitter's ray
     public init(_ origin: Vector, _ direction: Degrees) {
-        self.direction = direction
-
-        super.init(center: origin, radius: 10)
+        self.origin = origin
+        self.direction = Vector(angle: direction.toRadians())
 
     }
     
@@ -41,40 +40,19 @@ public class DirectionalEmitter: Circle, Emitter {
     /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(objects: [Intersectable]) {
-
-        let intersections = self.intersections(for: direction.toRadians(),
-                           origin: center,
-                           objects: objects
-        )
-
-        drawIntersections(intersections)
+    public func draw(objects: [RayTracable]) {
+        let ray = Ray(origin: origin.copy(), direction: direction.copy())
+        ray.run(objects: objects)
+        
+        ray.draw()
 
     }
     
     /// Draws a representation of the emitter suitable for debugging.
     /// - Parameter context: Context in which to draw
-    public override func debugDraw(in context: CGContext) {
-        super.debugDraw(in: context)
-
-        let dirPoint = Vector(angle: direction.toRadians())
-        dirPoint *= 20
-        dirPoint += center
-
-        dirPoint.debugDraw(in: context)
-    }
-
-    /// Find intersections for a ray cast from the specified origin.
-    ///
-    /// Each `Line` represents one segment of the path of the ray.
-    ///
-    /// - Parameters:
-    ///   - angle: Angle, in radians, of the ray.
-    ///   - origin: Origin of the ray.
-    ///   - objects: Objects to test for intersection.
-    /// - Returns: An array of line segments representing intersections and interactions.
-    public override func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
-        return defaultIntersections(for: angle, origin: origin, objects: objects)
+    public func debugDraw(in context: CGContext) {
+        let ray = Ray(origin: origin.copy(), direction: direction.copy())
+        ray.debugDraw(in: context)
     }
 
 }

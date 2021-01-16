@@ -9,7 +9,7 @@
 import Foundation
 
 /// Represents a line between two points
-open class Line: Shape, Intersectable {
+open class Line: Shape, Intersectable, RayTracable {
 
     /// The starting point of the line
     public var start: Vector
@@ -162,6 +162,38 @@ open class Line: Shape, Intersectable {
     func slope() -> Double {
         return (end.y - start.y) / (end.x - start.x)
     }
+    
+    // MARK: RayTracable
+    /// Calculate the intersection point of a ray and the Line
+    /// - Parameters:
+    ///   - origin: Origin of the ray
+    ///   - dir: Direction of the ray
+    /// - Returns: The point of intersection, if the ray intersections the line
+    public func rayIntersection(_ ray: Ray) -> Vector? {
+        
+        let v1 = ray.origin - start // swiftlint:disable:this identifier_name
+        let v2 = end - start // swiftlint:disable:this identifier_name
+        let v3 = Vector(-ray.direction.y, ray.direction.x) // swiftlint:disable:this identifier_name
+        
+        let dot = v2.dot(v3)
+        
+        let t1 = v2.crossProduct(v1) / dot  //Vector.crossProduct(v2, v1) / dot // swiftlint:disable:this identifier_name
+        let t2 = v1.dot(v3) / dot // swiftlint:disable:this identifier_name
+        
+        // Guard against the intersection point being nearly the same as the origin
+        guard t1.rounded() != 0 else {
+            return nil
+        }
+        if t1 >= 0.0 && (t2 >= 0.0 && t2 <= 1.0) {
+            return ray.origin + ray.direction * t1
+        }
+        return nil
+    }
+    
+    public func modifyRay(_ ray: Ray) {
+        ray.terminateRay()
+    }
+
 
 }
 

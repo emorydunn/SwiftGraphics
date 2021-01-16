@@ -17,7 +17,7 @@ public protocol Emitter: AnyObject {
     /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
     ///   - objects: Objects to test for intersection when casting rays
-    func draw(objects: [Intersectable])
+    func draw(objects: [RayTracable])
 }
 
 extension Emitter {
