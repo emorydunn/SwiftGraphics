@@ -85,6 +85,10 @@ public class Vector: Shape {
     public func nsPoint() -> NSPoint {
         NSPoint(x: x, y: y)
     }
+    
+    func rounded() -> Vector {
+        return Vector(x.rounded(), y.rounded(), z.rounded())
+    }
 
 }
 
@@ -95,6 +99,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, deprecated, message: "Please use instance methods")
     public static func dist(_ lhs: Vector, _ rhs: Vector) -> Double {
         return sqrt(pow(rhs.x - lhs.x, 2) + pow(rhs.y - lhs.y, 2) + pow(rhs.z - lhs.z, 2))
     }
@@ -103,6 +108,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, deprecated, message: "Please use instance methods")
     public static func dot(_ lhs: Vector, _ rhs: Vector) -> Double {
         return lhs.x * rhs.x + lhs.y * rhs.y + lhs.z * rhs.z
     }
@@ -111,6 +117,7 @@ extension Vector {
     /// - Parameters:
     ///   - v1: The first `Vector`
     ///   - v2: the second `Vector`
+    @available(*, deprecated, message: "Please use instance methods")
     public static func cross(_ lhs: Vector, _ rhs: Vector) -> Vector {
 
         let x = lhs.y * rhs.z - lhs.z * rhs.y
@@ -134,6 +141,7 @@ extension Vector {
     ///   - v1: The first vector to evaluate.
     ///   - v2: The second vector to evaluate.
     /// - Returns: The cross product of vector1 and vector2.
+    @available(*, deprecated, message: "Please use instance methods")
     public static func crossProduct(_ lhs: Vector, _ rhs: Vector) -> Double {
         // (Vector1.X * Vector2.Y) - (Vector1.Y * Vector2.X)
         return (lhs.x * rhs.y) - (lhs.y * rhs.x)
@@ -157,24 +165,47 @@ extension Vector {
     ///
     /// - Note: Faster if the real length is not required in the case of comparing vectors, etc.
     public func magSq() -> Double {
-        return x * x + y * y + z * z
+        return x.squared() + y.squared() + z.squared()
     }
     
     /// Return the distance to another vector
     /// - Parameter vector: Another vector
     /// - Returns: Distance to the second vector
     public func dist(_ vector: Vector) -> Double {
-        return Vector.dist(vector, self)
+        return sqrt(pow(self.x - vector.x, 2) + pow(self.y - vector.y, 2) + pow(self.z - vector.z, 2))
     }
 
     /// Calculates the dot product of two vectors.
     public func dot(_ vector: Vector) -> Double {
-        return Vector.dot(self, vector)
+        self.x * vector.x + self.y * vector.y + self.z * vector.z
     }
 
     /// Calculates and returns a vector composed of the cross product between two vectors
     public func cross(_ vector: Vector) -> Vector {
-        return Vector.cross(self, vector)
+        let x = self.y * vector.z - self.z * vector.y
+        let y = self.z * vector.x - self.x * vector.z
+        let z = self.x * vector.y - self.y * vector.x
+        
+        return Vector(x, y, z)
+    }
+    
+    /// Calculates the cross product of two vectors.
+    ///
+    /// The following formula is used to calculate the cross product:
+    ///
+    /// `(Vector1.X * Vector2.Y) - (Vector1.Y * Vector2.X)`
+    ///
+    ///  [Implementation][] from C#.
+    ///
+    /// [Implementation]: https://docs.microsoft.com/en-us/dotnet/api/system.windows.vector.crossproduct
+    ///
+    /// - Parameters:
+    ///   - v1: The first vector to evaluate.
+    ///   - v2: The second vector to evaluate.
+    /// - Returns: The cross product of vector1 and vector2.
+    public func crossProduct(_ vector: Vector) -> Double {
+        // (Vector1.X * Vector2.Y) - (Vector1.Y * Vector2.X)
+        return (self.x * vector.y) - (self.y * vector.x)
     }
     
     /// Normalize the vector to length 1 (make it a unit vector).
@@ -183,6 +214,13 @@ extension Vector {
         if len != 0 {
             self *= 1 / len
         }
+    }
+    
+    /// Return a normalized copy of the vector.
+    public func normalized() -> Vector {
+        let norm = copy()
+        copy().normalize()
+        return norm
     }
     
     /// Calculates and returns the angle (in radians) between two vectors.
