@@ -136,6 +136,7 @@ public class Ray {
 }
 
 public protocol RayTracable: Intersectable {
+    func rayIntersection(_ ray: Ray) -> Vector?
     func modifyRay(_ ray: Ray)
 }
 
@@ -144,12 +145,3 @@ public extension RayTracable {
         ray.terminateRay()
     }
 }
-
-
-extension Circle: RayTracable {
-    public func modifyRay(_ ray: Ray) {
-        deflectRay(ray)
-    }
-}
-extension Rectangle: RayTracable { }
-extension Line: RayTracable { }
