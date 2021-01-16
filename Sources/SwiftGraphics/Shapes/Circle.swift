@@ -88,22 +88,38 @@ public class Circle: Polygon, Intersectable, CGDrawable {
 
     /// Return the intersection of a ray
     ///
-    /// From https://math.stackexchange.com/a/311956
+    /// Based on this [algorithm ][] by Деян Добромиров, and an explanation of [t values][tValue] by Victor Li.
+    ///
+    /// [algorithm]: https://math.stackexchange.com/a/2633290
+    /// [tValue]: http://viclw17.github.io/2018/07/16/raytracing-ray-sphere-intersection/
     /// - Parameters:
     ///   - origin: Origin of the ray
     ///   - dir: Direction of the ray
     public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
+        
+        let originDiffs = origin - center
 
-        guard let hitPoints = rayIntersections(origin: origin, dir: dir) else { return nil }
+        let a = dir.magSq()
+        let b = 2 * dir.dot(originDiffs)
+        let c = originDiffs.magSq() - radius.squared()
 
-        if hitPoints.entry.inLine {
-            return hitPoints.entry.point
-        } else if hitPoints.exit.inLine {
-            return hitPoints.exit.point
+        let discr = b.squared() - 4 * a * c
+
+        guard discr > 0 else { return nil }
+
+        let g = 1 / (2 * a)
+        let determ = g * sqrt(discr)
+        let newB = -b * g
+        
+        let t0 = newB + determ
+        let t1 = newB - determ
+
+        guard let tValue = [t0, t1].filter({ $0 > 0 && $0.rounded() != 0}).sorted().first else {
+            return nil
         }
 
-        return nil
-        
+        return origin + dir * tValue
+
     }
     
     /// Return the entry and exit points for the given ray
@@ -126,8 +142,11 @@ public class Circle: Polygon, Intersectable, CGDrawable {
     
         guard discr > 0 else { return nil }
 
-        let tEntry = (2 * c) / (-b + sqrt(discr))
-        let tExit =  (2 * c) / (-b - sqrt(discr))
+//        let tEntry = (2 * c) / (-b + sqrt(discr))
+//        let tExit =  (2 * c) / (-b - sqrt(discr))
+        
+        let tEntry = (-b + sqrt(discr)) / (2 * a)
+        let tExit  = (-b - sqrt(discr)) / (2 * a)
 
         let pEntry = Vector(
             (relativeDir.x - origin.x) * tEntry + origin.x,
@@ -320,18 +339,25 @@ extension Circle {
         
         let refraction = 1.46
         let extIndex = 1.0
+        
+        let dirCopy = dir.copy()
 
         // Determine the angle from the normal
-        let thetaInc: Radians = dir.angleBetween(interface.normal())
+        let thetaInc: Radians = dirCopy.angleBetween(interface.normal())
 
         // Snell's Law of reflection
         let deflection: Radians = asin((extIndex * sin(thetaInc)) / refraction)
 
-        dir.rotate(by: deflection)
+        dirCopy.rotate(by: deflection)
         print("New heading is:", abs(dir.heading().toDegrees()))
 
-        return dir //Vector(angle: deflection)
+        return dirCopy //Vector(angle: deflection)
 
+    }
+    
+    func deflectRay(_ ray: Ray) {
+        let interface = self.interface(of: ray.origin)
+        ray.direction = deflectionAngle(for: ray.direction, at: interface)
     }
     
     /// Calculate the deflection geometry of a ray passing through the lens
@@ -347,7 +373,7 @@ extension Circle {
         // Calulcate the exit point
         // The intersection maths gets weird when the origin is on the circle
         // so we move the outside the circle
-        let modEntry = entryPoint.copy() - 10
+        let modEntry = entryPoint.copy() //- 10
         guard let intersections = rayIntersections(origin: modEntry, dir: entryDeflection) else { return nil }
         
         let exitInterface = self.interface(of: intersections.exit.point)
@@ -362,3 +388,4 @@ extension Circle {
             exitInterface: exitInterface)
     }
 }
+
