@@ -135,6 +135,12 @@ public class Ray {
     
 }
 
+extension Array where Element: Ray {
+    public func draw() {
+        self.forEach { $0.draw() }
+    }
+}
+
 public protocol RayTracable: Intersectable {
     func rayIntersection(_ ray: Ray) -> Vector?
     func modifyRay(_ ray: Ray)
