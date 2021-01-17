@@ -17,6 +17,7 @@ public class DirectionalEmitter: Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
 
+    var ray: Ray?
 
     /// Instantiate a new emitter
     /// - Parameters:
@@ -40,12 +41,14 @@ public class DirectionalEmitter: Emitter {
     /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(objects: [RayTracable]) {
-        let ray = Ray(origin: origin.copy(), direction: direction.copy())
-        ray.run(objects: objects)
-
-        self.drawIntersections(ray.path)
-
+    public func run(objects: [RayTracable]) {
+        self.ray = Ray(origin: origin.copy(), direction: direction.copy())
+        ray?.run(objects: objects)
+    }
+    
+    public func draw() {
+        guard let path = ray?.path else { return }
+        self.drawIntersections(path)
     }
     
     /// Draws a representation of the emitter suitable for debugging.

@@ -16,6 +16,8 @@ public class LinearEmitter: Line, Emitter {
 
     /// Distance between each ray
     public var rayStep: Double
+    
+    var rays: [Ray] = []
 
     /// Instantiate a new `Line`
     /// - Parameters:
@@ -41,7 +43,7 @@ public class LinearEmitter: Line, Emitter {
     /// Draw the emitter and ray trace using the specified objects
     /// - Parameters:
     ///   - objects: Objects to test for intersection when casting rays
-    public func draw(objects: [RayTracable]) {
+    public func run(objects: [RayTracable]) {
         // Draw the line
         if case .line = style {
             super.draw()
@@ -55,7 +57,7 @@ public class LinearEmitter: Line, Emitter {
         let angle = angleVector.heading()
         let percentStep = (rayStep / length)
 
-        stride(from: 0, to: 1 + percentStep, by: percentStep).forEach { percent in
+        self.rays = stride(from: 0, to: 1 + percentStep, by: percentStep).map { percent in
             let origin = self.lerp(percent)
             
             let ray = Ray(
@@ -63,11 +65,15 @@ public class LinearEmitter: Line, Emitter {
                 direction: Vector(angle: angle)
             )
             ray.run(objects: objects)
-            self.drawIntersections(ray.path)
+            return ray
 
         }
         
 
+    }
+    
+    public func draw() {
+        rays.forEach { self.drawIntersections($0.path) }
     }
 
 }

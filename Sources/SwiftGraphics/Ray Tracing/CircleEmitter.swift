@@ -24,6 +24,8 @@ public class CircleEmitter: Circle, Emitter {
 
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
+    
+    var rays: [Ray] = []
 
     /// Instantiate a new emitter at the specified coordinates
     /// - Parameters:
@@ -36,22 +38,14 @@ public class CircleEmitter: Circle, Emitter {
         super.init(x: x, y: y, radius: radius)
 
     }
-
-    /// Draw the emitter and ray trace using the specified objects
-    /// - Parameters:
-    ///   - objects: Objects to test for intersection when casting rays
-    public func draw(objects: [RayTracable]) {
-
-        // Draw the circle
-        if case .line = style {
-            super.draw()
-        }
-
+    
+    public func run(objects: [RayTracable]) {
+        
         // Nothing to do if there are no rays
         guard rayStep > 0 else { return }
-
+        
         // Stride through the circle, stepping by degree
-        stride(from: rayStep, through: 360, by: rayStep).forEach { angle in
+        self.rays = stride(from: rayStep, through: 360, by: rayStep).map { angle in
             let rAngle = Double(angle).toRadians()
             let origin = rayIntersection(rAngle)
             let ray = Ray(
@@ -59,9 +53,23 @@ public class CircleEmitter: Circle, Emitter {
                 direction: Vector(angle: rAngle)
             )
             ray.run(objects: objects)
-            self.drawIntersections(ray.path)
+            return ray
 
         }
+    }
+
+    /// Draw the emitter and ray trace using the specified objects
+    /// - Parameters:
+    ///   - objects: Objects to test for intersection when casting rays
+    public func draw() {
+        
+        // Draw the circle
+        if case .line = style {
+            super.draw()
+        }
+        print("Drawing \(rays.count) rays")
+        rays.forEach { self.drawIntersections($0.path) }
+        
 
     }
 
