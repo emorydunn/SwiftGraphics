@@ -43,8 +43,8 @@ public class DirectionalEmitter: Emitter {
     public func draw(objects: [RayTracable]) {
         let ray = Ray(origin: origin.copy(), direction: direction.copy())
         ray.run(objects: objects)
-        
-        ray.draw()
+
+        self.drawIntersections(ray.path)
 
     }
     

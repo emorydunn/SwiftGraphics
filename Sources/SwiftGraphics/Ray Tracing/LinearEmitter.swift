@@ -63,7 +63,7 @@ public class LinearEmitter: Line, Emitter {
                 direction: Vector(angle: angle)
             )
             ray.run(objects: objects)
-            ray.draw()
+            self.drawIntersections(ray.path)
 
         }
         

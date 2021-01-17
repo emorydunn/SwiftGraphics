@@ -59,7 +59,7 @@ public class CircleEmitter: Circle, Emitter {
                 direction: Vector(angle: rAngle)
             )
             ray.run(objects: objects)
-            ray.draw()
+            self.drawIntersections(ray.path)
 
         }
 
