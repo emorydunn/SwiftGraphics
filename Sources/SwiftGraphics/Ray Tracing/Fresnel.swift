@@ -15,7 +15,7 @@ public class Fresnel: Line {
     /// - Parameter ray: The ray to modify
     public override func modifyRay(_ ray: Ray) {
         
-        if normal().dot(ray.direction) > 0 {
+        if normal().dot(ray.direction) < 0 {
             ray.terminateRay()
         } else {
             ray.direction = normal().normalized()
