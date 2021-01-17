@@ -70,11 +70,11 @@ public struct Color: Equatable {
 
     /// Create  a color from a hex string
     /// From: https://stackoverflow.com/a/26341062
-    public init(hexString: String) {
+    public init(hexString: String, alpha: Float = 1) {
         var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
 
-        self.alpha = 1.0
+        self.alpha = alpha
         self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
