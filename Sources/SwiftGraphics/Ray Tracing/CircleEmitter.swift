@@ -14,10 +14,10 @@ public class CircleEmitter: Circle, Emitter {
     /// Angle of the step between emitted rays
     ///
     /// The value is clamped to a minimum of `0`
-    public var rayStep: Degrees {
+    public var rayStep: Int {
         didSet {
-            if rayStep < 0 {
-                rayStep = 0
+            if rayStep < 1 {
+                rayStep = 1
             }
         }
     }
@@ -33,7 +33,7 @@ public class CircleEmitter: Circle, Emitter {
     ///   - y: Center Y coordinate
     ///   - radius: Radius of the emitter
     ///   - rayStep: Angle between emitted rays
-    public init(x: Double, y: Double, radius: Double, rayStep: Double) {
+    public init(x: Double, y: Double, radius: Double, rayStep: Int) {
         self.rayStep = rayStep
         super.init(x: x, y: y, radius: radius)
 
@@ -45,7 +45,7 @@ public class CircleEmitter: Circle, Emitter {
         guard rayStep > 0 else { return }
         
         // Stride through the circle, stepping by degree
-        self.rays = stride(from: rayStep, through: 360, by: rayStep).map { angle in
+        self.rays = stride(from: 0.0, to: 360, by: 360 / Double(rayStep)).map { angle in
             let rAngle = Double(angle).toRadians()
             let origin = rayIntersection(rAngle)
             let ray = Ray(
