@@ -10,14 +10,17 @@ import Foundation
 
 /// A specialized `RayTracer` that collimates intersecting rays and casts them along the vector normal of the lens
 public class Fresnel: Line {
-
-    /// The angle at which rays are reflected, relative to the normal
-    public var reflectionAngle: Degrees = 180
-
+    
+    /// Collimate rays hitting the back of the Fresnel
+    /// - Parameter ray: The ray to modify
     public override func modifyRay(_ ray: Ray) {
         
-        ray.direction.rotate(to: reflectionAngle.toRadians() + normal().heading())
-        
+        if normal().dot(ray.direction) > 0 {
+            ray.terminateRay()
+        } else {
+            ray.direction = normal().normalized()
+        }
+
     }
 
 }
