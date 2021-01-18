@@ -35,7 +35,7 @@ public class CircleEmitter: Circle, Emitter {
     ///   - rayStep: Angle between emitted rays
     public init(x: Double, y: Double, radius: Double, rayStep: Int) {
         self.rayStep = rayStep
-        super.init(x: x, y: y, radius: radius)
+        super.init(center: Vector(x, y), radius: radius)
 
     }
     
@@ -44,10 +44,12 @@ public class CircleEmitter: Circle, Emitter {
         // Nothing to do if there are no rays
         guard rayStep > 0 else { return }
         
+        
+        // TODO: Replace this with pointsDistributed(every: Degrees)
         // Stride through the circle, stepping by degree
         self.rays = stride(from: 0.0, to: 360, by: 360 / Double(rayStep)).map { angle in
             let rAngle = Double(angle).toRadians()
-            let origin = rayIntersection(rAngle)
+            let origin = point(at: rAngle)
             let ray = Ray(
                 origin: origin,
                 direction: Vector(angle: rAngle)

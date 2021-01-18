@@ -84,7 +84,7 @@ open class Line: Shape, Intersectable, RayTracable {
     /// - Returns: A `Vector` whose heading is perpendicular to the line
     public func normal() -> Vector {
         //calculate base top normal
-        let baseDelta = end - start//Vector.sub(end, start)
+        let baseDelta = end - start
         baseDelta.normalize()
         let normal = Vector(-baseDelta.y, baseDelta.x)
 
@@ -128,7 +128,8 @@ open class Line: Shape, Intersectable, RayTracable {
 
         let dot = v2.dot(v3)
 
-        let t1 = Vector.crossProduct(v2, v1) / dot // swiftlint:disable:this identifier_name
+        
+        let t1 = v2.crossProduct(v1) //Vector.crossProduct(v2, v1) / dot // swiftlint:disable:this identifier_name
         let t2 = v1.dot(v3) / dot // swiftlint:disable:this identifier_name
 
         if t1 >= 0.0 && (t2 >= 0.0 && t2 <= 1.0) {

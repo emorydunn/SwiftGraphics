@@ -185,7 +185,6 @@ extension Path: CGDrawable {
         path.move(to: CGPoint(x: points[0].x, y: points[0].y))
 
         bezPoints.forEach {
-//            path.cur
             path.curve(
                 to: $0.point.nsPoint(),
                 controlPoint1: $0.control1.nsPoint(),

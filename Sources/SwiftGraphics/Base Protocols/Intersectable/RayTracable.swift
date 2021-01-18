@@ -151,3 +151,54 @@ public extension RayTracable {
         ray.terminateRay()
     }
 }
+
+public extension RayTracable where Self: Polygon {
+    /// The interface of the intersection of a ray
+    /// - Parameter intersection: The point of intersection
+    /// - Returns: A line representing the normal
+    func interface(of intersection: Vector) -> Line {
+        var entryAngle = angle(ofPoint: intersection)
+        if entryAngle < 0 {
+            entryAngle = 360.toRadians() + entryAngle
+        }
+        
+        let tangentAngle = entryAngle + 90.toRadians()
+        
+        return Line(center: intersection, direction: tangentAngle, length: 50)
+    }
+    
+    func deflectionAngle(for dir: Vector, at interface: Line) -> Vector {
+        
+        let refraction = 1.46
+        let extIndex = 1.0
+        
+        let dirCopy = dir.copy()
+        
+        // Determine the angle from the normal
+        let thetaInc: Radians = dirCopy.angleBetween(interface.normal())
+        
+        // Snell's Law of reflection
+        let deflection: Radians = asin((extIndex * sin(thetaInc)) / refraction)
+        
+        dirCopy.rotate(by: deflection)
+        
+        return dirCopy
+        
+    }
+    
+    func deflectRay(_ ray: Ray) {
+        let interface = self.interface(of: ray.origin)
+        ray.direction = deflectionAngle(for: ray.direction, at: interface)
+    }
+    
+    var criticalAngle: Radians {
+        let refraction = 1.46
+        let extIndex = 1.0
+        
+        return asin(extIndex / refraction)
+    }
+    
+    public func modifyRay(_ ray: Ray) {
+        deflectRay(ray)
+    }
+}
