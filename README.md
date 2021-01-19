@@ -6,7 +6,7 @@ SwiftGraphics is a library for creative coding and generative art tailored towar
 
 Take a look at the [documentation](https://emorydunn.github.io/SwiftGraphics/) and visit the [example repo](https://github.com/emorydunn/SwiftGraphics-Example) for a working reference.
 
-![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/Examples/20210118-153510-5b61a3fb.png)
+![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/raytrace-fix/Examples/20210118-153510-5b61a3fb.png)
 
 # 2D Primatives
 
