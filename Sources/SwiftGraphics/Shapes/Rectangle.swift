@@ -42,10 +42,20 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable, RayTracable {
     ///   - y: Origin Y coordinate
     ///   - width: Width of the rectangle
     ///   - height: Height of the rectangle
-    public init(centerX: Double, centerY: Double, width: Double, height: Double) {
-        self.x = centerX - width / 2
-        self.y = centerY - height / 2
-
+    public convenience init(centerX: Double, centerY: Double, width: Double, height: Double) {
+        self.init(center: Vector(centerX, centerY), width: width, height: height)
+    }
+    
+    /// Instantiate a new `Rectangle`
+    /// - Parameters:
+    ///   - x: Origin X coordinate
+    ///   - y: Origin Y coordinate
+    ///   - width: Width of the rectangle
+    ///   - height: Height of the rectangle
+    public init(center: Vector, width: Double, height: Double) {
+        self.x = center.x - width / 2
+        self.y = center.y - height / 2
+        
         self.width = width
         self.height = height
     }
