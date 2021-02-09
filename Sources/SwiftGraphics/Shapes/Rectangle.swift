@@ -9,7 +9,7 @@
 import Foundation
 
 /// A rectangle
-open class Rectangle: Polygon, CGDrawable, SVGDrawable {
+open class Rectangle: Polygon, CGDrawable, SVGDrawable, RayTracable {
 
     /// Origin X coordinate
     public var x: Double
@@ -42,10 +42,20 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
     ///   - y: Origin Y coordinate
     ///   - width: Width of the rectangle
     ///   - height: Height of the rectangle
-    public init(centerX: Double, centerY: Double, width: Double, height: Double) {
-        self.x = centerX - width / 2
-        self.y = centerY - height / 2
-
+    public convenience init(centerX: Double, centerY: Double, width: Double, height: Double) {
+        self.init(center: Vector(centerX, centerY), width: width, height: height)
+    }
+    
+    /// Instantiate a new `Rectangle`
+    /// - Parameters:
+    ///   - x: Origin X coordinate
+    ///   - y: Origin Y coordinate
+    ///   - width: Width of the rectangle
+    ///   - height: Height of the rectangle
+    public init(center: Vector, width: Double, height: Double) {
+        self.x = center.x - width / 2
+        self.y = center.y - height / 2
+        
         self.width = width
         self.height = height
     }
@@ -123,8 +133,9 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
 
     /// Returns the point on the rectangle where the specified angle originating from the center intersects
     /// - Parameter theta: Angle in radians
-    public func rayIntersection(_ theta: Radians) -> Vector {
-        return rayIntersection(origin: self.center, theta: theta)!
+    public func point(at angle: Radians) -> Vector {
+        // TODO: Fix this with an actual implementation
+        return rayIntersection(Ray(origin: center, direction: Vector(angle: angle)))!
     }
     
     public func angle(ofPoint point: Vector) -> Radians {
@@ -227,10 +238,8 @@ open class Rectangle: Polygon, CGDrawable, SVGDrawable {
         }
         
     }
-}
-
-extension Rectangle: Intersectable {
-
+    
+    // MARK: RayTracable
     /// Calculate the intersection point of a ray and the the Rectangle
     ///
     /// Adapted from [Amy Williams et al.][3d]
@@ -240,130 +249,64 @@ extension Rectangle: Intersectable {
     ///   - origin: Origin of the ray
     ///   - dir: Direction of the ray
     /// - Returns: The point of intersection, if the ray intersections the line
-    public func rayIntersection(origin: Vector, dir: Vector) -> Vector? {
-
-        let invDir = 1 / dir
-
+    public func rayIntersection(_ ray: Ray) -> Vector? {
+        
+        let invDir = 1 / ray.direction
+        
         // Calculate X Coordinate
         var tmin: Double
         var tmax: Double
         if invDir.x >= 0 {
-            tmin = (minX - origin.x) * invDir.x
-            tmax = (maxX - origin.x) * invDir.x
+            tmin = (minX - ray.origin.x) * invDir.x
+            tmax = (maxX - ray.origin.x) * invDir.x
         } else {
-            tmin = (maxX - origin.x) * invDir.x
-            tmax = (minX - origin.x) * invDir.x
+            tmin = (maxX - ray.origin.x) * invDir.x
+            tmax = (minX - ray.origin.x) * invDir.x
         }
-
+        
         // Calculate Y Coordinate
         let tymin: Double
         let tymax: Double
         if invDir.y >= 0 {
-            tymin = (minY - origin.y) * invDir.y
-            tymax = (maxY - origin.y) * invDir.y
+            tymin = (minY - ray.origin.y) * invDir.y
+            tymax = (maxY - ray.origin.y) * invDir.y
         } else {
-            tymin = (maxY - origin.y) * invDir.y
-            tymax = (minY - origin.y) * invDir.y
+            tymin = (maxY - ray.origin.y) * invDir.y
+            tymax = (minY - ray.origin.y) * invDir.y
         }
         
-//        let pEntry =
-
         if (tmin > tymax) || (tymin > tmax) {
             return nil
         }
-
+        
         if tymin > tmin {
             tmin = tymin
         }
         if tymax < tmax {
             tmax = tymax
         }
-
+        
         var t = tmin // swiftlint:disable:this identifier_name
         if t < 0 {
             t = tmax
             if t < 0 { return nil }
         }
-
-        let entryPoint = origin + dir * t
         
-//        entryPoint.debugDraw()
+        // Guard against the intersection point being nearly the same as the origin
+        guard t.rounded() != 0 else { return nil }
+        
+        let entryPoint = ray.origin + ray.direction * t
+        
         return entryPoint
-
+        
     }
     
-//    public func rayIntersections(origin: Vector, dir: Vector) -> (entry: IntersectionInfo, exit: IntersectionInfo)? {
-//        let invDir = 1 / dir
-//
-//        // Calculate X Coordinate
-//        var tmin: Double
-//        var tmax: Double
-//        if invDir.x >= 0 {
-//            tmin = (minX - origin.x) * invDir.x
-//            tmax = (maxX - origin.x) * invDir.x
-//        } else {
-//            tmin = (maxX - origin.x) * invDir.x
-//            tmax = (minX - origin.x) * invDir.x
-//        }
-//
-//        // Calculate Y Coordinate
-//        let tymin: Double
-//        let tymax: Double
-//        if invDir.y >= 0 {
-//            tymin = (minY - origin.y) * invDir.y
-//            tymax = (maxY - origin.y) * invDir.y
-//        } else {
-//            tymin = (maxY - origin.y) * invDir.y
-//            tymax = (minY - origin.y) * invDir.y
-//        }
-//
-//        if (tmin > tymax) || (tymin > tmax) {
-//            return nil
-//        }
-//
-//        if tymin > tmin {
-//            tmin = tymin
-//        }
-//        if tymax < tmax {
-//            tmax = tymax
-//        }
-//
-//        var t = tmin // swiftlint:disable:this identifier_name
-//        if t < 0 {
-//            t = tmax
-//            if t < 0 { return nil }
-//        }
-//
-//        return origin + dir * t
-//    }
-
-    /// Returns an empty array, which causes the receiver to terminate the ray.
-    public func intersections(for angle: Radians, origin: Vector, objects: [Intersectable]) -> [Line] {
-        let angleDir = Vector(angle: angle)
-        
-        while let intersection = exitPoint(entryPoint: origin, dir: angleDir) {
-            
-        }
-        
-        // The origin is the hit point on the lens
-        guard let intersection = exitPoint(entryPoint: origin, dir: angleDir) else {
-            return []
-        }
-
-        var lensLines = defaultIntersections(
-            for: intersection.exitDeflection.heading(),
-            origin: intersection.exitPoint,
-            objects: objects)
-
-        lensLines.append(Line(intersection.entryPoint, intersection.exitPoint))
-
-        return lensLines
-//        return []
+    public func modifyRay(_ ray: Ray) {
+        deflectRay(ray)
     }
-    
-    
-
 }
+
+extension Rectangle: Intersectable { }
 
 extension Rectangle: Hashable {
     
@@ -384,84 +327,4 @@ extension Rectangle: Hashable {
         hasher.combine(height)
     }
 
-}
-
-extension Rectangle {
-    /// The interface of the intersection of a ray
-    /// - Parameter intersection: The point of intersection
-    /// - Returns: A line representing the normal
-    func interface(of intersection: Vector) -> Line {
-        var entryAngle = angle(ofPoint: intersection)
-        if entryAngle < 0 {
-            entryAngle = 360.toRadians() + entryAngle
-        }
-
-        let tangentAngle = entryAngle + 90.toRadians()
-
-        return Line(center: intersection, direction: tangentAngle, length: 50)
-    }
-    
-    func deflectionAngle(for dir: Vector, at interface: Line) -> Vector {
-        
-        let refraction = 1.46
-        let extIndex = 1.0
-
-        // Determine the angle from the normal
-        let thetaInc: Radians = dir.angleBetween(interface.normal())
-
-        // Snell's Law of reflection
-        let deflection: Radians = asin((extIndex * sin(thetaInc)) / refraction)
-
-        dir.rotate(by: deflection)
-        print("New heading is:", abs(dir.heading().toDegrees()))
-
-        return dir //Vector(angle: deflection)
-
-    }
-    
-    /// Calculate the deflection geometry of a ray passing through the lens
-    /// - Parameters:
-    ///   - entryPoint: Entry point on the lens of a ray
-    ///   - dir: Direction of the ray
-    /// - Returns: Information about how the ray is deflected in the lens
-    func exitPoint(entryPoint: Vector, dir: Vector) -> LensIntersections? {
-
-        let entryInterface = self.interface(of: entryPoint)
-        let entryDeflection = deflectionAngle(for: dir, at: entryInterface)
-
-        // Calulcate the exit point
-        // The intersection maths gets weird when the origin is on the circle
-        // so we move the outside the circle
-        let modEntry = entryPoint.copy() + 10
-//        modEntry.debugDraw()
-        guard let exitPoint = rayIntersection(origin: modEntry, dir: entryDeflection) else { return nil }
-//        guard let intersections = rayIntersections(origin: modEntry, dir: entryDeflection) else { return nil }
-
-        let exitInterface = self.interface(of: exitPoint)
-        let exitDeflection = deflectionAngle(for: entryDeflection, at: exitInterface)
-        
-//        entryInterface.debugDraw()
-//        exitInterface.debugDraw()
-        
-//        let exitDiff = exitInterface.normal().angleBetween(exitDeflection)
-//        if exitDiff > criticalAngle {
-//            print("Total internal reflection")
-//            return nil
-//        }
-
-        return LensIntersections(
-            entryPoint: entryPoint,
-            entryDeflection: entryDeflection,
-            entryInterface: entryInterface,
-            exitPoint: exitPoint,
-            exitDeflection: exitDeflection,
-            exitInterface: exitInterface)
-    }
-    
-    var criticalAngle: Radians {
-        let refraction = 1.46
-        let extIndex = 1.0
-        
-        return asin(extIndex / refraction)
-    }
 }

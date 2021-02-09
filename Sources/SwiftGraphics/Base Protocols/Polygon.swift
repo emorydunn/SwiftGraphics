@@ -18,11 +18,12 @@ public protocol Polygon: Intersectable {
 
     /// Return the intersection point of the specified angle from the center of the shape
     /// - Parameter angle: The angle
-    func rayIntersection(_ theta: Radians) -> Vector
+    func point(at angle: Radians) -> Vector
     
     func angle(ofPoint point: Vector) -> Radians
     
     func bezierCurve(start: Radians, end: Radians) -> [BezierPath]
+    
 }
 
 extension Polygon {
@@ -71,7 +72,7 @@ extension Polygon {
             
             let (start, end) = arg1
             
-            let halfPoint = self.rayIntersection((end + start) / 2)
+            let halfPoint = self.point(at: (end + start) / 2)
             let inOtherShape = shapes.map { $0.contains(halfPoint) }
             
             switch operation {
@@ -178,8 +179,8 @@ extension Rectangle {
         corners.sort()
         
         // Create a Bézier from the angles
-        let bezier1 = BezierPath(start: rayIntersection(start))
-        bezier1.points = corners.map { BezierPath.Point(point: rayIntersection($0)) }
+        let bezier1 = BezierPath(start: point(at: start))
+        bezier1.points = corners.map { BezierPath.Point(point: point(at: $0)) }
         
         return [bezier1]
     }

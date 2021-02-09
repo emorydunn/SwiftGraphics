@@ -22,6 +22,8 @@ open class SketchView: NSView {
             canDrawConcurrently = true
             needsDisplay = true
             displayIfNeeded()
+            
+            fileName = sketch?.hashedFileName()
         }
     }
 
@@ -32,8 +34,10 @@ open class SketchView: NSView {
         // Set the context to CoreGraphics
         SwiftGraphicsContext.current = NSGraphicsContext.current?.cgContext
 
+        let startTime = Date()
         sketch.draw()
-        fileName = sketch.hashedFileName()
+        let endTime = startTime.timeIntervalSinceNow
+        Swift.print("View Render took:", abs(endTime))
         
     }
 

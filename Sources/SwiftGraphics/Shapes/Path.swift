@@ -65,6 +65,12 @@ public class Path: Shape {
     public init(points: [Vector] = []) {
         self.points = points
     }
+    
+    /// Instantiate a new Path from an array of Vectors
+    /// - Parameter points: Points in the path
+    public convenience init(point: Vector) {
+        self.init(points: [point])
+    }
 
     /// Append a point to the path
     /// - Parameter point: New Vector
@@ -164,6 +170,10 @@ extension Path: CGDrawable {
         points.forEach { point in
             path.line(to: point.nsPoint())
         }
+        
+        if close {
+            path.line(to: CGPoint(x: points[0].x, y: points[0].y))
+        }
 
         return path
     }
@@ -179,7 +189,6 @@ extension Path: CGDrawable {
         path.move(to: CGPoint(x: points[0].x, y: points[0].y))
 
         bezPoints.forEach {
-//            path.cur
             path.curve(
                 to: $0.point.nsPoint(),
                 controlPoint1: $0.control1.nsPoint(),
