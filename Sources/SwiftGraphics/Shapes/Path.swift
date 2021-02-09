@@ -170,6 +170,10 @@ extension Path: CGDrawable {
         points.forEach { point in
             path.line(to: point.nsPoint())
         }
+        
+        if close {
+            path.line(to: CGPoint(x: points[0].x, y: points[0].y))
+        }
 
         return path
     }
