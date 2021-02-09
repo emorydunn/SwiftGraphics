@@ -198,7 +198,7 @@ public extension RayTracable where Self: Polygon {
         return asin(extIndex / refraction)
     }
     
-    public func modifyRay(_ ray: Ray) {
+    func modifyRay(_ ray: Ray) {
         deflectRay(ray)
     }
 }
