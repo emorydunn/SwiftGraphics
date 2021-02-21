@@ -11,17 +11,6 @@ import AppKit
 /// Represents a multi-point path
 public class Path: Shape {
 
-    /// Drawing style of the Path
-    @available(*, deprecated)
-    public enum Style {
-
-        /// Draw straight lines connecting each point
-        case sharp
-
-        /// Draw a cubic Bézier curve between points
-        case smooth
-    }
-
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         // FIXME: This needs to be implemented
@@ -30,9 +19,6 @@ public class Path: Shape {
 
     /// Points that make up the path
     public var points: [Vector]
-
-//    /// Drawing style of the Path
-//    public var style: Style = .smooth
 
     /// Whether to close the path
     ///
@@ -49,6 +35,12 @@ public class Path: Shape {
     /// - Parameter points: Points in the path
     public convenience init(point: Vector) {
         self.init(points: [point])
+    }
+    
+    /// Instantiate a new Path from a Bézier curve
+    /// - Parameter bezier: The curve it convert to sharp lines
+    public convenience init(_ bezier: BezierPath) {
+        self.init(points: bezier.points.map(\.point))
     }
 
     /// Append a point to the path
@@ -74,30 +66,14 @@ public class Path: Shape {
     /// From: [Smooth a Svg path with cubic bezier curves][bezier]
     ///
     /// [bezier]: https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
+    @available(*, deprecated, message: "Use BezierPath(_:smoothing:) instead.")
     public func smoothLine() -> BezierPath {
-        return BezierPath(path: self)
+        return BezierPath(self)
     }
 
 }
 
 extension Path: CGDrawable {
-
-//    /// Create a `NSBezierPath` drawn with straight lines
-//    func sharpLine() -> NSBezierPath {
-//        let path = NSBezierPath()
-//
-//        path.move(to: CGPoint(x: points[0].x, y: points[0].y))
-//
-//        points.forEach { point in
-//            path.line(to: point.nsPoint())
-//        }
-//
-//        if close {
-//            path.line(to: CGPoint(x: points[0].x, y: points[0].y))
-//        }
-//
-//        return path
-//    }
 
     /// Draw the receiver in the specified context
     /// - Parameter context: Context in which to draw
@@ -134,27 +110,6 @@ extension Path: CGDrawable {
 }
 
 extension Path: SVGDrawable {
-
-//    /// Create a `XMLElement` drawn with straight lines
-//    func sharpLine() -> XMLElement {
-//        let element = XMLElement(name: "path")
-//
-//        let lines = points.map({
-//            "L \($0.x) \($0.y)"
-//            }).joined(separator: " ")
-//
-//        let command = "M \(points[0].x),\(points[0].y) \(lines)"
-//
-//        element.addAttribute(command, forKey: "d")
-//
-//        return element
-//    }
-
-//    /// Create a `XMLElement` drawn with a Bézier curve
-//    func smoothLine() -> XMLElement {
-//        let bezPath: BezierPath = smoothLine()
-//        return bezPath.svgElement()
-//    }
 
     /// Create an `XMLElement` for the Path in its drawing style
     public func svgElement() -> XMLElement {

@@ -82,7 +82,7 @@ final class SVGDrawableTests: XCTestCase {
     func testBezierPath() {
         setTestContext()
         
-        let path = BezierPath(path: Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)]))
+        let path = BezierPath(Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)]))
         
         let smoothXML: XMLElement = path.svgElement()
         XCTAssertEqual(

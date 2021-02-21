@@ -56,8 +56,12 @@ public class BezierPath: Shape {
     }
     
     /// Instantiate a new Bezier from a `Path`
+    ///
+    /// From: [Smooth a Svg path with cubic bezier curves][bezier]
+    ///
+    /// [bezier]: https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
     /// - Parameter path: The path to transform into a Bézier curve
-    public init(path: Path, smoothing: Double = 0.2) {
+    public init(_ path: Path, smoothing: Double = 0.2) {
         self.start = path.points[0]
         
         var bezPoints = path.points
