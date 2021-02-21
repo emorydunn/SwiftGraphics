@@ -8,9 +8,11 @@
 
 import AppKit
 
+
+/// A parametric curve
 public class BezierPath: Shape {
-    /// A point used to draw a Bézier curve
     
+    /// A point used to draw a Bézier curve
     public struct Point: Hashable {
         
         /// Anchor point
@@ -22,6 +24,11 @@ public class BezierPath: Shape {
         /// Second control point
         let control2: Vector?
         
+        /// Instantiate a new Point
+        /// - Parameters:
+        ///   - point: The point
+        ///   - control1: The point's first control point
+        ///   - control2: The point's second control point
         public init(point: Vector, control1: Vector? = nil, control2: Vector? = nil) {
             self.point = point
             self.control1 = control1
@@ -29,7 +36,10 @@ public class BezierPath: Shape {
         }
     }
     
+    /// The starting position of the path
     public var start: Vector
+    
+    /// The points making up the curve
     public var points: [Point]
     
     /// A Rectangle that contains the receiver
@@ -44,19 +54,46 @@ public class BezierPath: Shape {
         self.start = start
         self.points = points
     }
+    
+    /// Instantiate a new Bezier from a `Path`
+    /// - Parameter path: The path to transform into a Bézier curve
+    public init(path: Path, smoothing: Double = 0.2) {
+        self.start = path.points[0]
+        
+        var bezPoints = path.points
+        if path.close {
+            // Duplicate the first point
+            bezPoints.append(path.points[0])
+        }
+
+        self.points = bezPoints.enumerated().compactMap { index, point in
+
+            guard let backOne = path.points[safe: index - 1] else {
+                return nil
+            }
+            let control1 = backOne.controlPoint(
+                previous: path.points[safe: index - 2],
+                next: point,
+                smoothing: smoothing
+            )
+
+            let control2 = point.controlPoint(
+                previous: path.points[safe: index - 1],
+                next: path.points[safe: index + 1],
+                reverse: true,
+                smoothing: smoothing
+            )
+
+            return Point(point: point, control1: control1, control2: control2)
+
+        }
+    }
 }
 
 
 extension BezierPath: CGDrawable {
-
-    /// Draw the receiver in the specified context
-    /// - Parameter context: Context in which to draw
-    public func draw(in context: CGContext) {
-
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
-        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
-        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
-
+    
+    func makeBezier() -> NSBezierPath {
         let path = NSBezierPath()
         path.lineJoinStyle = .bevel
 
@@ -74,6 +111,19 @@ extension BezierPath: CGDrawable {
             }
             
         }
+        
+        return path
+    }
+
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
+    public func draw(in context: CGContext) {
+
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
+        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
+
+        let path = makeBezier()
         path.stroke()
 
     }
@@ -126,6 +176,8 @@ extension BezierPath: Hashable {
         lhs.start == rhs.start && lhs.points == rhs.points
     }
     
+    /// The hash value of the curve
+    /// - Parameter hasher: The hasher
     public func hash(into hasher: inout Hasher) {
         hasher.combine(start)
         hasher.combine(points)

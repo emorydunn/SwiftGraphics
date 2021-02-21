@@ -11,26 +11,8 @@ import AppKit
 /// Represents a multi-point path
 public class Path: Shape {
 
-    /// A point used to draw a Bézier curve
-    public struct BezierPoint: Hashable {
-        
-        /// Anchor point
-        let point: Vector
-
-        /// First control point
-        let control1: Vector
-
-        /// Second control point
-        let control2: Vector
-        
-        public init(point: Vector, control1: Vector, control2: Vector) {
-            self.point = point
-            self.control1 = control1
-            self.control2 = control2
-        }
-    }
-
     /// Drawing style of the Path
+    @available(*, deprecated)
     public enum Style {
 
         /// Draw straight lines connecting each point
@@ -49,11 +31,8 @@ public class Path: Shape {
     /// Points that make up the path
     public var points: [Vector]
 
-    /// Amount to smooth the Bézier curve
-    public var smoothing = 0.2
-
-    /// Drawing style of the Path
-    public var style: Style = .smooth
+//    /// Drawing style of the Path
+//    public var style: Style = .smooth
 
     /// Whether to close the path
     ///
@@ -90,79 +69,44 @@ public class Path: Shape {
         self.points.append(contentsOf: other.points)
     }
 
-    /// Calculate a control point tangent to the curve of the specified `Vector`
-    /// - Parameters:
-    ///   - current: The current point
-    ///   - previous: The previous point in the path
-    ///   - next: The next point in the path
-    ///   - reverse: Whether to rotate the control point 180º
-    func controlPoint(of current: Vector, previous: Vector?, next: Vector?, reverse: Bool = false) -> Vector {
-        // When 'current' is the first or last point of the array
-        // 'previous' or 'next' don't exist.
-        // Replace with 'current'
-        let prevPoint = previous ?? current
-        let nextPoint = next ?? current
-
-        // Properties of the opposed-line
-        let lengthX = nextPoint.x - prevPoint.x
-        let lengthY = nextPoint.y - prevPoint.y
-
-        let length = sqrt(lengthX.squared() + lengthY.squared()) * smoothing
-        var angle = atan2(lengthY, lengthX)
-
-        // If is end-control-point, add PI to the angle to go backward
-        angle += reverse ? Double.pi : 0
-
-        // The control point position is relative to the current point
-        let x = current.x + cos(angle) * length
-        let y = current.y + sin(angle) * length
-
-        return Vector(x, y)
-    }
-
     /// Create  a smooth Bézier curve
     ///
     /// From: [Smooth a Svg path with cubic bezier curves][bezier]
     ///
     /// [bezier]: https://medium.com/@francoisromain/smooth-a-svg-path-with-cubic-bezier-curves-e37b49d46c74
-    public func smoothLine() -> [BezierPoint] {
-
-        var bezPoints = points
-        if close {
-            // Duplicate the first point
-            bezPoints.append(points[0])
-        }
-
-        return bezPoints.enumerated().compactMap { index, point in
-
-            guard let backOne = points[safe: index - 1] else {
-                return nil
-            }
-            let control1 = controlPoint(
-                of: backOne,
-                previous: points[safe: index - 2],
-                next: point
-            )
-
-            let control2 = controlPoint(
-                of: point,
-                previous: points[safe: index - 1],
-                next: points[safe: index + 1],
-                reverse: true
-            )
-
-            return BezierPoint(point: point, control1: control1, control2: control2)
-
-        }
-
+    public func smoothLine() -> BezierPath {
+        return BezierPath(path: self)
     }
 
 }
 
 extension Path: CGDrawable {
 
-    /// Create a `NSBezierPath` drawn with straight lines
-    func sharpLine() -> NSBezierPath {
+//    /// Create a `NSBezierPath` drawn with straight lines
+//    func sharpLine() -> NSBezierPath {
+//        let path = NSBezierPath()
+//
+//        path.move(to: CGPoint(x: points[0].x, y: points[0].y))
+//
+//        points.forEach { point in
+//            path.line(to: point.nsPoint())
+//        }
+//
+//        if close {
+//            path.line(to: CGPoint(x: points[0].x, y: points[0].y))
+//        }
+//
+//        return path
+//    }
+
+    /// Draw the receiver in the specified context
+    /// - Parameter context: Context in which to draw
+    public func draw(in context: CGContext) {
+
+        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
+        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
+
         let path = NSBezierPath()
 
         path.move(to: CGPoint(x: points[0].x, y: points[0].y))
@@ -173,46 +117,6 @@ extension Path: CGDrawable {
         
         if close {
             path.line(to: CGPoint(x: points[0].x, y: points[0].y))
-        }
-
-        return path
-    }
-
-    /// Create a `NSBezierPath` drawn with a Bézier curve
-    func smoothLine() -> NSBezierPath {
-        
-        let path = NSBezierPath()
-        path.lineJoinStyle = .bevel
-
-        let bezPoints: [BezierPoint] = smoothLine()
-
-        path.move(to: CGPoint(x: points[0].x, y: points[0].y))
-
-        bezPoints.forEach {
-            path.curve(
-                to: $0.point.nsPoint(),
-                controlPoint1: $0.control1.nsPoint(),
-                controlPoint2: $0.control2.nsPoint()
-            )
-        }
-
-        return path
-    }
-
-    /// Draw the receiver in the specified context
-    /// - Parameter context: Context in which to draw
-    public func draw(in context: CGContext) {
-
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
-        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
-        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
-
-        let path: NSBezierPath
-        switch style {
-        case .sharp:
-            path = sharpLine()
-        case .smooth:
-            path = smoothLine()
         }
 
         path.stroke()
@@ -231,8 +135,29 @@ extension Path: CGDrawable {
 
 extension Path: SVGDrawable {
 
-    /// Create a `XMLElement` drawn with straight lines
-    func sharpLine() -> XMLElement {
+//    /// Create a `XMLElement` drawn with straight lines
+//    func sharpLine() -> XMLElement {
+//        let element = XMLElement(name: "path")
+//
+//        let lines = points.map({
+//            "L \($0.x) \($0.y)"
+//            }).joined(separator: " ")
+//
+//        let command = "M \(points[0].x),\(points[0].y) \(lines)"
+//
+//        element.addAttribute(command, forKey: "d")
+//
+//        return element
+//    }
+
+//    /// Create a `XMLElement` drawn with a Bézier curve
+//    func smoothLine() -> XMLElement {
+//        let bezPath: BezierPath = smoothLine()
+//        return bezPath.svgElement()
+//    }
+
+    /// Create an `XMLElement` for the Path in its drawing style
+    public func svgElement() -> XMLElement {
         let element = XMLElement(name: "path")
 
         let lines = points.map({
@@ -242,34 +167,6 @@ extension Path: SVGDrawable {
         let command = "M \(points[0].x),\(points[0].y) \(lines)"
 
         element.addAttribute(command, forKey: "d")
-
-        return element
-    }
-
-    /// Create a `XMLElement` drawn with a Bézier curve
-    func smoothLine() -> XMLElement {
-        let element = XMLElement(name: "path")
-
-        let bezPoints = smoothLine().map({
-            "C \($0.control1.x),\($0.control1.y) \($0.control2.x),\($0.control2.y) \($0.point.x),\($0.point.y)"
-            }).joined(separator: " ")
-
-        let command = "M \(points[0].x),\(points[0].y) \(bezPoints)"
-
-        element.addAttribute(command, forKey: "d")
-
-        return element
-    }
-
-    /// Create an `XMLElement` for the Path in its drawing style
-    public func svgElement() -> XMLElement {
-        let element: XMLElement
-        switch style {
-        case .sharp:
-            element = sharpLine()
-        case .smooth:
-            element = smoothLine()
-        }
 
         element.addAttribute(SwiftGraphicsContext.strokeColor, forKey: "stroke")
         element.addAttribute(SwiftGraphicsContext.strokeWeight, forKey: "stroke-width")

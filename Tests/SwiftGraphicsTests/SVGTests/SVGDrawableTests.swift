@@ -69,21 +69,25 @@ final class SVGDrawableTests: XCTestCase {
     
     func testPath() {
         
+        let path = Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)])
+    
+        let sharpXML: XMLElement = path.svgElement()
+        XCTAssertEqual(
+            makeXMLString(sharpXML),
+            ##"<path d="M 100.0,100.0 L 100.0 100.0 L 200.0 200.0 L 300.0 100.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></path>"##
+        )
+        
+    }
+    
+    func testBezierPath() {
         setTestContext()
         
-        let path = Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)])
+        let path = BezierPath(path: Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)]))
         
         let smoothXML: XMLElement = path.svgElement()
         XCTAssertEqual(
             makeXMLString(smoothXML),
             ##"<path d="M 100.0,100.0 C 120.0,120.0 160.0,200.0 200.0,200.0 C 240.0,200.0 280.0,120.0 300.0,100.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></path>"##
-        )
-        
-        path.style = .sharp
-        let sharpXML: XMLElement = path.svgElement()
-        XCTAssertEqual(
-            makeXMLString(sharpXML),
-            ##"<path d="M 100.0,100.0 L 100.0 100.0 L 200.0 200.0 L 300.0 100.0" stroke="#000000" stroke-opacity="1.0" stroke-width="1.0" fill="#000000" fill-opacity="0.0"></path>"##
         )
         
     }

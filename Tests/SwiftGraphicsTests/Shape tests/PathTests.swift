@@ -35,15 +35,15 @@ final class PathTests: XCTestCase {
     func testSmoothLine() {
         let path = Path(points: [Vector(100.0, 100.0), Vector(200.0, 200.0), Vector(300.0, 100.0)])
         
-        let bezier: [Path.BezierPoint] = path.smoothLine()
+        let bezier: [BezierPath.Point] = path.smoothLine().points
         
         XCTAssertEqual(
             bezier,
             [
-                Path.BezierPoint(point: Vector (200.0, 200.0),
+                BezierPath.Point(point: Vector (200.0, 200.0),
                                  control1: Vector (120.0, 120.0),
                                  control2: Vector (160.0, 200.0)),
-                Path.BezierPoint(point: Vector (300.0, 100.0),
+                BezierPath.Point(point: Vector (300.0, 100.0),
                                  control1: Vector (240.0, 200.0),
                                  control2: Vector (280.0, 120.0))
 

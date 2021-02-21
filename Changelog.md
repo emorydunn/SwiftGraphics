@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. The project follows semantic versioning.
 
+## 0.3.1 / 2021-02-21
+
+- [CHANGED] Document changes from 0.3.0
+- [CHANGED] Smoothing has been removed from `Path`, use `BezierPath` instead
+- [CHANGED] Move Bézier control point calculation to `Vector`
+
 ## 0.3.0 / 2021-02-19
 
 - [CHANGED] Shapes are now hashable

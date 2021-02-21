@@ -89,6 +89,36 @@ public class Vector: Shape {
     func rounded() -> Vector {
         return Vector(x.rounded(), y.rounded(), z.rounded())
     }
+    
+    /// Calculate a control point tangent to the curve of the specified `Vector`
+    /// - Parameters:
+    ///   - current: The current point
+    ///   - previous: The previous point in the path
+    ///   - next: The next point in the path
+    ///   - reverse: Whether to rotate the control point 180º
+    func controlPoint(previous: Vector?, next: Vector?, reverse: Bool = false, smoothing: Double = 0.2) -> Vector {
+        // When 'current' is the first or last point of the array
+        // 'previous' or 'next' don't exist.
+        // Replace with 'current'
+        let prevPoint = previous ?? self
+        let nextPoint = next ?? self
+
+        // Properties of the opposed-line
+        let lengthX = nextPoint.x - prevPoint.x
+        let lengthY = nextPoint.y - prevPoint.y
+
+        let length = sqrt(lengthX.squared() + lengthY.squared()) * smoothing
+        var angle = atan2(lengthY, lengthX)
+
+        // If is end-control-point, add PI to the angle to go backward
+        angle += reverse ? Double.pi : 0
+
+        // The control point position is relative to the current point
+        let x = self.x + cos(angle) * length
+        let y = self.y + sin(angle) * length
+
+        return Vector(x, y)
+    }
 
 }
 
