@@ -14,13 +14,14 @@ Take a look at the [documentation](https://emorydunn.github.io/SwiftGraphics/) a
 - Rectangle
   - BoundingBox
 - Line
+- Path
 - Bézier path
 
 # Ray Tracing
 
-- Directional emiiter
-- Radial emiiter
-- Linear emiiter
+- Directional emitter
+- Radial emitter
+- Linear emitter
 - Fresnel lenses
 - Refraction
 
