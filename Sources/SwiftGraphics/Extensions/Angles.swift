@@ -29,10 +29,19 @@ extension Radians {
         return self * 180 / Double.pi
     }
     
+    /// Pi, multiplied by two.
     public static let twoPi = Double.pi * 2
+    
+    /// Pi, divided by two.
     public static let halfPi = Double.pi / 2
     
+    
+    /// A full circle
     public static let fullCircle = Radians.twoPi
+    
+    /// A half circle
     public static let halfCircle = Radians.pi
+    
+    /// A quarter circle
     public static let quarterCircle = Radians.halfPi
 }

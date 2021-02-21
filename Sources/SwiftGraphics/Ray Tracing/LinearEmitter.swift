@@ -17,6 +17,7 @@ public class LinearEmitter: Line, Emitter {
     /// Distance between each ray
     public var rayStep: Double
     
+    /// The rays this emitter casts
     var rays: [Ray] = []
 
     /// Instantiate a new `Line`
@@ -40,9 +41,11 @@ public class LinearEmitter: Line, Emitter {
         super.init(x1, y1, x2, y2)
     }
 
-    /// Draw the emitter and ray trace using the specified objects
-    /// - Parameters:
-    ///   - objects: Objects to test for intersection when casting rays
+    /// Process the ray casting operations for this emitter.
+    ///
+    /// This method calculates the paths of the emitter's rays, but does not draw them.
+    /// Any previous rays will be overwritten.
+    /// - Parameter objects: The objects with which the rays will interact
     public func run(objects: [RayTracable]) {
         // Draw the line
         if case .line = style {
@@ -72,6 +75,9 @@ public class LinearEmitter: Line, Emitter {
 
     }
     
+    /// Draw the paths taken by the emitter's rays.
+    ///
+    /// This method does not perform any ray tracing.
     public func draw() {
         rays.forEach { self.drawIntersections($0.path) }
     }

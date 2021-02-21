@@ -14,17 +14,23 @@ public protocol Emitter: AnyObject {
     /// Visual style for the emitter's rays
     var style: RayTraceStyle { get set }
 
-    /// Draw the emitter and ray trace using the specified objects
-    /// - Parameters:
-    ///   - objects: Objects to test for intersection when casting rays
+    /// Process the ray casting operations for this emitter.
+    ///
+    /// This method calculates the paths of the emitter's rays, but does not draw them.
+    /// Any previous rays will be overwritten.
+    /// - Parameter objects: The objects with which the rays will interact
     func run(objects: [RayTracable])
     
-    /// Draw the emitter and ray trace using the specified objects
+    /// Draw the paths taken by the emitter's rays.
+    ///
+    /// This method does not perform any ray tracing.
     func draw()
 }
 
 extension Emitter {
     
+    /// Process the ray casting operations for this emitter and draw th paths.
+    /// - Parameter objects: The objects with which the rays will interact
     public func draw(objects: [RayTracable]) {
         run(objects: objects)
         draw()

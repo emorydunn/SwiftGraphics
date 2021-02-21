@@ -11,6 +11,9 @@ import Foundation
 
 public extension Line {
     
+    /// Calculate points of intersection with another shape.
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersections(with otherShape: Intersectable) -> [Vector] {
         
         switch otherShape {
@@ -25,14 +28,23 @@ public extension Line {
         }
     }
     
+    /// Calculate points of intersection with a `Line`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Line) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }
     
+    /// Calculate points of intersection with a `Circle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Circle) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }
     
+    /// Calculate points of intersection with a `Rectangle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Rectangle) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }
@@ -40,6 +52,9 @@ public extension Line {
 
 public extension Circle {
     
+    /// Calculate points of intersection with another shape.
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersections(with otherShape: Intersectable) -> [Vector] {
         
         switch otherShape {
@@ -54,14 +69,23 @@ public extension Circle {
         }
     }
     
+    /// Calculate points of intersection with a `Line`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Line) -> [Vector] {
         return IntersectionMethods.intersections(between: otherShape, and: self)
     }
     
+    /// Calculate points of intersection with a `Circle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Circle) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }
     
+    /// Calculate points of intersection with a `Rectangle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Rectangle) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }
@@ -69,6 +93,9 @@ public extension Circle {
 
 public extension Rectangle {
     
+    /// Calculate points of intersection with another shape.
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersections(with otherShape: Intersectable) -> [Vector] {
         
         switch otherShape {
@@ -83,14 +110,23 @@ public extension Rectangle {
         }
     }
     
+    /// Calculate points of intersection with a `Line`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Line) -> [Vector] {
         return IntersectionMethods.intersections(between: otherShape, and: self)
     }
     
+    /// Calculate points of intersection with a `Circle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Circle) -> [Vector] {
         return IntersectionMethods.intersections(between: otherShape, and: self)
     }
     
+    /// Calculate points of intersection with a `Rectangle`
+    /// - Parameter otherShape: The shape with which to find intersection points
+    /// - Returns: An array of Vectors
     func intersection(with otherShape: Rectangle) -> [Vector] {
         return IntersectionMethods.intersections(between: self, and: otherShape)
     }

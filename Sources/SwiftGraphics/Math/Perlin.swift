@@ -14,6 +14,7 @@ import Foundation
 /// Implemented from p5.js
 public class PerlinGenerator {
     
+    /// A shared generator
     public static let shared = PerlinGenerator()
     
     let yWrapB = 4
@@ -28,6 +29,7 @@ public class PerlinGenerator {
     /// The amount each octave loses influence
     var ampFalloff = 0.5
     
+    /// The noise array
     var perlin = [Double]()
     
     /// Instantiate a new generator

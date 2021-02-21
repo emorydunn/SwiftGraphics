@@ -11,6 +11,7 @@ import Foundation
 /// Represens a `Shape` that has an internal area
 public protocol Polygon: Intersectable {
     
+    /// The center of the shape
     var center: Vector { get set }
     
     /// A boolean indicating whether the specified point lies within the shape
@@ -20,20 +21,32 @@ public protocol Polygon: Intersectable {
     /// - Parameter angle: The angle
     func point(at angle: Radians) -> Vector
     
+    /// The angle of a point relative to the center
+    /// - Parameter point: The point to to determine the angle between.
     func angle(ofPoint point: Vector) -> Radians
     
+    /// Create a Bézier path representing the shaoe
+    ///
+    /// - Parameters:
+    ///   - start: Starting angle
+    ///   - end: Ending Angle
+    /// - Returns: An array of `BezierPath` which draw the shape
     func bezierCurve(start: Radians, end: Radians) -> [BezierPath]
     
 }
 
 extension Polygon {
+    
+    /// Perform a Boolean operation between the specified shapes.
+    /// - Parameters:
+    ///   - shapes: Shapes to operate on
+    ///   - operation: The operation to perform
+    /// - Returns: An array of the resulting paths
     public func booleanOperation(_ shapes: [Polygon], _ operation: BooleanOperation = .add) -> [BezierPath] {
         
         var shapes = shapes
         shapes.removeAll { $0 === self }
-        
-        
-        
+
         var intersections = shapes.reduce(into: [Vector]()) { (result, poly) in
             result.append(contentsOf: self.intersections(with: poly))
         }
@@ -186,10 +199,19 @@ extension Rectangle {
     }
 }
 
+/// Geometric Boolean Operations
 public enum BooleanOperation {
+    
+    /// Add the shapes together
     case add
+    
+    /// Add the shapes together, but intersecting the specified rectangle
     case addIntersecting(Rectangle)
+    
+    /// Intersect the shapes
     case intersect
+    
+    /// Globally intersect the shapes
     case globalIntersect
     
 }

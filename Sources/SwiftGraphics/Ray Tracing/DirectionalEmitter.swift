@@ -11,12 +11,18 @@ import Foundation
 /// An emiiter that casts a single ray at a given angle
 public class DirectionalEmitter: Emitter {
 
+    
+    /// The origin of the emiiter
     public var origin: Vector
+    
+    
+    /// The direction of the ray to be cast
     public var direction: Vector
 
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
 
+    /// The rays this emitter casts
     var ray: Ray?
 
     /// Instantiate a new emitter
@@ -38,14 +44,19 @@ public class DirectionalEmitter: Emitter {
         self.init(Vector(x, y), direction)
     }
 
-    /// Draw the emitter and ray trace using the specified objects
-    /// - Parameters:
-    ///   - objects: Objects to test for intersection when casting rays
+    /// Process the ray casting operations for this emitter.
+    ///
+    /// This method calculates the paths of the emitter's rays, but does not draw them.
+    /// Any previous rays will be overwritten.
+    /// - Parameter objects: The objects with which the rays will interact
     public func run(objects: [RayTracable]) {
         self.ray = Ray(origin: origin.copy(), direction: direction.copy())
         ray?.run(objects: objects)
     }
     
+    /// Draw the paths taken by the emitter's rays.
+    ///
+    /// This method does not perform any ray tracing.
     public func draw() {
         guard let path = ray?.path else { return }
         self.drawIntersections(path)

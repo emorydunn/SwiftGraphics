@@ -48,6 +48,11 @@ open class Line: Shape, Intersectable, RayTracable {
         self.end = Vector(x2, y2)
     }
     
+    /// Instantiate a new `Line` from a center point
+    /// - Parameters:
+    ///   - center: The center of the line
+    ///   - direction: The direction of the line
+    ///   - length: The length of the line
     public convenience init(center: Vector, direction: Radians, length: Double) {
         let dir = Vector(angle: direction)
         self.init(

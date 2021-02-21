@@ -37,6 +37,8 @@ extension Shape {
 }
 
 extension Array where Element: Shape {
+    
+    /// A convenience method to draw an array of Shapes
     public func draw() {
         self.forEach { $0.draw() }
     }

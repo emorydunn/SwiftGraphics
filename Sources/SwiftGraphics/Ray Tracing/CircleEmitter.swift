@@ -25,6 +25,7 @@ public class CircleEmitter: Circle, Emitter {
     /// Visual style for the emitter's rays
     public var style: RayTraceStyle = .line
     
+    /// The rays this emitter casts
     var rays: [Ray] = []
 
     /// Instantiate a new emitter at the specified coordinates
@@ -39,6 +40,12 @@ public class CircleEmitter: Circle, Emitter {
 
     }
     
+    
+    /// Process the ray casting operations for this emitter.
+    ///
+    /// This method calculates the paths of the emitter's rays, but does not draw them.
+    /// Any previous rays will be overwritten.
+    /// - Parameter objects: The objects with which the rays will interact
     public func run(objects: [RayTracable]) {
         
         // Nothing to do if there are no rays
@@ -60,9 +67,9 @@ public class CircleEmitter: Circle, Emitter {
         }
     }
 
-    /// Draw the emitter and ray trace using the specified objects
-    /// - Parameters:
-    ///   - objects: Objects to test for intersection when casting rays
+    /// Draw the paths taken by the emitter's rays.
+    ///
+    /// This method does not perform any ray tracing.
     public func draw() {
         
         // Draw the circle

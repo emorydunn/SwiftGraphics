@@ -22,6 +22,7 @@ public struct Color: Equatable {
     /// Alpha value
     public let alpha: Float
     
+    /// The grey value of the color, determined by averaging the channels.
     public var grey: Float {
         return (red + green + blue) / 3
     }
@@ -79,7 +80,13 @@ public struct Color: Equatable {
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
     }
-
+    
+    /// Determine the float value of a color component from it's hex representation in a string
+    /// - Parameters:
+    ///   - colorString: The full hex color value
+    ///   - start: The starting position of the component value
+    ///   - length: The length of the component value
+    /// - Returns: The floating point value of the color component
     static func colorComponentFrom(colorString: String, start: Int, length: Int) -> Float {
 
         let startIndex = colorString.index(colorString.startIndex, offsetBy: start)
@@ -133,7 +140,7 @@ public struct Color: Equatable {
     /// The color white
     public static var white: Color { Color(red: 1, green: 1, blue: 1, alpha: 1) }
     
-    /// A clear color
+    /// A clear color (black, with 0 alpha)
     public static var clear: Color { Color(red: 0, green: 0, blue: 0, alpha: 0) }
 
     /// The color red

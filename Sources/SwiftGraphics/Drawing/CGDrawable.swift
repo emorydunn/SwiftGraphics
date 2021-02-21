@@ -20,6 +20,9 @@ public protocol CGDrawable: Shape {
 }
 
 extension CGDrawable {
+    
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
     public func debugDraw() {
         // Important: Classes that directly conform to `DrawingContext`
         // must be listed first.

@@ -11,7 +11,9 @@ import Foundation
 /// A specialized `RayTracer` that collimates intersecting rays and casts them along the vector normal of the lens
 public class Fresnel: Line {
     
-    /// Collimate rays hitting the back of the Fresnel
+    /// Collimate rays hitting the back of the Fresnel.
+    ///
+    /// Rays hitting the "front" of the Fresnel will be terminated. 
     /// - Parameter ray: The ray to modify
     public override func modifyRay(_ ray: Ray) {
         
