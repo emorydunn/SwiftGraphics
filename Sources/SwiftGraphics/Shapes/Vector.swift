@@ -96,7 +96,7 @@ public class Vector: Shape {
     ///   - previous: The previous point in the path
     ///   - next: The next point in the path
     ///   - reverse: Whether to rotate the control point 180º
-    func controlPoint(previous: Vector?, next: Vector?, reverse: Bool = false, smoothing: Double) -> Vector {
+    public func controlPoint(previous: Vector?, next: Vector?, reverse: Bool = false, smoothing: Double) -> Vector {
         // When 'current' is the first or last point of the array
         // 'previous' or 'next' don't exist.
         // Replace with 'current'
