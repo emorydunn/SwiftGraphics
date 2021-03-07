@@ -62,6 +62,21 @@ open class Line: Shape, Intersectable, RayTracable {
             center.y + dir.y * (length / 2)
         )
     }
+    
+    /// Instantiate a new `Line` from an origin of a specified length
+    /// - Parameters:
+    ///   - origin: The origin of the line
+    ///   - direction: The direction of the line
+    ///   - length: The length of the line
+    public convenience init(origin: Vector, direction: Radians, length: Double) {
+        let dir = Vector(angle: direction)
+        self.init(
+            origin.x,
+            origin.y,
+            origin.x + dir.x * length,
+            origin.y + dir.y * length
+        )
+    }
 
     /// Determine whether a point is on the line
     ///
