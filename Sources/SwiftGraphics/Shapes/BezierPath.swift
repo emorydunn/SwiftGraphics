@@ -16,13 +16,13 @@ public class BezierPath: Shape {
     public struct Point: Hashable {
         
         /// Anchor point
-        let point: Vector
+        public let point: Vector
 
         /// First control point
-        let control1: Vector?
+        public let control1: Vector?
 
         /// Second control point
-        let control2: Vector?
+        public let control2: Vector?
         
         /// Instantiate a new Point
         /// - Parameters:
