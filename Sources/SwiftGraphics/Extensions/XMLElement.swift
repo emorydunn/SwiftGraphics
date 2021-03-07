@@ -13,7 +13,7 @@ extension XMLElement {
     /// - Parameters:
     ///   - value: The value to be converted into a string
     ///   - key: Name of the attribute
-    func addAttribute(_ value: CustomStringConvertible, forKey key: String) {
+    public func addAttribute(_ value: CustomStringConvertible, forKey key: String) {
         let attr = XMLNode(kind: .attribute)
         attr.name = key
         attr.stringValue = String(describing: value)
@@ -25,7 +25,7 @@ extension XMLElement {
     /// - Parameters:
     ///   - value: The value to be converted into a string
     ///   - key: Name of the attribute
-    func addAttribute(_ value: Color, forKey key: String) {
+    public func addAttribute(_ value: Color, forKey key: String) {
         let attr = XMLNode(kind: .attribute)
         attr.name = key
         attr.stringValue = value.toHex()
