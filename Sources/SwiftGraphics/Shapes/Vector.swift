@@ -285,6 +285,28 @@ extension Vector {
         rotate(to: newHeading)
 
     }
+    
+    /// Rotate the Vector around the spcified point
+    ///
+    /// Based on https://stackoverflow.com/a/16743716
+    /// - Parameters:
+    ///   - angle: Angle to rotate by, counterclockwise
+    ///   - point: The center point
+    public func rotate(by angle: Radians, around point: Vector) {
+        
+        // Offset by the center
+        self -= point
+        
+        let original = copy()
+        
+        // Rotate around the point
+        self.x = original.x * cos(angle) - original.y * sin(angle)
+        self.y = original.x * sin(angle) + original.y * cos(angle)
+        
+        // Restore position
+        self += point
+        
+    }
 
     /// Set the heading of the receiver to the specified angle
     /// - Parameter theta: The new heading

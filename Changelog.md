@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file. The project
 
 - [CHANGED] Mark XMLElement extension methods public
 - [ADDED] Create a `Line` segment from an origin, direction, and length
+- [ADDED] Vector rotation around another point
 
 ## 0.3.1 / 2021-02-21
 
