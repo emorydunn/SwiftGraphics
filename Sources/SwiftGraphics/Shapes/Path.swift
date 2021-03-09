@@ -60,6 +60,16 @@ public class Path: Shape {
     public func addPoints(_ other: Path) {
         self.points.append(contentsOf: other.points)
     }
+    
+    /// Rotate all points in the path around another point
+    /// - Parameters:
+    ///   - angle: Angle to rotate by, counterclockwise
+    ///   - point: The center point
+    public func rotate(by angle: Radians, around point: Vector) {
+        points.forEach {
+            $0.rotate(by: angle, around: point)
+        }
+    }
 
     /// Create  a smooth Bézier curve
     ///
