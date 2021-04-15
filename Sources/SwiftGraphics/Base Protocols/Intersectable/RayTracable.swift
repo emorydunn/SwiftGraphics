@@ -134,6 +134,25 @@ public class Ray {
         dirPoint.debugDraw(in: context)
     }
     
+    /// Draw a representation of the receiver meant for debugging the shape in the specified context
+    /// - Parameter context: Context in which to draw
+    public func debugDraw() {
+        // Important: Classes that directly conform to `DrawingContext`
+        // must be listed first.
+        // Conformance by extension will always succeed, because the
+        // method doesn't need to know anything beyond the protocol
+        
+        switch SwiftGraphicsContext.current {
+        case is SVGContext:
+            break
+        case let context as CGContext:
+            debugDraw(in: context)
+        default:
+            break
+        }
+        
+    }
+    
 }
 
 extension Array where Element: Ray {
