@@ -26,7 +26,7 @@ public class CircleEmitter: Circle, Emitter {
     public var style: RayTraceStyle = .line
     
     /// The rays this emitter casts
-    var rays: [Ray] = []
+    public var rays: [Ray] = []
 
     /// Instantiate a new emitter at the specified coordinates
     /// - Parameters:
