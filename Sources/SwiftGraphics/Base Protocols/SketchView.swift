@@ -44,8 +44,16 @@ open class SketchView: NSView {
         Swift.print("View Render took:", abs(endTime))
         
     }
+    
+//    /// Create a snapshot of the currently drawn sketch as it appears on screen.
+//    ///
+//    /// - Important: You must have called `.draw()` previously to draw the sketch in the SketchView. 
+//    open func snapshot() -> CGImage? {
+//        return NSGraphicsContext.current?.cgContext.makeImage()
+//    }
 
     /// Draws the sketch to an image
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
     open func drawToImage() -> NSImage? {
         guard let sketch = sketch else { return nil }
         let image = NSImage(size: sketch.size.cgSize)
@@ -61,6 +69,7 @@ open class SketchView: NSView {
     }
     
     /// Creates an SVG document
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
     open func drawToSVG() -> XMLDocument? {
         guard let sketch = sketch else { return nil }
 
@@ -80,6 +89,7 @@ open class SketchView: NSView {
     /// - Parameters:
     ///   - image: Image to save
     ///   - url: URL to save to
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
     open func saveImage(_ image: NSImage, to url: URL) throws {
 
         guard let tiffData = image.tiffRepresentation else {
@@ -90,9 +100,22 @@ open class SketchView: NSView {
 
         try data?.write(to: url)
     }
+    
+    /// Save an image to the specified URL
+    /// - Parameters:
+    ///   - image: Image to save
+    ///   - url: URL to save to
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
+    open func saveImage(_ image: CGImage, to url: URL) throws {
+        let imageRep = NSBitmapImageRep(cgImage: image)
+        let data = imageRep.representation(using: .png, properties: [:])
+        
+        try data?.write(to: url)
+    }
 
     /// Draw the sketch to an image and attempt to save it
     /// - Parameter url: URL to write the image to
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
     open func saveImage(to url: URL) throws {
         guard let image = drawToImage() else { return }
         try saveImage(image, to: url)
@@ -100,6 +123,7 @@ open class SketchView: NSView {
     
     /// Generates an SVG and attempts to write it to the specified URL
     /// - Parameter url: URL to write to
+    @available(*, deprecated, message: "Use the Sketch drawing methods.")
     open func saveSVG(to url: URL) throws {
         guard let sketch = sketch else { return }
         
@@ -114,6 +138,16 @@ open class SketchView: NSView {
         try context.writeSVG(to: url)
 
     }
+    
+//    /// Save a snapshot of the view
+//    /// - Parameter url: URL to write the image to
+//    open func saveSnapshot(to url: URL) throws {
+//        guard let image = snapshot() else {
+//            NSLog("Failed to get snapshot")
+//            return
+//        }
+//        try saveImage(image, to: url)
+//    }
 
     /// Passes clicks to the sketch
     @IBAction open func clickGestureAction(_ sender: NSClickGestureRecognizer) {
