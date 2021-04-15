@@ -26,6 +26,10 @@ open class SketchView: NSView {
             fileName = sketch?.hashedFileName()
         }
     }
+    
+    public func updateFileName() {
+        fileName = sketch?.hashedFileName()
+    }
 
     /// Calls the sketches `.draw()` method
     override open func draw(_ dirtyRect: NSRect) {
