@@ -76,7 +76,7 @@ public class CircleEmitter: Circle, Emitter {
         if case .line = style {
             super.draw()
         }
-        print("Drawing \(rays.count) rays")
+
         rays.forEach { self.drawIntersections($0.path) }
         
 
