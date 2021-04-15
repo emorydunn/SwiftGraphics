@@ -59,6 +59,14 @@ public class Vector: Shape {
         self.y = sin(angle)
         self.z = 0
     }
+    
+    public static func random(in range: Range<Double>) -> Vector {
+        Vector(
+            Double.random(in: range),
+            Double.random(in: range),
+            Double.random(in: range)
+        )
+    }
 
     /// Set the coordinates of the receiver to those of the specified vector
     /// - Parameter v: The vector whose coordinates will be copied
@@ -79,6 +87,16 @@ public class Vector: Shape {
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         Rectangle(x: x, y: y, width: 1, height: 1)
+    }
+    
+    public var center: Vector {
+        get { self }
+        set {
+            self.x = newValue.x
+            self.y = newValue.y
+            self.z = newValue.z
+            
+        }
     }
 
     /// Return an `NSPoint` of the receiver
@@ -254,7 +272,7 @@ extension Vector {
     }
     
     /// Calculates and returns the angle (in radians) between two vectors.
-    public func angleBetween(_ vector: Vector) -> Double {
+    public func angleBetween(_ vector: Vector) -> Radians {
         let dotmagmag = self.dot(vector) / (self.mag() * vector.mag())
         // Mathematically speaking: the dotmagmag variable will be between -1 and 1
         // inclusive. Practically though it could be slightly outside this range due
