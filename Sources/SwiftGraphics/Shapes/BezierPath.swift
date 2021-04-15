@@ -48,6 +48,11 @@ public class BezierPath: Shape {
         Rectangle(x: 0, y: 0, width: 0, height: 0)
     }
     
+    public var center: Vector {
+        get { boundingBox.center }
+        set { }
+    }
+    
     /// Instantiate a new Path from an array of Vectors
     /// - Parameter points: Points in the path
     public init(start: Vector, points: [Point] = []) {

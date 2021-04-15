@@ -22,10 +22,16 @@ open class Line: Shape, Intersectable, RayTracable {
 
     /// The midpoint of the line
     public var center: Vector {
-        return Vector(
-            (end.x + start.x) / 2,
-            (end.y + start.y) / 2
-        )
+        get {
+            Vector(
+                (end.x + start.x) / 2,
+                (end.y + start.y) / 2
+            )
+        }
+        set {
+            
+        }
+        
     }
 
     /// Instantiate a new `Line`

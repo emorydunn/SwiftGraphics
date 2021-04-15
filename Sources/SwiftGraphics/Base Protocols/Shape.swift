@@ -11,6 +11,9 @@ public protocol Shape {
     
     /// A Rectangle that contains the receiver
     var boundingBox: Rectangle { get }
+    
+    /// The center of the shape
+    var center: Vector { get set }
 }
 
 extension Shape {

@@ -11,9 +11,6 @@ import Foundation
 /// Represens a `Shape` that has an internal area
 public protocol Polygon: Intersectable {
     
-    /// The center of the shape
-    var center: Vector { get set }
-    
     /// A boolean indicating whether the specified point lies within the shape
     func contains(_ point: Vector) -> Bool
 

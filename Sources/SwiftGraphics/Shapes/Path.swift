@@ -16,6 +16,11 @@ public class Path: Shape {
         // FIXME: This needs to be implemented
         Rectangle(x: 0, y: 0, width: 0, height: 0)
     }
+    
+    public var center: Vector {
+        get { boundingBox.center }
+        set { }
+    }
 
     /// Points that make up the path
     public var points: [Vector]
