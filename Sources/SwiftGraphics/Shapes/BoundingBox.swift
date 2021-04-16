@@ -22,9 +22,6 @@ public class BoundingBox: Rectangle {
     public init(inset: Double = 100) {
         self.inset = inset
         super.init(x: 0, y: 0, width: 0, height: 0)
-
-        update()
-
     }
 
     /// Draw the `BoundingBox`
