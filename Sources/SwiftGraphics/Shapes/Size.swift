@@ -32,4 +32,46 @@ public struct Size: Hashable {
     public var nsSize: NSSize {
         NSSize(width: width, height: height)
     }
+    
+    /// The center of a rectangle with the origin `(0, 0)`
+    var center: Vector {
+        Vector(
+            width / 2,
+            height / 2
+        )
+    }
+    
+    /// Rotate the `Size` to a landscape orientation.
+    /// - Returns: A rotated Size
+    func landscape() -> Size {
+        if height > width {
+            var newHeight = height
+            var newWidth = width
+            swap(&newHeight, &newWidth)
+            
+            return Size(width: newWidth, height: newHeight)
+        } else {
+            return self
+        }
+    }
+    
+    /// Rotate the `Size` to a portrait orientation.
+    /// - Returns: A rotated Size
+    func portrait() -> Size {
+        if height < width {
+            var newHeight = height
+            var newWidth = width
+            swap(&newHeight, &newWidth)
+            
+            return Size(width: newWidth, height: newHeight)
+        } else {
+            return self
+        }
+    }
+    
+    /// Length of the long side
+    var longSide: Double { max(width, height) }
+    
+    /// Length of the short side
+    var shortSide: Double { min(width, height) }
 }
