@@ -34,7 +34,7 @@ public struct Size: Hashable {
     }
     
     /// The center of a rectangle with the origin `(0, 0)`
-    var center: Vector {
+    public var center: Vector {
         Vector(
             width / 2,
             height / 2
@@ -43,7 +43,7 @@ public struct Size: Hashable {
     
     /// Rotate the `Size` to a landscape orientation.
     /// - Returns: A rotated Size
-    func landscape() -> Size {
+    public func landscape() -> Size {
         if height > width {
             var newHeight = height
             var newWidth = width
@@ -57,7 +57,7 @@ public struct Size: Hashable {
     
     /// Rotate the `Size` to a portrait orientation.
     /// - Returns: A rotated Size
-    func portrait() -> Size {
+    public func portrait() -> Size {
         if height < width {
             var newHeight = height
             var newWidth = width
@@ -70,8 +70,8 @@ public struct Size: Hashable {
     }
     
     /// Length of the long side
-    var longSide: Double { max(width, height) }
+    public var longSide: Double { max(width, height) }
     
     /// Length of the short side
-    var shortSide: Double { min(width, height) }
+    public var shortSide: Double { min(width, height) }
 }
