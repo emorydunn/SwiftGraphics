@@ -98,6 +98,7 @@ final class SVGDrawableTests: XCTestCase {
         SwiftGraphicsContext.current = SVGContext(width: 500, height: 500)
 
         let shape = BoundingBox(inset: 100)
+        shape.update()
         let xml = shape.svgElement()
 
         XCTAssertEqual(

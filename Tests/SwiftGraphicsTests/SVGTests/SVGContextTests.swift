@@ -17,6 +17,7 @@ final class SVGContextTests: XCTestCase {
         let context = SVGContext(width: 1000, height: 1000)
 
         SwiftGraphicsContext.current = context
+        SwiftGraphicsContext.blendMode = .normal
 
         // Draw an invisible boundingbox
         SwiftGraphicsContext.fillColor = .clear
