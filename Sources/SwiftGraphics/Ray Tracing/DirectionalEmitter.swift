@@ -24,6 +24,25 @@ public class DirectionalEmitter: Emitter {
 
     /// The rays this emitter casts
     var ray: Ray?
+    
+    /// Instantiate a new emitter
+    /// - Parameters:
+    ///   - origin: The emitter's origin
+    ///   - direction: Direction of the emitter's ray
+    public init(_ origin: Vector, direction: Vector) {
+        self.origin = origin
+        self.direction = direction
+    }
+    
+    /// Instantiate a new emitter
+    /// - Parameters:
+    ///   - x: `x` coordinate of the origin
+    ///   - y: `y` coordinate of the origin
+    ///   - direction: Direction of the emitter's ray
+    public init(x: Double, y: Double, z: Double = 0, direction: Vector) {
+        self.origin = Vector(x, y, z)
+        self.direction = direction
+    }
 
     /// Instantiate a new emitter
     /// - Parameters:
