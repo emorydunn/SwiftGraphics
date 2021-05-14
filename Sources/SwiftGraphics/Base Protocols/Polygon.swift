@@ -34,6 +34,28 @@ public protocol Polygon: Intersectable {
 
 extension Polygon {
     
+    /// Create a grid `Vector`s within the Polygon's bounding box.
+    ///
+    /// This method strides through the X axis and then the Y, creating columns of points. 
+    ///
+    /// - Parameter stepSize: The distance between each row & column in the grid.
+    /// - Parameter limitToShape: Whether to only return points within the shape.
+    /// - Returns: An array of `Vector`s.
+    func makeGrid(with stepSize: Double, limitToShape: Bool = true) -> [Vector] {
+        var points = [Vector]()
+        stride(from: self.boundingBox.minX, through: self.boundingBox.maxX, by: stepSize).forEach { x in
+            stride(from: self.boundingBox.minY, through: self.boundingBox.maxY, by: stepSize).forEach { y in
+                let point = Vector(x, y)
+                if self.contains(point) && limitToShape {
+                    points.append(point)
+                }
+                
+            }
+        }
+        
+        return points
+    }
+    
     /// Perform a Boolean operation between the specified shapes.
     /// - Parameters:
     ///   - shapes: Shapes to operate on
