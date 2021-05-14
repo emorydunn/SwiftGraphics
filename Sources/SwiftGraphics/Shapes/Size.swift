@@ -23,6 +23,29 @@ public struct Size: Hashable {
         self.height = height
     }
     
+    /// Create a size with the specified dimensions and DPI.
+    /// - Parameters:
+    ///   - w: The width in inches
+    ///   - h: The height in inches
+    ///   - dpi: The dots per inch
+    public init(inches w: Double, _ h: Double, at dpi: Double = 96) {
+        self.width = w * dpi
+        self.height = h * dpi
+    }
+    
+    /// Create a size with the specified dimensions and DPI.
+    ///
+    /// The dimensions are converted to inches (sorry) before being multiplied to pixels. 
+    ///
+    /// - Parameters:
+    ///   - w: The width in mm
+    ///   - h: The height in mm
+    ///   - dpi: The dots per inch
+    public init(mm w: Double, _ h: Double, at dpi: Double = 96) {
+        self.width = (w / 25.4) * dpi
+        self.height = (h / 25.4) * dpi
+    }
+    
     /// Returns a CGSize object
     public var cgSize: CGSize {
         CGSize(width: width, height: height)
