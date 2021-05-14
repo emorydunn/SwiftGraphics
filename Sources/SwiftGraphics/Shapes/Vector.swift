@@ -165,6 +165,31 @@ public class Vector: Shape {
 
         return Vector(x, y)
     }
+    
+    /// Apply barrel distortion to the receiver.
+    ///
+    /// Barrel distortion typically will have a negative term for `K1` whereas pincushion distortion will have a positive value.
+    ///
+    /// - Note: Adapted from the forumula provided by [Wikipedia](https://en.wikipedia.org/wiki/Distortion_(optics)#Software_correction).
+    ///
+    /// - Parameters:
+    ///   - center: The center of the distortion
+    ///   - distCoefficient1: Radial distortion coefficient, raised to the power of 2.
+    ///   - distCoefficient2: Radial distortion coefficient, raised to the power of 4.
+    ///   - distCoefficient3: Radial distortion coefficient, raised to the power of 6.
+    public func applyDistortion(around center: Vector,
+                                _ distCoefficient1: Double = 1.532e-4,
+                                _ distCoefficient2: Double = 9.656e-10,
+                                _ distCoefficient3: Double = 7.245e-10) {
+        
+        let r = sqrt((x - center.x).squared() + (y - center.y).squared())
+        let denom = 1 + distCoefficient1 * pow(r, 2)
+                      + distCoefficient2 * pow(r, 4)
+                      + distCoefficient3 * pow(r, 6)
+        
+        self += (self - center) / denom
+        
+    }
 
 }
 
