@@ -72,12 +72,12 @@ public class SVGContext: DrawingContext {
     /// all elements will be grouped by their stroke color for easy pen switching.
     ///
     /// - Parameter attributeName: Grouping attribute name
-    public func groupElements(by attributeName: String) {
+    public func groupElements(by attributeName: SVGAttribute) {
         guard let children = svg.children as? [XMLElement] else { return }
 
         let grouped: [String: [XMLElement]] = Dictionary(grouping: children) {
             $0.detach()
-            return ($0.attribute(forName: attributeName)?.stringValue) ?? ""
+            return ($0.attribute(forName: attributeName.rawValue)?.stringValue) ?? ""
         }
 
         let xmlGroups: [XMLElement] = grouped.enumerated().compactMap { (index, arg) in
