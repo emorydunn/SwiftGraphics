@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file. The project
 - [CHANGED] Mark XMLElement extension methods public
 - [ADDED] Create a `Line` segment from an origin, direction, and length
 - [ADDED] Vector rotation around another point
+- [CHANGED] Move `center` to `Shape`
+- [ADDED] Random `Vector` init
+- [CHANGED] Move drawing methods to `Sketch`
+- [ADDED] Array methods for `Polygon.contains(_:)`
+- [ADDED] Create a grid of `Vector`s in a `Polygon`
+- [ADDED] Barrel distortion for `Vector`
+- [ADDED] Create `Size` from inches and mm
+- [CHANGED] Add SVG attribute enum for grouping elements into layers
 
 ## 0.3.1 / 2021-02-21
 
