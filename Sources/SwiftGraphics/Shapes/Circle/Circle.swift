@@ -129,10 +129,10 @@ extension Circle: Polygon {
         return atan2(unitInt.y, unitInt.x)
     }
     
-    /// Determine whether teh specified point is inside the circle
+    /// Determine whether the specified point is inside the circle
     ///
     /// This method compares the distance between the center and point to the radius of the circle.
-    /// - Parameter point: Whether the point is inside the circle
+    /// - Parameter point: A Boolean indicating whether the point is contained by the circle
     public func contains(_ point: Vector) -> Bool {
         let unitPoint = point - center
         return sqrt(unitPoint.x.squared() + unitPoint.y.squared()) < radius
