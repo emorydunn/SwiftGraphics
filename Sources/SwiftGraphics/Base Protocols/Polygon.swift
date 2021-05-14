@@ -212,3 +212,26 @@ public enum BooleanOperation {
     case globalIntersect
     
 }
+
+extension Array where Element: Polygon {
+    
+    /// Determine whether the specified point is contained by any Polygon.
+    /// - Parameter point: The point to test
+    /// - Returns: A Boolean indicating whether the point is contained by any Polygon.
+    func contains(_ point: Vector) -> Bool {
+        self.reduce(into: false) { result, circle in
+            result = result && circle.contains(point)
+        }
+    }
+    
+    /// Return the Polygon that contains the specified point
+    /// - Parameter point: The point to test
+    /// - Returns: The Polygon containing the point
+    func shapeContaining(point: Vector) -> Polygon? {
+        self.reduce(into: nil) { (result, shape) in
+            if shape.contains(point) {
+                result = shape
+            }
+        }
+    }
+}
