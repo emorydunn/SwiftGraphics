@@ -60,12 +60,40 @@ public class Vector: Shape {
         self.z = 0
     }
     
-    public static func random(in range: Range<Double>) -> Vector {
+    /// Create a random Vector within the specified range.
+    ///
+    /// - Parameters:
+    ///   - range: Range for random coordinates.
+    ///   - withZ: Whether or not to randomize `z`. Defaults to `false`, which will set `z` to `0`
+    /// - Returns: A random Vector
+    public static func random(in range: Range<Double>, withZ: Bool = false) -> Vector {
         Vector(
             Double.random(in: range),
             Double.random(in: range),
-            Double.random(in: range)
+            (withZ ? Double.random(in: range) : 0)
         )
+    }
+    
+    /// Create a random Vector within the specified range.
+    ///
+    /// - Note: If a range for `z` isn't provided it defaults to `0`
+    ///
+    /// - Parameters:
+    ///   - x: Range for random `x` coordinate.
+    ///   - y: Range for random `y` coordinate.
+    ///   - z: Range for random `z` coordinate.
+    /// - Returns: A random Vector
+    public static func random(_ x: Range<Double>, _ y: Range<Double>, _ z: Range<Double>? = nil) -> Vector {
+        let vect = Vector(
+            Double.random(in: x),
+            Double.random(in: y)
+        )
+        
+        if let z = z {
+            vect.z = Double.random(in: z)
+        }
+        
+        return vect
     }
 
     /// Set the coordinates of the receiver to those of the specified vector
