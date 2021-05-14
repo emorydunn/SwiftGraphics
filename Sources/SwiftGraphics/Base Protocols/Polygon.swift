@@ -36,7 +36,7 @@ extension Polygon {
     
     /// Create a grid `Vector`s within the Polygon's bounding box.
     ///
-    /// This method strides through the X axis and then the Y, creating columns of points. 
+    /// This method strides through the X axis and then the Y, creating columns of points.
     ///
     /// - Parameter stepSize: The distance between each row & column in the grid.
     /// - Parameter limitToShape: Whether to only return points within the shape.
@@ -235,7 +235,7 @@ public enum BooleanOperation {
     
 }
 
-extension Array where Element: Polygon {
+public extension Array where Element: Polygon {
     
     /// Determine whether the specified point is contained by any Polygon.
     /// - Parameter point: The point to test
