@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file. The project
 - [ADDED] Barrel distortion for `Vector`
 - [ADDED] Create `Size` from inches and mm
 - [CHANGED] Add SVG attribute enum for grouping elements into layers
+- [ADDED] HatchFill for Polygons
 
 ## 0.3.1 / 2021-02-21
 
