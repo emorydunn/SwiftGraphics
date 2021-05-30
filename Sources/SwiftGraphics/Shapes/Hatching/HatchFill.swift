@@ -7,24 +7,29 @@
 
 import Foundation
 
+/// Draws a shape with hatched lines
 public class HatchFill {
     
+    /// The shape to fill
     public var shape: SwiftGraphics.Polygon
     
+    /// The lines making up the hatching
     public var fillLines = Set<Line>()
+    
+    /// The full lines
     public var fullLines = [Line]()
     
-    /// Fixed addition spacing to apply add to the noise value.
-    ///
-    /// A higher value will result in fewer paths
-    ///
-    /// `vect.y += noise + noiseSpacing`
+    
+    /// The spacing between lines
     public var spacing: Double = 5
     
+    /// The angle of the hatched lines
     public var angle: Radians = 0
     
-    public init(_ shape: SwiftGraphics.Polygon) {
+    public init(_ shape: SwiftGraphics.Polygon, angle: Radians, spacing: Double) {
         self.shape = shape
+        self.angle = angle
+        self.spacing = spacing
     }
     
     public func iteratePaths() {
@@ -63,13 +68,6 @@ public class HatchFill {
     
     public func draw() {
 
-        if Bool.random() {
-            SwiftGraphicsContext.strokeWeight = Double(penWeight: 0.25)
-        } else {
-            SwiftGraphicsContext.strokeWeight = Double(penWeight: 0.5)
-        }
-        
-        SwiftGraphicsContext.strokeColor = .black
         fillLines.forEach { path in
             path.draw()
         }
