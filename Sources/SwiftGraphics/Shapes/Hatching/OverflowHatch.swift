@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import SwiftGraphics
 
 /// A fill that may overflow the bounds of the original shape
-public class OverflowHatch: Hatch {
+public class OverflowHatch: HatchFill {
     
     public override func iteratePaths() {
 
