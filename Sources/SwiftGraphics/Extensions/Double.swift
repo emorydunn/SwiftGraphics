@@ -28,7 +28,7 @@ extension Double {
     
     /// Creates a new value in points from the specified number of mm.
     /// - Parameter mm: Size in millimeters. 
-    init(penWeight mm: Double) {
+    public init(penWeight mm: Double) {
         self = mm * 2.8
     }
 }
