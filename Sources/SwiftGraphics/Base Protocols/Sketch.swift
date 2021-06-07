@@ -35,11 +35,11 @@ public enum SketchAnimation {
     /// Only call `.draw()` once
     case none
     
-    /// Repeatedly call `.draw()` at the specified framerate
+    /// Repeatedly call `.draw()` at the specified frame-rate
     case animate(frameRate: Int)
     
     /// The amount of time each frame takes
-    /// - Parameter frameRate: The framerate.
+    /// - Parameter frameRate: The frame-rate.
     /// - Returns: The number of seconds each frame takes.
     public func frameRateInterval(_ frameRate: Int) -> TimeInterval {
         return 1 / Double(frameRate)

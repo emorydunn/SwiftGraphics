@@ -30,7 +30,7 @@ extension Array {
         return pairedItems
     }
 
-    /// Ensure the given index is not out of bouds
+    /// Ensure the given index is not out of bounds
     /// - Parameter index: index
     subscript(safe index: Int) -> Element? {
         guard index >= 0 else { return nil }

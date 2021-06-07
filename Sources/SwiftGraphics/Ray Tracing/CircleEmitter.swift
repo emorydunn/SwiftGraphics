@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// A circle that emits rays radiating out from its perimiter
+/// A circle that emits rays radiating out from its perimeter
 public class CircleEmitter: Circle, Emitter {
 
     /// Angle of the step between emitted rays

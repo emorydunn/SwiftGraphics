@@ -170,7 +170,7 @@ public class Vector: Shape {
     ///
     /// Barrel distortion typically will have a negative term for `K1` whereas pincushion distortion will have a positive value.
     ///
-    /// - Note: Adapted from the forumula provided by [Wikipedia](https://en.wikipedia.org/wiki/Distortion_(optics)#Software_correction).
+    /// - Note: Adapted from the formula provided by [Wikipedia](https://en.wikipedia.org/wiki/Distortion_(optics)#Software_correction).
     ///
     /// - Parameters:
     ///   - center: The center of the distortion
@@ -357,7 +357,7 @@ extension Vector {
 
     }
     
-    /// Rotate the Vector around the spcified point
+    /// Rotate the Vector around the specified point
     ///
     /// Based on https://stackoverflow.com/a/16743716
     /// - Parameters:

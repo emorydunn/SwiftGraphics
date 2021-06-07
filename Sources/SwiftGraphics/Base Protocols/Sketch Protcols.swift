@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Allows a `Sketch` to recieve mouse events
+/// Allows a `Sketch` to receive mouse events
 public protocol InteractiveSketch {
     
     

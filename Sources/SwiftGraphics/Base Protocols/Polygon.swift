@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Represens a `Shape` that has an internal area
+/// Represents a `Shape` that has an internal area
 public protocol Polygon: Intersectable {
     
     /// A boolean indicating whether the specified point lies within the shape
@@ -22,7 +22,7 @@ public protocol Polygon: Intersectable {
     /// - Parameter point: The point to to determine the angle between.
     func angle(ofPoint point: Vector) -> Radians
     
-    /// Create a Bézier path representing the shaoe
+    /// Create a Bézier path representing the shape
     ///
     /// - Parameters:
     ///   - start: Starting angle

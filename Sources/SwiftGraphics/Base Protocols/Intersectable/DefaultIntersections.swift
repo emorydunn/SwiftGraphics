@@ -248,7 +248,7 @@ enum IntersectionMethods {
     
     /// Determine the points where the specified `Circle` intersects the `Circle`
     ///
-    /// Adapted from the C version by [ Tim Voght](http://paulbourke.net/geometry/circlesphere/).
+    /// Adapted from the C version by [Tim Voght](http://paulbourke.net/geometry/circlesphere/).
     ///
     /// - Parameters:
     ///   - circle: Circle to intersect

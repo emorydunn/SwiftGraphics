@@ -8,11 +8,11 @@
 
 import Foundation
 
-/// An emiiter that casts a single ray at a given angle
+/// An emitter that casts a single ray at a given angle
 public class DirectionalEmitter: Emitter {
 
     
-    /// The origin of the emiiter
+    /// The origin of the emitter
     public var origin: Vector
     
     

@@ -58,10 +58,10 @@ extension Emitter {
     }
 }
 
-/// Represnts the style to draw rays
+/// Represents the style to draw rays
 public enum RayTraceStyle: String, Codable, CaseIterable {
     
-    /// draws a line between the starting and endoing points
+    /// draws a line between the starting and ending points
     case line
     
     /// Draws only the end point of a line

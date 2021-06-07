@@ -26,7 +26,7 @@ public class OverflowHatch: HatchFill {
             
             fullLines.append(fullLine)
             
-            // Clip the line to the shpe
+            // Clip the line to the shape
             let inters = fullLine.intersections(with: shape)
             
             inters.forEach {

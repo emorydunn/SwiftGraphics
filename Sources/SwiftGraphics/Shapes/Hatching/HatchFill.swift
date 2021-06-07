@@ -34,7 +34,7 @@ public class HatchFill {
     
     public func iteratePaths() {
 
-        // Make a box which completrly covers the shape at the desired rotation
+        // Make a box which completely covers the shape at the desired rotation
         
         let hypot = sqrt(shape.boundingBox.width.squared() + shape.boundingBox.height.squared())
         

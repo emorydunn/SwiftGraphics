@@ -17,7 +17,7 @@ extension Comparable {
     /// 0.clamped(to: 1..<10) // 1
     /// ```
     ///
-    /// - Parameter limits: Bounds of alowable values.
+    /// - Parameter limits: Bounds of allowable values.
     /// - Returns: The clamped value
     public func clamped(to limits: ClosedRange<Self>) -> Self {
         return min(max(self, limits.lowerBound), limits.upperBound)
@@ -34,7 +34,7 @@ extension Strideable where Stride: SignedInteger {
     /// 0.clamped(to: 1..<10) // 1
     /// ```
     ///
-    /// - Parameter limits: Bounds of alowable values.
+    /// - Parameter limits: Bounds of allowable values.
     /// - Returns: The clamped value
     public func clamped(to limits: CountableClosedRange<Self>) -> Self {
         return min(max(self, limits.lowerBound), limits.upperBound)
