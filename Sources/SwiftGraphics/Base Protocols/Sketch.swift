@@ -46,17 +46,17 @@ public enum SketchAnimation {
     }
 }
 
-extension Sketch {
+public extension Sketch {
 
     /// Returns the current `DrawingContext`
-    public var context: DrawingContext? {
+    var context: DrawingContext? {
         SwiftGraphicsContext.current
     }
 
     /// Return a unique file name based on a hash of the time and pid.
     ///
     /// The string takes the form of `YYYYMMDD-HHmmss-<short hash>`
-    public func hashedFileName() -> String {
+    func hashedFileName() -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyyMMdd-HHmmss"
 
@@ -74,7 +74,7 @@ extension Sketch {
     /// Draw a solid rectangle over the sketch
     /// - Parameter fillColor: Color of the background to draw
     /// - Parameter drawInSVG: Draw the background in `SVGContext`
-    public func drawBackground(fillColor: Color = .white, drawInSVG: Bool = false) {
+    func drawBackground(fillColor: Color = .white, drawInSVG: Bool = false) {
 
         switch SwiftGraphicsContext.current {
         case is SVGContext:
@@ -90,6 +90,69 @@ extension Sketch {
             break
         }
 
+    }
+    
+    /// The Output folder relative to the current file.
+    ///
+    /// `#filePath/../../../Output/`
+    var outputFolder: URL {
+        let rootPath = URL(fileURLWithPath: #filePath)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        
+        return rootPath.appendingPathComponent("Output")
+    }
+    
+    /// Render the sketch to an output folder relative to the `#filePath`.
+    ///
+    /// This method is primarily meant for SPM-based sketches. The SVG is saved to
+    /// `#filePath/../../../Output/SVG`
+    ///
+    /// - Throws: Any errors while writing the renders to disk.
+    /// - Returns: The URL of the SVG.
+    func writeSVGToOutput(originalFileName: String) throws -> URL {
+        let rootPath = outputFolder.appendingPathComponent("SVG")
+
+        try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
+        
+        let svgURL = rootPath.appendingPathComponent("\(originalFileName).svg")
+        try saveSVG(to: svgURL)
+        
+        return svgURL
+    }
+    
+    /// Render the sketch to an output folder relative to the `#filePath`.
+    ///
+    /// This method is primarily meant for SPM-based sketches. The PNG is saved to
+    /// `#filePath/../../../Output/PNG`
+    ///
+    /// - Throws: Any errors while writing the renders to disk.
+    /// - Returns: The URL of the PNG.
+    func writePNGToOutput(originalFileName: String) throws -> URL {
+        let rootPath = outputFolder.appendingPathComponent("PNG")
+        
+        try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
+        
+        let pngURL = rootPath.appendingPathComponent("\(originalFileName).png")
+        try saveImage(to: pngURL)
+        
+        return pngURL
+    }
+    
+    /// Render the sketch to an output folder relative to the `#filePath`.
+    ///
+    /// This method is primarily meant for SPM-based sketches. The files is saved to
+    /// `#filePath/../../../Output`
+    ///
+    /// - Throws: Any errors while writing the renders to disk.
+    /// - Returns: The URLs of the files written. The
+    func writeToOutput() throws -> (svg: URL, png: URL) {
+        let originalFileName: String = hashedFileName()
+        let svgURL = try writeSVGToOutput(originalFileName: originalFileName)
+        let pngURL = try writePNGToOutput(originalFileName: originalFileName)
+        
+        return (svgURL, pngURL)
     }
 
 }
