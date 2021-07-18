@@ -149,8 +149,8 @@ public extension Sketch {
     /// - Returns: The URLs of the files written. The
     func writeToOutput() throws -> (svg: URL, png: URL) {
         let originalFileName: String = hashedFileName()
-        let svgURL = try writeSVGToOutput(originalFileName: originalFileName, output: outputFolder())
-        let pngURL = try writePNGToOutput(originalFileName: originalFileName, output: outputFolder())
+        let svgURL = try writeSVGToOutput(originalFileName, output: outputFolder())
+        let pngURL = try writePNGToOutput(originalFileName, output: outputFolder())
         
         return (svgURL, pngURL)
     }
