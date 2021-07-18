@@ -95,8 +95,8 @@ public extension Sketch {
     /// The Output folder relative to the current file.
     ///
     /// `#filePath/../../../Output/`
-    var outputFolder: URL {
-        let rootPath = URL(fileURLWithPath: #filePath)
+    func outputFolder(relativeTo url: URL = URL(fileURLWithPath: #filePath)) ->  URL {
+        let rootPath = url
             .deletingLastPathComponent()
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -112,7 +112,7 @@ public extension Sketch {
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the SVG.
     func writeSVGToOutput(originalFileName: String) throws -> URL {
-        let rootPath = outputFolder.appendingPathComponent("SVG")
+        let rootPath = outputFolder().appendingPathComponent("SVG")
 
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
         
@@ -130,7 +130,7 @@ public extension Sketch {
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the PNG.
     func writePNGToOutput(originalFileName: String) throws -> URL {
-        let rootPath = outputFolder.appendingPathComponent("PNG")
+        let rootPath = outputFolder().appendingPathComponent("PNG")
         
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
         
