@@ -92,10 +92,10 @@ public extension Sketch {
 
     }
     
-    /// The Output folder relative to the current file.
+    /// The Output folder relative to the specified URL.
     ///
-    /// `#filePath/../../../Output/`
-    func outputFolder(relativeTo url: URL = URL(fileURLWithPath: #filePath)) -> URL {
+    /// `url/../../../Output/`
+    func outputFolder(relativeTo url: URL) -> URL {
         let rootPath = url
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -104,13 +104,14 @@ public extension Sketch {
         return rootPath.appendingPathComponent("Output")
     }
     
-    /// Render the sketch to an output folder relative to the `#filePath`.
+    /// Render an SVG with the specified name.
     ///
-    /// This method is primarily meant for SPM-based sketches. The SVG is saved to
-    /// `#filePath/../../../Output/SVG`
-    ///
+    /// - Parameters:
+    ///   - filename: The filename for the renders, without extension.
+    ///   - output: The root output folder.
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the SVG.
+    @discardableResult
     func writeSVGToOutput(_ filename: String, output: URL) throws -> URL {
         let rootPath = output.appendingPathComponent("SVG")
 
@@ -122,13 +123,14 @@ public extension Sketch {
         return svgURL
     }
     
-    /// Render the sketch to an output folder relative to the `#filePath`.
+    /// Render a PNG with the specified name.
     ///
-    /// This method is primarily meant for SPM-based sketches. The PNG is saved to
-    /// `#filePath/../../../Output/PNG`
-    ///
+    /// - Parameters:
+    ///   - filename: The filename for the renders, without extension.
+    ///   - output: The root output folder.
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the PNG.
+    @discardableResult
     func writePNGToOutput(_ filename: String, output: URL) throws -> URL {
         let rootPath = output.appendingPathComponent("PNG")
         
@@ -140,17 +142,29 @@ public extension Sketch {
         return pngURL
     }
     
-    /// Render the sketch to an output folder relative to the `#filePath`.
+    /// Render both a SVG and PNG with a hashed filename.
     ///
-    /// This method is primarily meant for SPM-based sketches. The files is saved to
-    /// `#filePath/../../../Output`
-    ///
+    /// - Parameter output: The root output folder.
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URLs of the files written. The
-    func writeToOutput() throws -> (svg: URL, png: URL) {
+    @discardableResult
+    func writeToOutput(_ output: URL) throws -> (svg: URL, png: URL) {
         let originalFileName: String = hashedFileName()
-        let svgURL = try writeSVGToOutput(originalFileName, output: outputFolder())
-        let pngURL = try writePNGToOutput(originalFileName, output: outputFolder())
+        return try writeToOutput(originalFileName, output: output)
+
+    }
+    
+    /// Render both a SVG and PNG with the specified name.
+    ///
+    /// - Parameters:
+    ///   - filename: The filename for the renders, without extension.
+    ///   - output: The root output folder.
+    /// - Throws: Any errors while writing the renders to disk.
+    /// - Returns: The URLs of the files written. The
+    @discardableResult
+    func writeToOutput(_ filename: String, output: URL) throws -> (svg: URL, png: URL) {
+        let svgURL = try writeSVGToOutput(filename, output: output)
+        let pngURL = try writePNGToOutput(filename, output: output)
         
         return (svgURL, pngURL)
     }
