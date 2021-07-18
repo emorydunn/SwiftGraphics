@@ -73,6 +73,7 @@ final class LineTests: XCTestCase {
             Vector(50, 50)
         )
     }
+    
 
     func testPointAtDistance() {
         let line = Line(0, 0, 100, 100)
@@ -83,6 +84,19 @@ final class LineTests: XCTestCase {
         )
 
     }
+    
+    func testDistance_Horizontal() {
+        XCTAssertEqual(
+            Line(0, 0, 100, 0).point(at: 50),
+            Vector(50, 0)
+        )
+        
+        XCTAssertEqual(
+            Line(200, 225, 0, 225).point(at: 50),
+            Vector(150, 225)
+        )
+    }
+    
 
     func testSlope() {
         let line = Line(0, 50, 100, 100)
