@@ -56,9 +56,9 @@ public extension Sketch {
     /// Return a unique file name based on a hash of the time and pid.
     ///
     /// The string takes the form of `YYYYMMDD-HHmmss-<short hash>`
-    func hashedFileName() -> String {
+    func hashedFileName(dateFormat: String = "yyyyMMdd-HHmmss") -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyyMMdd-HHmmss"
+        formatter.dateFormat = dateFormat
 
         let dateString = formatter.string(from: Date())
 
@@ -95,7 +95,7 @@ public extension Sketch {
     /// The Output folder relative to the current file.
     ///
     /// `#filePath/../../../Output/`
-    func outputFolder(relativeTo url: URL = URL(fileURLWithPath: #filePath)) ->  URL {
+    func outputFolder(relativeTo url: URL = URL(fileURLWithPath: #filePath)) -> URL {
         let rootPath = url
             .deletingLastPathComponent()
             .deletingLastPathComponent()
@@ -111,12 +111,12 @@ public extension Sketch {
     ///
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the SVG.
-    func writeSVGToOutput(originalFileName: String) throws -> URL {
-        let rootPath = outputFolder().appendingPathComponent("SVG")
+    func writeSVGToOutput(_ filename: String, output: URL) throws -> URL {
+        let rootPath = output.appendingPathComponent("SVG")
 
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
         
-        let svgURL = rootPath.appendingPathComponent("\(originalFileName).svg")
+        let svgURL = rootPath.appendingPathComponent("\(filename).svg")
         try saveSVG(to: svgURL)
         
         return svgURL
@@ -129,12 +129,12 @@ public extension Sketch {
     ///
     /// - Throws: Any errors while writing the renders to disk.
     /// - Returns: The URL of the PNG.
-    func writePNGToOutput(originalFileName: String) throws -> URL {
-        let rootPath = outputFolder().appendingPathComponent("PNG")
+    func writePNGToOutput(_ filename: String, output: URL) throws -> URL {
+        let rootPath = output.appendingPathComponent("PNG")
         
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
         
-        let pngURL = rootPath.appendingPathComponent("\(originalFileName).png")
+        let pngURL = rootPath.appendingPathComponent("\(filename).png")
         try saveImage(to: pngURL)
         
         return pngURL
@@ -149,8 +149,8 @@ public extension Sketch {
     /// - Returns: The URLs of the files written. The
     func writeToOutput() throws -> (svg: URL, png: URL) {
         let originalFileName: String = hashedFileName()
-        let svgURL = try writeSVGToOutput(originalFileName: originalFileName)
-        let pngURL = try writePNGToOutput(originalFileName: originalFileName)
+        let svgURL = try writeSVGToOutput(originalFileName: originalFileName, output: outputFolder())
+        let pngURL = try writePNGToOutput(originalFileName: originalFileName, output: outputFolder())
         
         return (svgURL, pngURL)
     }
