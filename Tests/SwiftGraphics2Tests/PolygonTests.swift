@@ -11,10 +11,23 @@ import XCTest
 
 final class PolygonTests: XCTestCase {
     
+    func testPolygon() {
+
+        let polygon = Rectangle(center: Vector(20, 30), width: 20, height: 10)
+        
+        XCTAssertEqual(polygon.points, [
+            Vector(10, 35),
+            Vector(30, 35),
+            Vector(30, 25),
+            Vector(10, 25),
+        ])
+
+    }
+    
     func testRotate() {
 
         measure {
-            let polygon = Rectangle(origin: Vector(20, 30), height: 10, width: 20, rotation: .degrees(30))
+            let polygon = Rectangle(center: Vector(20, 30), width: 20, height: 10, rotation: .degrees(30))
             
             XCTAssertEqual(polygon.points, [
                 Vector(13.839745962155613, 39.33012701892219),
@@ -28,7 +41,7 @@ final class PolygonTests: XCTestCase {
     
     func testBoundingBox() {
         
-        let polygon = Rectangle(origin: Vector(20, 30), height: 10, width: 20, rotation: .degrees(30))
+        let polygon = Rectangle(center: Vector(20, 30), width: 20, height: 10, rotation: .degrees(30))
 
         measure {
 

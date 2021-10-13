@@ -9,53 +9,53 @@ import Foundation
 import simd
 
 
+/// A figure defined by three or more points.
 public protocol Polygon {
-    var origin: Vector { get set }
-    var rotation: Angle { get set }
     
     var points: [Vector] { get }
+    
 }
 
-extension Polygon {
+public extension Polygon {
+    
+    /// Determine the bounding box for the polygon.
+    var boundingBox: Rectangle {
+        points.boundingBox
+    }
+    
+    /// Determine whether a point is contained by the polygon.
+    ///
+    /// This method uses the winding number algorithm by Dan Sunday.
+    /// - Parameter point: The point to test
+    /// - Returns: A boolean indicating whether the polygon contains the point.
+    func contains(point: Vector) -> Bool {
+        windingNumber(of: point, polygon: points)
+    }
+}
+
+extension Array where Element == Vector {
+    
+    /// Determine the bounding box for the points contained in the array.
     var boundingBox: Rectangle {
         var maxX = Double.zero
         var maxY = Double.zero
         var minX = Double.infinity
         var minY = Double.infinity
         
-        points.forEach {
-            maxX = max($0.x, maxX)
-            maxY = max($0.y, maxY)
-            minX = min($0.x, minX)
-            minY = min($0.y, minY)
+        forEach {
+            maxX = Swift.max($0.x, maxX)
+            maxY = Swift.max($0.y, maxY)
+            minX = Swift.min($0.x, minX)
+            minY = Swift.min($0.y, minY)
         }
         
-        return Rectangle(origin: origin, height: maxY - minY, width: maxX - minX)
+        let width = maxX - minX
+        let height = maxY - minY
+        
+        return Rectangle(centerX: minX + width / 2,
+                         y: minY + height / 2,
+                         width: width,
+                         height: height)
 
     }
 }
-//public struct Polygon {
-//    var points: [Vector]
-//
-////    func makeRotationMatrix(angle: Double) -> simd_double3x3 {
-////        let rows = [
-////            simd_double3( cos(angle), sin(angle), 0),
-////            simd_double3(-sin(angle), cos(angle), 0),
-////            simd_double3( 0,          0,          1)
-////        ]
-////
-////        return double3x3(rows: rows)
-////    }
-////
-//    mutating func rotate(by angle: Angle) {
-//        let quat = simd_quatd(MatrixTransformation.rotate(by: angle))
-//        for var vector in points {
-//
-////            vector.simdVector = quat.act(vector.simdVector)
-//        }
-//    }
-//
-//    func contains(point: Vector) -> Bool {
-//        windingNumber(of: point, polygon: points)
-//    }
-//}
