@@ -145,13 +145,11 @@ public extension Vector {
     }
     
     mutating func matrixRotate(by theta: Angle) {
-        let matrix = MatrixTransformation.rotate(by: theta)
-        simdVector = simdVector * matrix
+        simdVector = simdVector * MatrixTransformation.rotate(by: theta)
     }
     
     /// Rotate the Vector around the specified point
     ///
-    /// Based on https://stackoverflow.com/a/16743716
     /// - Parameters:
     ///   - angle: Angle to rotate by, counterclockwise
     ///   - point: The center point
@@ -161,7 +159,7 @@ public extension Vector {
         self -= point
 
         // Perform the rotation
-        simdVector = simdVector * MatrixTransformation.rotate(by: angle)
+        matrixRotate(by: angle)
         
         // Restore the point
         self += point
