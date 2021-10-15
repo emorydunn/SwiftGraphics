@@ -1,36 +1,32 @@
 //
-//  File.swift
+//  Array.swift
 //  
 //
-//  Created by Emory Dunn on 10/10/21.
+//  Created by Emory Dunn on 10/13/21.
 //
 
 import Foundation
-import simd
 
+extension Array {
 
-/// A figure defined by three or more points.
-public protocol Polygon {
-    
-    var points: [Vector] { get }
-    
-}
-
-public extension Polygon {
-    
-    /// Determine the bounding box for the polygon.
-    var boundingBox: Rectangle {
-        points.boundingBox
-    }
-    
-    /// Determine whether a point is contained by the polygon.
+    /// Calls the given closure on each pair of elements in the sequence.
     ///
-    /// This method uses the winding number algorithm by Dan Sunday.
-    /// - Parameter point: The point to test
-    /// - Returns: A boolean indicating whether the polygon contains the point.
-    func contains(point: Vector) -> Bool {
-        windingNumber(of: point, polygon: points)
+    /// ```
+    /// let a = ["zero", "one", "two", "three", "four"]
+    /// array.paired { _, _ in } // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
+    /// ```
+    public func paired(_ pair: (Element, Element) -> Void) {
+
+        self.enumerated().forEach { offset, item in
+            guard offset < (self.count - 1) else { return }
+
+            let nextItem = self[offset + 1]
+            
+            pair(item, nextItem)
+
+        }
     }
+    
 }
 
 extension Array where Element == Vector {
