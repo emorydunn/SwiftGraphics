@@ -16,28 +16,6 @@
 
 import Foundation
 
-extension Array {
-
-    /// Calls the given closure on each pair of elements in the sequence.
-    ///
-    /// ```
-    /// let a = ["zero", "one", "two", "three", "four"]
-    /// array.paired { _, _ in } // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
-    /// ```
-    public func paired(_ pair: (Element, Element) -> Void) {
-
-        self.enumerated().forEach { offset, item in
-            guard offset < (self.count - 1) else { return }
-
-            let nextItem = self[offset + 1]
-            
-            pair(item, nextItem)
-
-        }
-    }
-    
-}
-
 /// Tests if a point is Left|On|Right of an infinite line.
 /// - Parameters:
 ///   - p0: First point in the line
