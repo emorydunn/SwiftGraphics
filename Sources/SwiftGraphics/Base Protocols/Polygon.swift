@@ -41,7 +41,7 @@ extension Polygon {
     /// - Parameter stepSize: The distance between each row & column in the grid.
     /// - Parameter limitToShape: Whether to only return points within the shape.
     /// - Returns: An array of `Vector`s.
-    func makeGrid(with stepSize: Double, limitToShape: Bool = true) -> [Vector] {
+    public func makeGrid(with stepSize: Double, limitToShape: Bool = true) -> [Vector] {
         var points = [Vector]()
         stride(from: self.boundingBox.minX, through: self.boundingBox.maxX, by: stepSize).forEach { x in
             stride(from: self.boundingBox.minY, through: self.boundingBox.maxY, by: stepSize).forEach { y in
