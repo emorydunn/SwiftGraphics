@@ -18,9 +18,9 @@ final class ColorTests: XCTestCase {
         let red = Color.red
         let color = Color(155, 160, 240, 0.8)
 
-        XCTAssertEqual(grey.toHex(), "#808080FF")
-        XCTAssertEqual(red.toHex(), "#FF0000FF")
-        XCTAssertEqual(color.toHex(), "#9BA0F0CC")
+        XCTAssertEqual(grey.toHex(), "#808080")
+        XCTAssertEqual(red.toHex(), "#FF0000")
+        XCTAssertEqual(color.toHex(withAlpha: true), "#9BA0F0CC")
     }
 
     func testRGBA() {

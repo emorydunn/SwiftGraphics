@@ -117,15 +117,19 @@ public struct Color: Equatable {
 
     /// Convert to a hex string
     /// From: https://stackoverflow.com/a/26341062
-    public func toHex() -> String {
+    public func toHex(withAlpha: Bool = false) -> String {
 
         let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
         let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
         let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
-        let a = lroundf(alpha * 255) // swiftlint:disable:this identifier_name
+        
+        if withAlpha {
+            let a = lroundf(alpha * 255) // swiftlint:disable:this identifier_name
+            return String.init(format: "#%02lX%02lX%02lX%02lX", r, g, b, a)
+        } else {
+            return String.init(format: "#%02lX%02lX%02lX", r, g, b)
+        }
 
-        let hexString = String.init(format: "#%02lX%02lX%02lX%02lX", r, g, b, a)
-        return hexString
     }
     
     /// Create a CGColor
