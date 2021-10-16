@@ -16,11 +16,11 @@ final class ColorTests: XCTestCase {
     func testHex() {
         let grey = Color(grey: 0.5, 1)
         let red = Color.red
-        let color = Color(155, 160, 240, 1)
+        let color = Color(155, 160, 240, 0.8)
 
-        XCTAssertEqual(grey.toHex(), "#808080")
-        XCTAssertEqual(red.toHex(), "#FF0000")
-        XCTAssertEqual(color.toHex(), "#9BA0F0")
+        XCTAssertEqual(grey.toHex(), "#808080FF")
+        XCTAssertEqual(red.toHex(), "#FF0000FF")
+        XCTAssertEqual(color.toHex(), "#9BA0F0CC")
     }
 
     func testRGBA() {
