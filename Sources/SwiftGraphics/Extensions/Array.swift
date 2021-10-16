@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension Array {
+public extension Array {
     /// Returns the arrays elements in paired tuples
     ///
     /// ```
     /// let a = ["zero", "one", "two", "three", "four"]
     /// let p = array.paired() // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
     /// ```
-    public func paired() -> [(Element, Element)] {
+    func paired() -> [(Element, Element)] {
         var pairedItems = [(Element, Element)]()
 
         self.enumerated().forEach { offset, item in
@@ -40,7 +40,7 @@ extension Array {
     }
 }
 
-extension Array where Element: Vector {
+public extension Array where Element: Vector {
 
     /// Sort an array of `Vector`s by distance to the specified point
     /// - Parameter point: Origin point
@@ -62,7 +62,7 @@ extension Array where Element: Vector {
     /// - Parameters:
     ///   - origin: Origin to shift along
     ///   - range: Range within to shift
-    public func randomizePoints(origin: Vector, range: Range<Double> = -60..<60) -> [Vector] {
+    func randomizePoints(origin: Vector, range: Range<Double> = -60..<60) -> [Vector] {
 
         return self.enumerated().map { index, point in
             let percent: Double
@@ -85,11 +85,11 @@ extension Array where Element: Vector {
     }
 }
 
-extension Array where Element == Bool {
+public extension Array where Element == Bool {
     
     /// Returns a boolean indicating whether all elements of the array are `true`
-    public func allTrue() -> Bool { allSatisfy { $0 } }
+    func allTrue() -> Bool { allSatisfy { $0 } }
     
     /// Returns a boolean indicating whether all elements of the array are `false`
-    public func allFalse() -> Bool { allSatisfy { !$0 } }
+    func allFalse() -> Bool { allSatisfy { !$0 } }
 }

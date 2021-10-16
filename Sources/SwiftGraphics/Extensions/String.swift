@@ -8,7 +8,7 @@
 import Foundation
 import CommonCrypto
 
-extension String {
+public extension String {
 
     /// Return the SHA1 hash in a hex representation
     func sha1() -> String {
