@@ -82,13 +82,12 @@ public struct Color: Equatable {
         var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
 
-        
         self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
         
         if colorString.count == 8 {
-            alpha = Color.colorComponentFrom(colorString: colorString, start: 6, length: 2)
+            self.alpha = Color.colorComponentFrom(colorString: colorString, start: 6, length: 2)
         } else {
             self.alpha = alpha
         }
