@@ -113,6 +113,7 @@ public extension Sketch {
     /// - Returns: The URL of the SVG.
     @discardableResult
     func writeSVGToOutput(_ filename: String, output: URL) throws -> URL {
+        NSLog("Rendering SVG to \(filename)")
         let rootPath = output.appendingPathComponent("SVG")
 
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
@@ -132,6 +133,7 @@ public extension Sketch {
     /// - Returns: The URL of the PNG.
     @discardableResult
     func writePNGToOutput(_ filename: String, output: URL) throws -> URL {
+        NSLog("Rendering PNG to \(filename)")
         let rootPath = output.appendingPathComponent("PNG")
         
         try FileManager.default.createDirectory(at: rootPath, withIntermediateDirectories: true)
