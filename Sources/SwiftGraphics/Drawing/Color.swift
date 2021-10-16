@@ -1,5 +1,5 @@
 //
-//  CGColor.swift
+//  Color.swift
 //  
 //
 //  Created by Emory Dunn on 5/21/20.
@@ -70,15 +70,28 @@ public struct Color: Equatable {
     }
 
     /// Create  a color from a hex string
+    ///
+    /// If an alpha value is specified in the hex string that value will be used, otherwise the alpha parameter is used.
+    ///
     /// From: https://stackoverflow.com/a/26341062
+
+    /// - Parameters:
+    ///   - hexString: The hex color string.
+    ///   - alpha: The default alpha value.
     public init(hexString: String, alpha: Float = 1) {
         var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
 
-        self.alpha = alpha
+        
         self.red = Color.colorComponentFrom(colorString: colorString, start: 0, length: 2)
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
+        
+        if colorString.count == 8 {
+            alpha = Color.colorComponentFrom(colorString: colorString, start: 6, length: 2)
+        } else {
+            self.alpha = alpha
+        }
     }
     
     /// Determine the float value of a color component from it's hex representation in a string
@@ -110,12 +123,13 @@ public struct Color: Equatable {
         let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
         let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
         let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
+        let a = lroundf(alpha * 255) // swiftlint:disable:this identifier_name
 
-        let hexString = String.init(format: "#%02lX%02lX%02lX", r, g, b)
+        let hexString = String.init(format: "#%02lX%02lX%02lX%02lX", r, g, b, a)
         return hexString
     }
     
-    /// Createa CGColor
+    /// Create a CGColor
     public func toCGColor() -> CGColor {
         return CGColor(
             red: CGFloat(red),
@@ -151,5 +165,15 @@ public struct Color: Equatable {
     
     /// The color blue
     public static var blue: Color { Color(red: 0, green: 0, blue: 1, alpha: 1) }
+
+}
+
+extension Color: ExpressibleByStringLiteral {
+    
+    /// Create  a color from a hex string
+    /// - Parameter value: The hex value
+    public init(stringLiteral value: String) {
+        self.init(hexString: value)
+    }
 
 }
