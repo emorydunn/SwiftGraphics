@@ -1,0 +1,64 @@
+//
+//  BezierPath.swift
+//  
+//
+//  Created by Emory Dunn on 3/3/22.
+//
+
+import Foundation
+
+public struct BezierPath {
+    
+    public var controlPoints: [Vector]
+    
+    public var style: Style
+    
+    /// Determine the point at `t` by interpreting the Path as a Bézier curve.
+    ///
+    /// The method uses de Casteljau's algorithm.
+    ///
+    /// - Parameter t: The time value
+    /// - Returns: The point along the curve.
+    public func bezier(_ t: Double) -> Vector {
+        
+        assert(controlPoints.count > 0, "Path cannot be empty")
+        
+        if controlPoints.count == 1 {
+            return controlPoints[0]
+        }
+
+        var bezPoints = controlPoints
+        let n = controlPoints.count
+        (1..<n).forEach { j in
+            (0..<(n - j)).forEach { k in
+                let p = bezPoints[k]
+                let p1 = bezPoints[k + 1]
+                
+                bezPoints[k] = Vector.lerp(percent: t, start: p, end: p1)
+            }
+        }
+        
+        return bezPoints[0]
+    }
+    
+}
+
+extension BezierPath {
+    public enum Style {
+        case curve
+        case sampled(Double)
+    }
+    
+    /// Create a Path from the specified points.
+    /// - Parameter points: Points which make up the Path.
+    init(_ points: [Vector], style: Style = .curve) {
+        self.controlPoints = points
+        self.style = style
+    }
+    
+    /// Create a Path from the specified points.
+    /// - Parameter points: Points which make up the Path.
+    init(_ points: Vector..., style: Style = .curve) {
+        self.init(points, style: style)
+    }
+}
