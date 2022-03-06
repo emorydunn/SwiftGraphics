@@ -15,7 +15,10 @@ public struct BezierPath {
     
     /// Determine the point at `t` by interpreting the Path as a Bézier curve.
     ///
-    /// The method uses de Casteljau's algorithm.
+    /// The method uses de Casteljau's algorithm. For values between `0` and `1`, inclusive, the point returned is
+    /// between the first and last control points. Values outside that range will return a point elsewhere on the curve
+    ///
+    /// - Important: It is a programer error to call this method with an empty path.
     ///
     /// - Parameter t: The time value
     /// - Returns: The point along the curve.
