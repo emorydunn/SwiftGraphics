@@ -251,6 +251,15 @@ extension Vector {
         Vector(lhs.simdVector * num)
     }
     
+    /// Multiplies two values and produces their product
+    ///
+    /// - Parameters:
+    ///   - lhs: The first value to multiply.
+    ///   - num: The second value to multiply.
+    public static func * (num: Double, lhs: Vector) -> Vector {
+        Vector(lhs.simdVector * num)
+    }
+    
     /// Multiplies two values and stores the result in the left-hand-side variable.
     /// - Parameters:
     ///   - lhs: The first value to multiply.
@@ -299,5 +308,14 @@ extension Vector {
     /// - Parameter vector: The vector to negate
     public static prefix func - (vector: Vector) -> Vector {
         Vector(-vector.simdVector)
+    }
+    
+    /// Linearly interpret betweet two vectors
+    /// - Parameters:
+    ///   - percent: The percent, between `0` and `1`
+    ///   - start: The starting Vector
+    ///   - end: The ending Vector
+    public static func lerp(percent: Double, start: Vector, end: Vector) -> Vector {
+        return start + ((end - start) * percent)
     }
 }
