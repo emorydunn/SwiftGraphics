@@ -24,7 +24,7 @@ public struct BezierPath {
     /// - Returns: The point along the curve.
     public func bezier(_ t: Double) -> Vector {
         
-        assert(controlPoints.count > 0, "Path cannot be empty")
+        precondition(controlPoints.count > 0, "Path cannot be empty")
         
         if controlPoints.count == 1 {
             return controlPoints[0]

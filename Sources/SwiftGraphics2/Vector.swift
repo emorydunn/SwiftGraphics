@@ -310,7 +310,7 @@ extension Vector {
         Vector(-vector.simdVector)
     }
     
-    /// Linearly interpret betweet two vectors
+    /// Linearly interpret between two vectors
     /// - Parameters:
     ///   - percent: The percent, between `0` and `1`
     ///   - start: The starting Vector
