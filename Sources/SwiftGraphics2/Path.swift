@@ -8,6 +8,7 @@
 import Foundation
 import simd
 
+/// A straight-line path made up of vector points.
 public struct Path: Equatable {
     
     /// The points which make up the path
@@ -19,19 +20,56 @@ public struct Path: Equatable {
         points.append(point)
     }
     
+    /// The combined length of each line segment
+    var length: Double {
+        points.paired().reduce(into: 0) { partialResult, vectors in
+            partialResult += vectors.1.dist(vectors.0)
+        }
+    }
+    
     /// Linearly interpret a point along the line to the specified distance.
+    ///
+    /// - Important: It is a programer error to call this method with an empty path.
     /// - Parameter distance: The distance from the start.
     func lerp(percent t: Double) -> Vector {
-        var newPoints: [Vector] = []
-        stride(from: 0, to: points.count, by: 1).forEach { i in
-//            let p = points[i]
-//            let p1 = points[i + 1]
-//            let point = Vector.lerp(percent: t, start: p, end: p1)
-//            newPoints.append(point)
+        
+        precondition(points.count > 0, "Path cannot be empty")
+        
+        // The distance along the path
+        let distance = length * t
+        
+        // The current distance we've lerped
+        var distanceTravelled: Double = 0
+        
+        // The point
+        var point: Vector = points.last!
+        
+        // Iterate through pairs of line segments
+        for points in points.paired() {
+            let (lhs, rhs) = points
+            
+            // Calculate the distance between the points
+            let dist = rhs.dist(lhs)
+            
+            print(distanceTravelled, distance, dist)
+            
+            // If the new length is and the travelled length is less than the total distance
+            // "jump" to the end of the segment by adding it's length
+            
+            // If the combined distance is greater than our needed distance
+            // subtract the travelled and create a new percent on the line
+            if dist + distanceTravelled < distance {
+                distanceTravelled += dist
+            } else {
+                let lineP = (distance - distanceTravelled) / dist
+                point = Vector.lerp(percent: lineP, start: lhs, end: rhs)
+                break
+            }
+        
         }
         
-        return newPoints.last ?? points[0]
-        
+        return point
+
     }
 
 }

@@ -17,17 +17,11 @@ final class PathTests: XCTestCase {
             Vector(130, 40),
             Vector(200, 100)
         )
+
+        let point = path.lerp(percent: 0.5)
         
-//        let point = path.lerp(percent: 0.5)
-//        print(point)
-//
-//        let lerped = Path(strideFrom: 0, through: 1, by: 0.1) {
-//            path.lerp(percent: $0)
-//        }
-//
-//        print(lerped.svgElement().xmlString)
-//
-////        XCTAssertEqual(point, Vector(171.8, 82.8))
+        XCTAssertEqual(point, Vector(118.46854449606303, 56.91280140577422))
+
     }
     
     func testBezier() {
