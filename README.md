@@ -8,7 +8,13 @@ Take a look at the [documentation](https://emorydunn.github.io/SwiftGraphics/) a
 
 ![Ray Tracing Example](https://raw.githubusercontent.com/emorydunn/SwiftGraphics/main/Examples/20210118-153510-5b61a3fb.png)
 
-# 2D Primatives
+# SwiftGraphics2
+
+This branch is a rewrite of the basic shapes using `simd` to provide hopefully faster processing and other features like rotation, proper Bézier curves, and cleaner code.
+
+It's still a work in progress and will most likely not be fully compatible with the existing library. 
+
+# 2D Primitives
 
 - Circle
 - Rectangle
