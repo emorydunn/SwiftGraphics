@@ -68,7 +68,7 @@ public extension Angle {
     static let twoPi = Angle(radians: Double.pi * 2)
     
     /// Pi, divided by two.
-    static let halfPi = Angle(radians: Double.pi / 20)
+    static let halfPi = Angle(radians: Double.pi / 2)
     
     
     /// A full circle

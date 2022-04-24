@@ -32,6 +32,7 @@ public struct BezierPath {
 
         var bezPoints = controlPoints
         let n = controlPoints.count
+        
         (1..<n).forEach { j in
             (0..<(n - j)).forEach { k in
                 let p = bezPoints[k]

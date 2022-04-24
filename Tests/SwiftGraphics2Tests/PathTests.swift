@@ -37,10 +37,11 @@ final class PathTests: XCTestCase {
             Vector(200, 100)
         )
         
-        let point = path.bezier(0.8)
+        measure {
+            let point = path.bezier(0.8)
+            XCTAssertEqual(point, Vector(171.8, 82.8))
+        }
         
-        XCTAssertEqual(point, Vector(171.8, 82.8))
-
     }
     
     func testBezierCurve() {
@@ -77,11 +78,11 @@ final class PathTests: XCTestCase {
             Vector(200, 100)
         )
         
-        let paths = path.splitCurve(at: 0.8)
-        
-        print(paths.0.svgElement().xmlString)
-        print(paths.1.svgElement().xmlString)
-        print(paths.2.svgElement().xmlString)
+//        let paths = path.splitCurve(at: 0.8)
+//        
+//        print(paths.0.svgElement().xmlString)
+//        print(paths.1.svgElement().xmlString)
+//        print(paths.2.svgElement().xmlString)
         
 //        XCTAssertEqual(point, Vector(171.8, 82.8))
 
