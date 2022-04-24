@@ -27,6 +27,27 @@ extension Array {
         }
     }
     
+    /// Returns the arrays elements in paired tuples
+    ///
+    /// ```
+    /// let a = ["zero", "one", "two", "three", "four"]
+    /// let p = array.paired() // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
+    /// ```
+    public func paired() -> [(Element, Element)] {
+        var pairedItems = [(Element, Element)]()
+
+        self.enumerated().forEach { offset, item in
+            guard offset < (self.count - 1) else { return }
+
+            let nextItem = self[offset + 1]
+
+            pairedItems.append((item, nextItem))
+
+        }
+
+        return pairedItems
+    }
+    
 }
 
 extension Array where Element == Vector {
