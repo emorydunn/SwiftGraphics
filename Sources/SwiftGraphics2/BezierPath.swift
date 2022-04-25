@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Defines a Cubic Bézier curve. 
 public struct BezierPath {
     
     public var controlPoints: [Vector]
