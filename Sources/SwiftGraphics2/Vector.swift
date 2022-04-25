@@ -37,7 +37,7 @@ public struct Vector {
         self.simdVector = simd_double3(x: x, y: y, z: z)
     }
     
-    /// Instantiate a new `Vector` at the specified coordinates
+    /// Create a new `Vector` by applying a transformation to the specified points.
     /// - Parameters:
     ///   - x: The `x` position of the vector
     ///   - y: The `y` position of the vector
@@ -71,21 +71,43 @@ public extension Vector {
     }
     
     /// Calculates the magnitude (length) of the vector.
+    @available(*, deprecated, renamed: "length()")
     func mag() -> Double {
+        simd_length(simdVector)
+    }
+    
+    /// Calculates the magnitude (length) of the vector.
+    func length() -> Double {
         simd_length(simdVector)
     }
     
     /// Calculates the squared magnitude of the vector.
     ///
     /// - Note: Faster if the real length is not required in the case of comparing vectors, etc.
+    @available(*, deprecated, renamed: "lengthSquared()")
     func magSq() -> Double {
+        simd_length_squared(simdVector)
+    }
+    
+    /// Calculates the squared magnitude of the vector.
+    ///
+    /// - Note: Faster if the real length is not required in the case of comparing vectors, etc.
+    func lengthSquared() -> Double {
         simd_length_squared(simdVector)
     }
     
     /// Returns the distance to another vector
     /// - Parameter vector: Another vector
     /// - Returns: Distance to the second vector
+    @available(*, deprecated, renamed: "distance(to:)")
     func dist(_ vector: Vector) -> Double {
+        simd_distance(simdVector, vector.simdVector)
+    }
+    
+    /// Returns the distance to another vector
+    /// - Parameter vector: Another vector
+    /// - Returns: Distance to the second vector
+    func distance(to vector: Vector) -> Double {
         simd_distance(simdVector, vector.simdVector)
     }
     
@@ -94,7 +116,17 @@ public extension Vector {
     /// - Note: Faster if the real distance is not required in the case of comparing vectors, etc.
     /// - Parameter vector: Another vector
     /// - Returns: Distance to the second vector
+    @available(*, deprecated, renamed: "distanceSquared(to:)")
     func distSquared(_ vector: Vector) -> Double {
+        simd_distance_squared(simdVector, vector.simdVector)
+    }
+    
+    /// Returns the square of the distance between two vectors.
+    ///
+    /// - Note: Faster if the real distance is not required in the case of comparing vectors, etc.
+    /// - Parameter vector: Another vector
+    /// - Returns: Distance to the second vector
+    func distanceSquared(to vector: Vector) -> Double {
         simd_distance_squared(simdVector, vector.simdVector)
     }
     
@@ -132,8 +164,8 @@ public extension Vector {
     mutating func rotate(to theta: Angle) {
         let newHeading = theta.radians
 
-        self.x = cos(newHeading) * mag()
-        self.y = sin(newHeading) * mag()
+        self.x = cos(newHeading) * length()
+        self.y = sin(newHeading) * length()
 
     }
     

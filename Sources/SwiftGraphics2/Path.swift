@@ -10,20 +10,20 @@ import simd
 
 /// A straight-line path made up of vector points.
 public struct Path: Equatable {
-    
+
     /// The points which make up the path
-    var points: [Vector]
+    public var points: [Vector]
     
-    var isEmpty: Bool { points.isEmpty }
+    public var isEmpty: Bool { points.isEmpty }
     
     mutating func addPoint(_ point: Vector) {
         points.append(point)
     }
     
     /// The combined length of each line segment
-    var length: Double {
+    public var length: Double {
         points.paired().reduce(into: 0) { partialResult, vectors in
-            partialResult += vectors.1.dist(vectors.0)
+            partialResult += vectors.1.distance(to: vectors.0)
         }
     }
     
@@ -31,7 +31,7 @@ public struct Path: Equatable {
     ///
     /// - Important: It is a programer error to call this method with an empty path.
     /// - Parameter distance: The distance from the start.
-    func lerp(percent t: Double) -> Vector {
+    public func lerp(percent t: Double) -> Vector {
         
         precondition(points.count > 0, "Path cannot be empty")
         
@@ -49,7 +49,7 @@ public struct Path: Equatable {
             let (lhs, rhs) = points
             
             // Calculate the distance between the points
-            let dist = rhs.dist(lhs)
+            let dist = rhs.distance(to: lhs)
             
             print(distanceTravelled, distance, dist)
             
@@ -117,45 +117,4 @@ public extension Path {
         points.boundingBox
     }
     
-}
-
-extension Path {
-
-    /// Create an `XMLElement` for the Path in its drawing style
-    public func svgElement() -> XMLElement {
-        let element = XMLElement(name: "path")
-
-        guard !isEmpty else { return element }
-
-        let lines = points.map({
-            "L \($0.x) \($0.y)"
-            }).joined(separator: " ")
-
-        let command = "M \(points[0].x),\(points[0].y) \(lines)"
-
-        element.addAttribute(command, forKey: "d")
-
-        element.addAttribute("black", forKey: "stroke")
-        element.addAttribute(1, forKey: "stroke-width")
-//        element.addAttribute(SwiftGraphicsContext.fillColor, forKey: "fill")
-
-        return element
-    }
-
-}
-
-extension XMLElement {
-
-    /// Adds an attribute node to the receiver.
-    /// - Parameters:
-    ///   - value: The value to be converted into a string
-    ///   - key: Name of the attribute
-    public func addAttribute(_ value: CustomStringConvertible, forKey key: String) {
-        let attr = XMLNode(kind: .attribute)
-        attr.name = key
-        attr.stringValue = String(describing: value)
-
-        addAttribute(attr)
-    }
-
 }

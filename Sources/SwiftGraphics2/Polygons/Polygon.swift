@@ -14,6 +14,10 @@ public protocol Polygon {
     
     var points: [Vector] { get }
     
+    var boundingBox: Rectangle { get }
+    
+    func contains(point: Vector) -> Bool
+    
 }
 
 public extension Polygon {

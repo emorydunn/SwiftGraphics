@@ -8,13 +8,14 @@
 import Foundation
 
 public struct Line {
+    
     /// The starting point of the line
     public var start: Vector
 
     /// The ending point of the line
     public var end: Vector
     
-    public var length: Double { end.dist(start) }
+    public var length: Double { end.distance(to: start) }
     
     /// The midpoint of the line
     public var center: Vector {
@@ -22,7 +23,22 @@ public struct Line {
             (end.x + start.x) / 2,
             (end.y + start.y) / 2
         )
-        
+    }
+    
+    public init(start: Vector, end: Vector) {
+        self.start = start
+        self.end = end
+    }
+    
+    /// Instantiate a new `Line` from coordinates
+    /// - Parameters:
+    ///   - x1: Starting X coordinate
+    ///   - y1: Starting Y coordinate
+    ///   - x2: Ending X coordinate
+    ///   - y2: Ending Y coordinate
+    public init(_ x1: Double, _ y1: Double, _ x2: Double, _ y2: Double) {
+        self.start = Vector(x1, y1)
+        self.end = Vector(x2, y2)
     }
     
     /// Determine whether a point is on the line
@@ -31,7 +47,7 @@ public struct Line {
     ///
     /// - Parameter point: Whether the point is on the line
     public func contains(_ point: Vector) -> Bool {
-        return start + (end - start) * (start.dist(point)) / end.dist(start) == point
+        return start + (end - start) * (start.distance(to: point)) / end.distance(to: start) == point
     }
     
     /// Calculate the vector normal of the line
@@ -83,3 +99,4 @@ public struct Line {
 
 //    }
 }
+

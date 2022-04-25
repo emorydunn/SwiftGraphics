@@ -39,6 +39,12 @@ public func isLeft(p0: Vector, p1: Vector, p2: Vector) -> Double {
 public func crossingNumber(of point: Vector, polygon: [Vector]) -> Bool {
     // Ensure we have a polygon
     guard polygon.count > 2 else { return false }
+    
+    // Close the shape if needed
+    var polygon = polygon
+    if polygon.first != polygon.last {
+        polygon.append(polygon[0])
+    }
 
     var count = 0
     polygon.paired { p0, p1 in
