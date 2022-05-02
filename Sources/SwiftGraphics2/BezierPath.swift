@@ -46,6 +46,13 @@ public struct BezierPath {
         return bezPoints[0]
     }
     
+    public func splitCurve(at percent: Double) {
+        // The point along the path
+//        let point = bezier(percent)
+        
+        
+    }
+    
 }
 
 extension BezierPath {
