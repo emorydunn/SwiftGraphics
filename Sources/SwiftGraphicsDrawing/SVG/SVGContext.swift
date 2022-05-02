@@ -21,13 +21,17 @@ public class SVGContext {
     /// Height of the SVG
     public let height: Int
     
+    public var debug: Bool
+    
     /// Create a new SVG with the specified dimensions
     /// - Parameters:
     ///   - width: Width of the SVG
     ///   - height: Height of the SVG
-    public init(width: Int, height: Int) {
+    public init(width: Int, height: Int, debug: Bool = false) {
         self.width = width
         self.height = height
+        self.debug = debug
+        
 
         // Set up the SVG root element
         self.svg = XMLElement(kind: .element)
@@ -61,9 +65,14 @@ public class SVGContext {
     /// Append a shape to the SVG
     /// - Parameter shape: Shape to add
     public func addShape(_ shape: SVGDrawable) {
-        let xml = shape.svgElement()
+        if debug {
+            svg.addChild(shape.debugSVG())
+        } else {
+            svg.addChild(shape.svgElement())
+        }
+//        let xml = shape.svgElement()
 
-        svg.addChild(xml)
+//        svg.addChild(xml)
     }
 
     /// Group top-level elements by the specified attribute's value.
@@ -184,6 +193,10 @@ public class SVGContext {
         let svg = svgString()
 
         try svg.write(to: url, atomically: true, encoding: .utf8)
+    }
+    
+    public func writeSVG(to path: String, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
+        try writeSVG(to: URL(fileURLWithPath: path))
     }
 
 }

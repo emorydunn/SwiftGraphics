@@ -12,5 +12,13 @@ public protocol SVGDrawable {
     
     /// Create a `XMLElement` representing the receiver
     func svgElement() -> XMLElement
+    
+    func debugSVG() -> XMLElement
 
+}
+
+extension SVGDrawable {
+    public func debugSVG() -> XMLElement {
+        svgElement()
+    }
 }
