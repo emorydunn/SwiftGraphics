@@ -112,49 +112,5 @@ final class SVGBezierPathTests: XCTestCase {
         XCTAssertEqual(svg.xmlString(options: .documentTidyXML),
                        #"<g><polyline points="55.0,150.0 130.0,40.0 200.0,100.0 375.0,120.0" stroke="black" stroke-width="1" fill="none"></polyline><path d="M 55.0,150.0 C 130.0,40.0 200.0,100.0 375.0,120.0" stroke="black" stroke-width="1" fill="none"></path></g>"#)
     }
-    
-    func testSplit() throws {
-        let path = BezierPath(
-            Vector(55, 150),
-            Vector(130, 40),
-            Vector(200, 100),
-            Vector(375, 120)
-        )
-        
-        let t = 0.8
-        
-        var allPoints: [Vector] = []
-        var beforePoints: [Vector] = []
-        var bezPoints = path.controlPoints
-        let n = path.controlPoints.count
-        
-        (1..<n).forEach { j in
-            (0..<(n - j)).forEach { k in
-//                print("k", k)
-                let p = bezPoints[k]
-                let p1 = bezPoints[k + 1]
-                
-                allPoints.append(p)
-//                allPoints.append(Vector.lerp(percent: t, start: p, end: p1))
-                bezPoints[k] = Vector.lerp(percent: t, start: p, end: p1)
-            }
-        }
-        
-//        beforePoints.append(bezPoints[0])
-        
-        let afterSplit = BezierPath(bezPoints)
-        let beforeSplit = Path(allPoints)
-        
-        
-        let svg = SVGContext(width: 500, height: 500, debug: false)
-        
-//        svg.addShape(path)
-
-//        svg.addShape(afterSplit)
-        svg.addShape(beforeSplit)
-        
-        try svg.writeSVG(to: "/Users/emorydunn/Desktop/BezierSplit.svg")
-
-    }
 
 }

@@ -46,11 +46,38 @@ public struct BezierPath {
         return bezPoints[0]
     }
     
-    public func splitCurve(at percent: Double) {
-        // The point along the path
-//        let point = bezier(percent)
+    public func splitCurve(at percent: Double) -> (BezierPath, BezierPath) {
         
+        precondition(controlPoints.count > 0, "Path cannot be empty")
         
+        let n = controlPoints.count
+        
+        // Start the pre-split curve with the initial point
+        var preSplit: [Vector] = [controlPoints[0]]
+        
+        // Use the original curve to start the post-split curve
+        var postSplit = controlPoints
+
+        (1..<n).forEach { j in
+            (0..<(n - j)).forEach { k in
+                let p = postSplit[k]
+                let p1 = postSplit[k + 1]
+                
+                // Calculate the new mid-point
+                let l = Vector.lerp(percent: percent, start: p, end: p1)
+                
+                // Replace the point in the curve with the new point
+                postSplit[k] = l
+                
+                // Add the first point of each level to the pre-curve
+                if k == 0 {
+                    preSplit.append(l)
+                }
+
+            }
+        }
+        
+        return (BezierPath(preSplit), BezierPath(postSplit))
     }
     
 }

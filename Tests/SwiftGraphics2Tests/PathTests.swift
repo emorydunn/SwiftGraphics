@@ -66,19 +66,16 @@ final class PathTests: XCTestCase {
     }
     
     func testBezierSplit() {
-        let path = Path(
+        let path = BezierPath(
             Vector(55, 150),
             Vector(130, 40),
             Vector(200, 100)
         )
         
-//        let paths = path.splitCurve(at: 0.8)
-//        
-//        print(paths.0.svgElement().xmlString)
-//        print(paths.1.svgElement().xmlString)
-//        print(paths.2.svgElement().xmlString)
-        
-//        XCTAssertEqual(point, Vector(171.8, 82.8))
+        let paths = path.splitCurve(at: 0.8)
+
+        XCTAssertEqual(paths.0.controlPoints, [Vector (55.0, 150.0), Vector (115.0, 62.0), Vector (171.8, 82.8)])
+        XCTAssertEqual(paths.1.controlPoints, [Vector (171.8, 82.8), Vector (186.0, 88.0), Vector (200.0, 100.0)])
 
     }
     
