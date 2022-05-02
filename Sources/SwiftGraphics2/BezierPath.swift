@@ -8,11 +8,20 @@
 import Foundation
 
 /// Defines a Cubic Bézier curve. 
-public struct BezierPath {
+public struct BezierPath: Drawable {
     
     public var controlPoints: [Vector]
     
     public var style: Style
+    
+    /// Color of the outline of the shape
+    public var strokeColor: Color?
+    
+    /// Color of the fill of the shape
+    public var fillColor: Color?
+    
+    /// Weight of the outline of the shape
+    public var strokeWidth: Double?
     
     /// Determine the point at `t` by interpreting the Path as a Bézier curve.
     ///
@@ -99,5 +108,43 @@ extension BezierPath {
     /// - Parameter points: Points which make up the Path.
     init(_ points: Vector..., style: Style = .curve) {
         self.init(points, style: style)
+    }
+}
+
+extension BezierPath: SVGDrawable {
+    /// Create an `XMLElement` for the Path in its drawing style
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(name: "path")
+
+        let lines = controlPoints
+            .dropFirst()
+            .map{ "\($0.x),\($0.y)" }
+            .joined(separator: " ")
+        
+        // Three point curves need to be treated as quadratic curves,
+        // otherwise use a cubic curve
+        let curveType = controlPoints.count > 3 ? "C" : "Q"
+
+        let command = "M \(controlPoints[0].x),\(controlPoints[0].y) \(curveType) \(lines)"
+
+        element.addAttribute(command, forKey: "d")
+
+        element.strokeColor(strokeColor)
+        element.strokeWidth(strokeWidth)
+        element.fillColor(fillColor)
+
+        return element
+    }
+    
+    public func debugSVG() -> XMLElement {
+        let path = Path(controlPoints).svgElement()
+        let curve = svgElement()
+        
+        let element = XMLElement(name: "g")
+        
+        element.addChild(path)
+        element.addChild(curve)
+        
+        return element
     }
 }

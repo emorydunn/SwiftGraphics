@@ -13,10 +13,7 @@ let package = Package(
         
             .library(
             name: "SwiftGraphics2",
-            targets: ["SwiftGraphics2"]),
-        .library(
-            name: "SwiftGraphicsDrawing",
-            targets: ["SwiftGraphicsDrawing"])
+            targets: ["SwiftGraphics2"])
         
     ],
     dependencies: [
@@ -39,14 +36,7 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "SwiftGraphics2Tests",
-            dependencies: ["SwiftGraphics2"]),
-        
-        .target(
-            name: "SwiftGraphicsDrawing",
-            dependencies: ["SwiftGraphics2"]),
-        .testTarget(
-            name: "SwiftGraphicsDrawingTests",
-            dependencies: ["SwiftGraphicsDrawing"]),
+            dependencies: ["SwiftGraphics2"])
         
     ]
 )

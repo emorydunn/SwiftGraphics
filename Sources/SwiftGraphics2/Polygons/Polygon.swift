@@ -10,7 +10,7 @@ import simd
 
 
 /// A figure defined by three or more points.
-public protocol Polygon {
+public protocol Polygon: Drawable {
     
     var points: [Vector] { get }
     

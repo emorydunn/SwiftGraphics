@@ -8,7 +8,7 @@
 import Foundation
 
 /// A `Shape` that can be represented as an SVG element
-public protocol SVGDrawable {
+public protocol SVGDrawable: Drawable {
     
     /// Create a `XMLElement` representing the receiver
     func svgElement() -> XMLElement

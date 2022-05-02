@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Circle {
+public struct Circle: Drawable {
     /// Radius of the circle
     public var radius: Double
 
@@ -16,6 +16,15 @@ public struct Circle {
 
     /// The diameter of the circle
     public var diameter: Double { radius * 2 }
+    
+    /// Color of the outline of the shape
+    public var strokeColor: Color?
+    
+    /// Color of the fill of the shape
+    public var fillColor: Color?
+    
+    /// Weight of the outline of the shape
+    public var strokeWidth: Double?
 
     /// Instantiate a new `Circle`
     /// - Parameters:
@@ -39,5 +48,21 @@ public struct Circle {
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
         Rectangle(center: center, width: diameter, height: diameter)
+    }
+}
+
+extension Circle: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(name: "circle")
+        
+        element.addAttribute(center.x, forKey: "cx")
+        element.addAttribute(center.y, forKey: "cy")
+        element.addAttribute(radius, forKey: "r")
+        
+        element.strokeColor(strokeColor)
+        element.strokeWidth(strokeWidth)
+        element.fillColor(fillColor)
+        
+        return element
     }
 }

@@ -21,23 +21,54 @@ extension XMLElement {
         addAttribute(attr)
     }
 
-//    /// Adds an attribute node to the receiver.
-//    /// - Parameters:
-//    ///   - value: The value to be converted into a string
-//    ///   - key: Name of the attribute
-//    public func addAttribute(_ value: Color, forKey key: String) {
-//        let attr = XMLNode(kind: .attribute)
-//        attr.name = key
-//        attr.stringValue = value.toHex()
-//
-//        addAttribute(attr)
-//        
-//        let alpha = XMLNode(kind: .attribute)
-//        alpha.name = "\(key)-opacity"
-//        alpha.stringValue = String(describing: value.alpha)
-//        
-//        addAttribute(alpha)
-//    }
+    /// Adds an attribute node to the receiver.
+    /// - Parameters:
+    ///   - value: The value to be converted into a string
+    ///   - key: Name of the attribute
+    public func addAttribute(_ value: Color?, forKey key: String) {
+        
+        let attr = XMLNode(kind: .attribute)
+        attr.name = key
+        
+        // If the color is `nil` add "none" as the value
+        guard let value = value else {
+            attr.stringValue = "none"
+            addAttribute(attr)
+            return
+        }
+
+        attr.stringValue = value.toHex()
+        addAttribute(attr)
+        
+        // If the alpha isn't 1 add an opacity key
+        if value.alpha != 1 {
+            let alpha = XMLNode(kind: .attribute)
+            alpha.name = "\(key)-opacity"
+            alpha.stringValue = String(describing: value.alpha)
+            
+            addAttribute(alpha)
+        }
+        
+    }
+    
+    public func strokeWidth(_ value: Double?) {
+        guard
+            let value = value,
+            value != 1
+        else {
+            return
+        }
+
+        addAttribute(value, forKey: "stroke-width")
+    }
+    
+    public func strokeColor(_ value: Color?) {
+        addAttribute(value, forKey: "stroke")
+    }
+    
+    public func fillColor(_ value: Color?) {
+        addAttribute(value, forKey: "fill")
+    }
 }
 
 /// SVG attribute names.

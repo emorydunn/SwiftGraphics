@@ -7,13 +7,22 @@
 
 import Foundation
 
-public struct Line {
+public struct Line: Drawable {
     
     /// The starting point of the line
     public var start: Vector
 
     /// The ending point of the line
     public var end: Vector
+    
+    /// Color of the outline of the shape
+    public var strokeColor: Color?
+    
+    /// Color of the fill of the shape
+    public var fillColor: Color?
+    
+    /// Weight of the outline of the shape
+    public var strokeWidth: Double?
     
     public var length: Double { end.distance(to: start) }
     
@@ -100,3 +109,18 @@ public struct Line {
 //    }
 }
 
+extension Line: SVGDrawable {
+    public func svgElement() -> XMLElement {
+        let element = XMLElement(name: "line")
+        
+        element.addAttribute(start.x, forKey: "x1")
+        element.addAttribute(start.y, forKey: "y1")
+        element.addAttribute(end.x, forKey: "x2")
+        element.addAttribute(end.y, forKey: "y2")
+
+        element.strokeColor(strokeColor)
+        element.strokeWidth(strokeWidth)
+
+        return element
+    }
+}
