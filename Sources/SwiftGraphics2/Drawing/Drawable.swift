@@ -41,3 +41,17 @@ public extension Drawable {
         return new
     }
 }
+
+extension Array where Element: Drawable {
+    func strokeColor(_ color: Color?) -> Self {
+        map { $0.strokeColor(color) }
+    }
+    
+    func fillColor(_ color: Color?) -> Self {
+        map { $0.fillColor(color) }
+    }
+    
+    func strokeWidth(_ weight: Double?) -> Self {
+        map { $0.strokeWidth(weight) }
+    }
+}
