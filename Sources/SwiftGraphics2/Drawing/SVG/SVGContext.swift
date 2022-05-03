@@ -8,6 +8,7 @@
 import Foundation
 
 /// A drawing context which creates SVG files
+@resultBuilder
 public class SVGContext {
     
     /// The root SVG element
@@ -45,6 +46,29 @@ public class SVGContext {
 
     }
     
+    public init(width: Int, height: Int, debug: Bool = false, @SVGContext shapes: () -> [SVGDrawable] = { [] }) {
+        self.width = width
+        self.height = height
+        self.debug = debug
+        
+//        self.sh
+        
+
+        // Set up the SVG root element
+        self.svg = XMLElement(kind: .element)
+        svg.name = "svg"
+        svg.addAttribute(width, forKey: "width")
+        svg.addAttribute(height, forKey: "height")
+        svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
+        svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
+        
+        shapes().forEach { self.addShape($0) }
+
+        addBlendMode()
+        
+        
+    }
+    
 //    /// Create a new SVG from a `SketchView`
 //    @available(*, deprecated, message: "Initialize with a Sketch, rather than SketchView.", renamed: "init(sketch:)")
 //    public convenience init(sketch: SketchView) {
@@ -70,9 +94,14 @@ public class SVGContext {
         } else {
             svg.addChild(shape.svgElement())
         }
-//        let xml = shape.svgElement()
-
-//        svg.addChild(xml)
+    }
+    
+    public func addShapes(_ shapes: [SVGDrawable]) {
+        shapes.forEach { addShape($0) }
+    }
+    
+    public func addShapes(_ shapes: SVGDrawable...) {
+        shapes.forEach { addShape($0) }
     }
 
     /// Group top-level elements by the specified attribute's value.
@@ -199,4 +228,10 @@ public class SVGContext {
         try writeSVG(to: URL(fileURLWithPath: path))
     }
 
+}
+
+public extension SVGContext {
+    static func buildBlock(_ shapes: SVGDrawable...) -> [SVGDrawable] {
+        shapes
+    }
 }
