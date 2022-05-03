@@ -11,7 +11,7 @@ let package = Package(
             name: "SwiftGraphics",
             targets: ["SwiftGraphics"]),
         
-            .library(
+        .library(
             name: "SwiftGraphics2",
             targets: ["SwiftGraphics2"])
         

@@ -42,7 +42,7 @@ public extension Drawable {
     }
 }
 
-extension Array where Element: Drawable {
+public extension Array where Element: Drawable {
     func strokeColor(_ color: Color?) -> Self {
         map { $0.strokeColor(color) }
     }

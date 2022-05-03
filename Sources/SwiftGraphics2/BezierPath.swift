@@ -22,7 +22,7 @@ public struct BezierPath: Drawable {
     
     /// Weight of the outline of the shape
     public var strokeWidth: Double?
-    
+
     /// Determine the point at `t` by interpreting the Path as a Bézier curve.
     ///
     /// The method uses de Casteljau's algorithm. For values between `0` and `1`, inclusive, the point returned is
@@ -101,12 +101,21 @@ public struct BezierPath: Drawable {
         }
     }
     
+    /// Create a `Path` by sampling the curve.
+    /// - Parameter interval: The interval at which to sample the path.
+    /// - Returns: A `Path` following the curve.
+    public func sampled(every interval: Double = 0.01) -> [Vector] {
+        stride(from: 0, to: 1, by: interval).map {
+            bezier($0)
+        }
+    }
+    
     /// Randomly sample the curve.
     /// - Parameters:
     ///   - interval: The interval at which to sample the path.
     ///   - threshold: The threshold over which the noise must be for the segments inclusion.
     /// - Returns: An Array of Line segments along the curve.
-    func randomSample(every interval: Double = 0.01, threshold: Double = 0.5) -> [Path] {
+    public func randomSample(every interval: Double = 0.01, threshold: Double = 0.5) -> [Path] {
         
         randomSample(every: interval) { _, noise in
             noise < threshold
@@ -119,7 +128,7 @@ public struct BezierPath: Drawable {
     ///   - interval: The interval at which to sample the path.
     ///   - threshold: The threshold over which the noise must be for the segments inclusion.
     /// - Returns: An Array of Line segments along the curve.
-    func randomSample(every interval: Double = 0.01, threshold: (Double, Double) -> Bool) -> [Path] {
+    public func randomSample(every interval: Double = 0.01, threshold: (Double, Double) -> Bool) -> [Path] {
         let generator = PerlinGenerator()
         
         var paths: [Path] = []
@@ -161,14 +170,14 @@ extension BezierPath {
     
     /// Create a Path from the specified points.
     /// - Parameter points: Points which make up the Path.
-    init(_ points: [Vector], style: Style = .curve) {
+    public init(_ points: [Vector], style: Style = .curve) {
         self.controlPoints = points
         self.style = style
     }
     
     /// Create a Path from the specified points.
     /// - Parameter points: Points which make up the Path.
-    init(_ points: Vector..., style: Style = .curve) {
+    public init(_ points: Vector..., style: Style = .curve) {
         self.init(points, style: style)
     }
 }
