@@ -89,6 +89,12 @@ public struct BezierPath: Drawable {
         return (BezierPath(preSplit), BezierPath(postSplit))
     }
     
+    public func sampled(every interval: Double = 0.01) -> Path {
+        Path(strideFrom: 0, through: 1, by: interval) {
+            bezier($0)
+        }
+    }
+    
 }
 
 extension BezierPath {
