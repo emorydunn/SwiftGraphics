@@ -88,46 +88,13 @@ final class SVGBezierPathTests: XCTestCase {
             Vector(55, 150),
             Vector(130, 40),
             Vector(200, 100),
-            Vector(375, 120),
-            Vector(425, 35)
+            Vector(375, 120)
         )
 
         let svg = path.svgElement()
-        
-        let curve = Path(strideFrom: 0, through: 1, by: 0.05) {
-            path.bezier($0)
-        }
-        
-        let canvas = SVGContext(width: 500, height: 300)
-        
-        canvas.addShape(curve)
-//        canvas.addShape(path)
-        
-        let split = path.splitCurve(at: 0.5)
-        
-        canvas.addShape(Path(strideFrom: 0, through: 1, by: 0.05) {
-            split.0.bezier($0)
-        })
-        
-        canvas.addShape(Path(strideFrom: 0, through: 1, by: 0.05) {
-            split.1.bezier($0)
-        })
-        
-//        canvas.addShape(split.0)
-//        canvas.addShape(split.1)
-        
-        canvas.addShape(Circle(center: path.bezier(0.5), radius: 5))
-        
-        try! canvas.writeSVG(to: "/Users/emorydunn/Desktop/BezierSplit.svg")
-        
-//        print(curve.svgElement())
-        
-//        print(Circle(center: path.bezier(0.8), radius: 5).svgElement())
-        
-        
 
-//        XCTAssertEqual(svg.xmlString(options: .documentTidyXML),
-//                       #"<path d="M 55.0,150.0 C 130.0,40.0 200.0,100.0 375.0,120.0" stroke="black" stroke-width="1" fill="none"></path>"#)
+        XCTAssertEqual(svg.xmlString(options: .documentTidyXML),
+                       #"<path d="M 55.0,150.0 C 130.0,40.0 200.0,100.0 375.0,120.0" stroke="none" fill="none"></path>"#)
     }
     
     func testThreePoint() {
