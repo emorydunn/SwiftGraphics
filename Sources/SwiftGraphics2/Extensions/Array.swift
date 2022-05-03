@@ -48,6 +48,42 @@ extension Array {
         return pairedItems
     }
     
+    /// Calls the given closure on each pair of elements in the sequence.
+    ///
+    /// ```
+    /// let a = ["zero", "one", "two", "three", "four"]
+    /// array.paired { _, _ in } // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
+    /// ```
+    public func pairedMap<T>(_ pair: (Element, Element) -> T) -> [T] {
+
+        self.enumerated().compactMap { offset, item in
+            guard offset < (self.count - 1) else { return nil }
+
+            let nextItem = self[offset + 1]
+            
+            return pair(item, nextItem)
+
+        }
+    }
+    
+    /// Calls the given closure on each pair of elements in the sequence.
+    ///
+    /// ```
+    /// let a = ["zero", "one", "two", "three", "four"]
+    /// array.paired { _, _ in } // [("zero", "one"), ("one", "two"), ("two", "three"), ("three", "four")]
+    /// ```
+    public func pairedCompactMap<T>(_ pair: (Element, Element) -> T?) -> [T] {
+
+        self.enumerated().compactMap { offset, item in
+            guard offset < (self.count - 1) else { return nil }
+
+            let nextItem = self[offset + 1]
+            
+            return pair(item, nextItem)
+
+        }
+    }
+    
 }
 
 extension Array where Element == Vector {
@@ -76,3 +112,9 @@ extension Array where Element == Vector {
 
     }
 }
+
+//extension Array: SVGDrawable where Element: SVGDrawable {
+//    public func svgElement() -> XMLElement {
+//        <#code#>
+//    }
+//}

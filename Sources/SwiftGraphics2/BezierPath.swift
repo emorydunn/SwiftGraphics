@@ -55,6 +55,9 @@ public struct BezierPath: Drawable {
         return bezPoints[0]
     }
     
+    /// Split the curve and return two new sub-curves.
+    /// - Parameter percent: The point at which to split the curve.
+    /// - Returns: A tuple containing the the two curves.
     public func splitCurve(at percent: Double) -> (BezierPath, BezierPath) {
         
         precondition(controlPoints.count > 0, "Path cannot be empty")
@@ -89,10 +92,63 @@ public struct BezierPath: Drawable {
         return (BezierPath(preSplit), BezierPath(postSplit))
     }
     
+    /// Create a `Path` by sampling the curve.
+    /// - Parameter interval: The interval at which to sample the path.
+    /// - Returns: A `Path` following the curve.
     public func sampled(every interval: Double = 0.01) -> Path {
         Path(strideFrom: 0, through: 1, by: interval) {
             bezier($0)
         }
+    }
+    
+    /// Randomly sample the curve.
+    /// - Parameters:
+    ///   - interval: The interval at which to sample the path.
+    ///   - threshold: The threshold over which the noise must be for the segments inclusion.
+    /// - Returns: An Array of Line segments along the curve.
+    func randomSample(every interval: Double = 0.01, threshold: Double = 0.5) -> [Path] {
+        
+        randomSample(every: interval) { _, noise in
+            noise < threshold
+        }
+
+    }
+        
+    /// Randomly sample the curve.
+    /// - Parameters:
+    ///   - interval: The interval at which to sample the path.
+    ///   - threshold: The threshold over which the noise must be for the segments inclusion.
+    /// - Returns: An Array of Line segments along the curve.
+    func randomSample(every interval: Double = 0.01, threshold: (Double, Double) -> Bool) -> [Path] {
+        let generator = PerlinGenerator()
+        
+        var paths: [Path] = []
+        var workingPath = Path()
+        
+        let points = stride(from: 0, to: 1, by: interval)
+        let count = 1 / interval
+        
+        points.enumerated().forEach { index, step in
+            let point = bezier(step)
+            let noise = generator.noise(point)
+            let percent = Double(index) / Double(count)
+            
+            // If the point passes add it to the working path
+            // If not, end the path
+            if threshold(percent, noise) {
+                workingPath.addPoint(point)
+            } else {
+                // If the working path is empty it means we've had multiple
+                // points excluded in a row, so we don't have to do anything
+                if !workingPath.isEmpty {
+                    paths.append(workingPath)
+                    workingPath = Path()
+                }
+            }
+        }
+        
+        return paths
+
     }
     
 }
@@ -121,6 +177,16 @@ extension BezierPath: SVGDrawable {
     /// Create an `XMLElement` for the Path in its drawing style
     public func svgElement() -> XMLElement {
         let element = XMLElement(name: "path")
+        
+        // For large paths, sample
+        guard controlPoints.count <= 4 else {
+            return sampled()
+                .strokeColor(strokeColor)
+                .strokeWidth(strokeWidth)
+                .fillColor(fillColor)
+                .svgElement()
+        }
+        
 
         let lines = controlPoints
             .dropFirst()
