@@ -156,6 +156,7 @@ public struct BezierPath: Drawable {
             }
         }
         
+        paths.append(workingPath)
         return paths
 
     }
