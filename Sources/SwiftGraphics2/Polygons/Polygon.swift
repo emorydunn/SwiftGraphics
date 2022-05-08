@@ -10,7 +10,7 @@ import simd
 
 
 /// A figure defined by three or more points.
-public protocol Polygon: Drawable {
+public protocol Polygon: Shape {
     
     var points: [Vector] { get }
     
@@ -34,5 +34,9 @@ public extension Polygon {
     /// - Returns: A boolean indicating whether the polygon contains the point.
     func contains(point: Vector) -> Bool {
         windingNumber(of: point, polygon: points)
+    }
+    
+    func pointOnPerimeter(_ t: Double) -> Vector {
+        points.lerp(percent: t)
     }
 }

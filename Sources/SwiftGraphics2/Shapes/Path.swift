@@ -9,19 +9,10 @@ import Foundation
 import simd
 
 /// A straight-line path made up of vector points.
-public struct Path: Equatable, Drawable {
+public struct Path: Equatable, Shape, Drawable {
 
     /// The points which make up the path
     public var points: [Vector]
-    
-    /// Color of the outline of the shape
-    public var strokeColor: Color?
-    
-    /// Color of the fill of the shape
-    public var fillColor: Color?
-    
-    /// Weight of the outline of the shape
-    public var strokeWidth: Double?
     
     public var isEmpty: Bool { points.isEmpty }
     
@@ -36,49 +27,8 @@ public struct Path: Equatable, Drawable {
         }
     }
     
-    /// Linearly interpret a point along the line to the specified distance.
-    ///
-    /// - Important: It is a programer error to call this method with an empty path.
-    /// - Parameter distance: The distance from the start.
-    public func lerp(percent t: Double) -> Vector {
-        
-        precondition(points.count > 0, "Path cannot be empty")
-        
-        // The distance along the path
-        let distance = length * t
-        
-        // The current distance we've lerped
-        var distanceTravelled: Double = 0
-        
-        // The point
-        var point: Vector = points.last!
-        
-        // Iterate through pairs of line segments
-        for points in points.paired() {
-            let (lhs, rhs) = points
-            
-            // Calculate the distance between the points
-            let dist = rhs.distance(to: lhs)
-            
-            print(distanceTravelled, distance, dist)
-            
-            // If the new length is and the travelled length is less than the total distance
-            // "jump" to the end of the segment by adding it's length
-            
-            // If the combined distance is greater than our needed distance
-            // subtract the travelled and create a new percent on the line
-            if dist + distanceTravelled < distance {
-                distanceTravelled += dist
-            } else {
-                let lineP = (distance - distanceTravelled) / dist
-                point = Vector.lerp(percent: lineP, start: lhs, end: rhs)
-                break
-            }
-        
-        }
-        
-        return point
-
+    public func pointOnPerimeter(_ t: Double) -> Vector {
+        points.lerp(percent: t)
     }
 
 }
@@ -130,15 +80,15 @@ public extension Path {
 
 extension Path: SVGDrawable {
     /// Create an `XMLElement` for the Path in its drawing style
-    public func svgElement() -> XMLElement {
+    public func svgElement() -> XMLElement? {
         let element = XMLElement(name: "polyline")
 
         element.addAttribute(points.map { "\($0.x),\($0.y)" }.joined(separator: " "),
                              forKey: "points")
 
-        element.strokeColor(strokeColor)
-        element.strokeWidth(strokeWidth)
-        element.fillColor(fillColor)
+        element.strokeColor(Color.black)
+        element.strokeWidth(1)
+        element.fillColor(nil)
 
         return element
     }

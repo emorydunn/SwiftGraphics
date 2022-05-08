@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Circle: Drawable {
+public struct Circle: Shape, Drawable {
     /// Radius of the circle
     public var radius: Double
 
@@ -17,15 +17,6 @@ public struct Circle: Drawable {
     /// The diameter of the circle
     public var diameter: Double { radius * 2 }
     
-    /// Color of the outline of the shape
-    public var strokeColor: Color?
-    
-    /// Color of the fill of the shape
-    public var fillColor: Color?
-    
-    /// Weight of the outline of the shape
-    public var strokeWidth: Double?
-
     /// Instantiate a new `Circle`
     /// - Parameters:
     ///   - center: Center of the circle
@@ -44,6 +35,20 @@ public struct Circle: Drawable {
         self.init(center: Vector(x, y), radius: radius)
 
     }
+    
+    public func pointOnPerimeter(_ t: Double) -> Vector {
+        return point(at: Angle(radians: Double.pi * t))
+    }
+    
+    /// Return the intersection point of the specified angle from the center of the circle
+    /// - Parameter angle:The angle
+    public func point(at angle: Angle) -> Vector {
+        
+        let x = center.x + radius * cos(angle.radians)
+        let y = center.y + radius * sin(angle.radians)
+        
+        return Vector(x, y)
+    }
 
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
@@ -52,16 +57,16 @@ public struct Circle: Drawable {
 }
 
 extension Circle: SVGDrawable {
-    public func svgElement() -> XMLElement {
+    public func svgElement() -> XMLElement? {
         let element = XMLElement(name: "circle")
         
         element.addAttribute(center.x, forKey: "cx")
         element.addAttribute(center.y, forKey: "cy")
         element.addAttribute(radius, forKey: "r")
         
-        element.strokeColor(strokeColor)
-        element.strokeWidth(strokeWidth)
-        element.fillColor(fillColor)
+        element.strokeColor(Color.black)
+        element.strokeWidth(1)
+        element.fillColor(nil)
         
         return element
     }

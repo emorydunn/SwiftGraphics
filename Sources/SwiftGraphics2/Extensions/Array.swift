@@ -111,6 +111,56 @@ extension Array where Element == Vector {
                          height: height)
 
     }
+    
+    /// The combined length of each line segment
+    public var length: Double {
+        paired().reduce(into: 0) { partialResult, vectors in
+            partialResult += vectors.1.distance(to: vectors.0)
+        }
+    }
+    
+    /// Linearly interpret a point along the line to the specified distance.
+    ///
+    /// - Important: It is a programer error to call this method with an empty path.
+    /// - Parameter distance: The distance from the start.
+    public func lerp(percent t: Double) -> Vector {
+        
+        precondition(count > 0, "Path cannot be empty")
+        
+        // The distance along the path
+        let distance = length * t
+        
+        // The current distance we've lerped
+        var distanceTravelled: Double = 0
+        
+        // The point
+        var point: Vector = last!
+        
+        // Iterate through pairs of line segments
+        for points in paired() {
+            let (lhs, rhs) = points
+            
+            // Calculate the distance between the points
+            let dist = rhs.distance(to: lhs)
+
+            // If the new length is and the travelled length is less than the total distance
+            // "jump" to the end of the segment by adding it's length
+            
+            // If the combined distance is greater than our needed distance
+            // subtract the travelled and create a new percent on the line
+            if dist + distanceTravelled < distance {
+                distanceTravelled += dist
+            } else {
+                let lineP = (distance - distanceTravelled) / dist
+                point = Vector.lerp(percent: lineP, start: lhs, end: rhs)
+                break
+            }
+        
+        }
+        
+        return point
+
+    }
 }
 
 //extension Array: SVGDrawable where Element: SVGDrawable {

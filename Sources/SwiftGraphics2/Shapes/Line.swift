@@ -7,22 +7,13 @@
 
 import Foundation
 
-public struct Line: Drawable {
+public struct Line: Shape, Drawable {
     
     /// The starting point of the line
     public var start: Vector
 
     /// The ending point of the line
     public var end: Vector
-    
-    /// Color of the outline of the shape
-    public var strokeColor: Color?
-    
-    /// Color of the fill of the shape
-    public var fillColor: Color?
-    
-    /// Weight of the outline of the shape
-    public var strokeWidth: Double?
     
     public var length: Double { end.distance(to: start) }
     
@@ -94,6 +85,10 @@ public struct Line: Drawable {
     public func lerp(_ percent: Double) -> Vector {
         Vector.lerp(percent: percent, start: start, end: end)
     }
+    
+    public func pointOnPerimeter(_ t: Double) -> Vector {
+        Vector.lerp(percent: t, start: start, end: end)
+    }
 
     /// A Rectangle that contains the receiver
 //    public var boundingBox: Rectangle {
@@ -110,7 +105,7 @@ public struct Line: Drawable {
 }
 
 extension Line: SVGDrawable {
-    public func svgElement() -> XMLElement {
+    public func svgElement() -> XMLElement? {
         let element = XMLElement(name: "line")
         
         element.addAttribute(start.x, forKey: "x1")
@@ -118,8 +113,8 @@ extension Line: SVGDrawable {
         element.addAttribute(end.x, forKey: "x2")
         element.addAttribute(end.y, forKey: "y2")
 
-        element.strokeColor(strokeColor)
-        element.strokeWidth(strokeWidth)
+        element.strokeColor(Color.black)
+        element.strokeWidth(1)
 
         return element
     }

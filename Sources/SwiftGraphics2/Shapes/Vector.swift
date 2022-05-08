@@ -199,7 +199,6 @@ public extension Vector {
     }
 }
 
-
 extension Vector {
     
     /// Adds two values and produces their sum.

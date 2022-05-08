@@ -9,7 +9,7 @@ import Foundation
 import simd
 
 /// A rectangle defined by its center, width, and height.
-public struct Rectangle: Polygon, Drawable {
+public struct Rectangle: Polygon {
     
     /// The center of the rectangle
     public var origin: Vector
@@ -22,16 +22,7 @@ public struct Rectangle: Polygon, Drawable {
     
     /// The angle of rotation of the rectangle
     public var rotation: Angle
-    
-    /// Color of the outline of the shape
-    public var strokeColor: Color?
-    
-    /// Color of the fill of the shape
-    public var fillColor: Color?
-    
-    /// Weight of the outline of the shape
-    public var strokeWidth: Double?
-    
+
     /// The points that make up the rectangle
     public var points: [Vector] { makePolygon() }
 
@@ -79,7 +70,7 @@ public struct Rectangle: Polygon, Drawable {
 }
 
 extension Rectangle: SVGDrawable {
-    public func svgElement() -> XMLElement {
+    public func svgElement() -> XMLElement? {
         let element = XMLElement(name: "rect")
         
         let transMatrix = MatrixTransformation.translate(vector: origin)
@@ -94,9 +85,9 @@ extension Rectangle: SVGDrawable {
             element.addAttribute("rotate(\(rotation.degrees),\(origin.x),\(origin.y))", forKey: "transform")
         }
         
-        element.strokeColor(strokeColor)
-        element.strokeWidth(strokeWidth)
-        element.fillColor(fillColor)
+        element.strokeColor(Color.black)
+        element.strokeWidth(1)
+        element.fillColor(nil)
 
         return element
     }
