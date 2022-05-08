@@ -9,7 +9,7 @@ import Foundation
 
 /// A drawing context which creates SVG files
 @resultBuilder
-public class SVGContext {
+public class SVGContext: DrawingContext {
     
     /// The root SVG element
     public var svg: XMLElement
@@ -33,7 +33,6 @@ public class SVGContext {
         self.height = height
         self.debug = debug
         
-
         // Set up the SVG root element
         self.svg = XMLElement(kind: .element)
         svg.name = "svg"
@@ -50,9 +49,6 @@ public class SVGContext {
         self.width = width
         self.height = height
         self.debug = debug
-        
-//        self.sh
-        
 
         // Set up the SVG root element
         self.svg = XMLElement(kind: .element)
@@ -66,34 +62,79 @@ public class SVGContext {
 
         addBlendMode()
         
+    }
+    
+    public init(width: Int, height: Int, debug: Bool = false, @SketchBuilder shapes: () -> [Drawable] = { [] }) {
+        self.width = width
+        self.height = height
+        self.debug = debug
+
+        // Set up the SVG root element
+        self.svg = XMLElement(kind: .element)
+        svg.name = "svg"
+        svg.addAttribute(width, forKey: "width")
+        svg.addAttribute(height, forKey: "height")
+        svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
+        svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
+        
+        shapes().forEach { addShape($0) }
+        
+//        shapes().forEach {
+//            if let shape = $0 as? SVGDrawable {
+//                self.addShape(shape)
+//            }
+//        }
+
+        addBlendMode()
         
     }
     
-//    /// Create a new SVG from a `SketchView`
-//    @available(*, deprecated, message: "Initialize with a Sketch, rather than SketchView.", renamed: "init(sketch:)")
-//    public convenience init(sketch: SketchView) {
-//        self.init(
-//            width: Int(sketch.bounds.width),
-//            height: Int(sketch.bounds.height)
-//        )
-//    }
+    public init<C: Sketch>(_ sketch: C, debug: Bool = false) {
+        self.width = Int(sketch.size.width)
+        self.height = Int(sketch.size.height)
+        self.debug = debug
+        
+        // Set up the SVG root element
+        self.svg = XMLElement(kind: .element)
+        svg.name = "svg"
+        svg.addAttribute(width, forKey: "width")
+        svg.addAttribute(height, forKey: "height")
+        svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
+        svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
+        
+        addShape(sketch.body)
+    }
+    
+    
+    public func addShape(_ shape: Drawable) {
+        
+        switch shape {
+//        case let shape as GroupDrawable:
+//            print("Adding \(shape.shapes.count) group to SVG")
+//            shape.shapes.forEach { $0.draw(in: self) }
+        case let shape as SVGDrawable:
+            print("Adding \(type(of: shape)) to SVG")
+            addShape(shape)
+        default:
+            break
+        }
+//        guard let shape = shape as? SVGDrawable else { return }
 //
-//    /// Create a new SVG from a `Sketch`
-//    public convenience init(sketch: Sketch) {
-//        self.init(
-//            width: Int(sketch.size.width),
-//            height: Int(sketch.size.height)
-//        )
-//    }
+//        addShape(shape)
+    }
+    
     
     /// Append a shape to the SVG
     /// - Parameter shape: Shape to add
     public func addShape(_ shape: SVGDrawable) {
-        if debug {
-            svg.addChild(shape.debugSVG())
-        } else {
-            svg.addChild(shape.svgElement())
+        if let child = debug ? shape.debugSVG() : shape.svgElement() {
+            svg.addChild(child)
         }
+//        if debug {
+//            svg.addChild(shape.debugSVG())
+//        } else {
+//            svg.addChild(shape.svgElement())
+//        }
     }
     
     public func addShapes(_ shapes: [SVGDrawable]) {
@@ -220,12 +261,30 @@ public class SVGContext {
     /// - Throws: Errors related to writing the SVG to disk
     public func writeSVG(to url: URL, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
         let svg = svgString()
+        
+        // Create the folder if needed
+        try FileManager.default.createDirectory(
+            at: url.deletingLastPathComponent(),
+            withIntermediateDirectories: true)
 
         try svg.write(to: url, atomically: true, encoding: .utf8)
     }
     
     public func writeSVG(to path: String, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
         try writeSVG(to: URL(fileURLWithPath: path))
+    }
+    
+    public func writeSVG(named name: String, to directory: URL, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
+        var url = directory
+            .appendingPathComponent("SVG", isDirectory: true)
+            .appendingPathComponent(name, isDirectory: false)
+        
+        if url.pathExtension != "svg" {
+            url.appendPathExtension("svg")
+        }
+        
+        try writeSVG(to: url, options: options)
+
     }
 
 }

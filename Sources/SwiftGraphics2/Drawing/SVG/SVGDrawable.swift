@@ -11,14 +11,14 @@ import Foundation
 public protocol SVGDrawable: Drawable {
     
     /// Create a `XMLElement` representing the receiver
-    func svgElement() -> XMLElement
+    func svgElement() -> XMLElement?
     
-    func debugSVG() -> XMLElement
+    func debugSVG() -> XMLElement?
 
 }
 
 extension SVGDrawable {
-    public func debugSVG() -> XMLElement {
+    public func debugSVG() -> XMLElement? {
         svgElement()
     }
 }

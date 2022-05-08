@@ -115,15 +115,15 @@ public struct Color: Equatable {
         return hexString
     }
     
-    /// Createa CGColor
-    public func toCGColor() -> CGColor {
-        return CGColor(
-            red: CGFloat(red),
-            green: CGFloat(green),
-            blue: CGFloat(blue),
-            alpha: CGFloat(alpha)
-        )
-    }
+//    /// Create a CGColor
+//    public func toCGColor() -> CGColor {
+//        return CGColor(
+//            red: CGFloat(red),
+//            green: CGFloat(green),
+//            blue: CGFloat(blue),
+//            alpha: CGFloat(alpha)
+//        )
+//    }
     
     /// Returns an RGBA string
     public func toRGBA() -> String {
