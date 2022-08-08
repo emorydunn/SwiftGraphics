@@ -6,8 +6,9 @@
 //
 
 import Foundation
+import Silica
 
-public struct StyledShape: Drawable, SVGDrawable {
+public struct StyledShape: Drawable, SVGDrawable, PNGDrawable {
     
     /// Color of the outline of the shape
     var strokeColor: Color?
@@ -55,6 +56,30 @@ public struct StyledShape: Drawable, SVGDrawable {
         return element
     }
 
+	public func draw(in context: Silica.CGContext) {
+
+
+		context.saveGState()
+
+		if let strokeColor {
+			context.strokeColor = strokeColor.toCGColor()
+		}
+
+		if let strokeWidth {
+			context.lineWidth = strokeWidth
+		}
+
+		if let fillColor {
+			context.fillColor = fillColor.toCGColor()
+		}
+
+		if let shape = shape as? PNGDrawable {
+			shape.draw(in: context)
+		}
+
+
+		context.restoreGState()
+	}
 }
 
 public extension Drawable {

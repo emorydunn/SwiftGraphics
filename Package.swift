@@ -19,6 +19,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
+		.package(url: "https://github.com/PureSwift/Silica.git", .branch("master"))
         // .package(url: /* package url */, from: "1.0.0"),
     ],
     targets: [
@@ -34,7 +35,9 @@ let package = Package(
         
         .target(
             name: "SwiftGraphics2",
-            dependencies: []),
+            dependencies: [
+				"Silica"
+			]),
         .testTarget(
             name: "SwiftGraphics2Tests",
             dependencies: ["SwiftGraphics2"])

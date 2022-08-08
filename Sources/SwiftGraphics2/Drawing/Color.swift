@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Silica
 
 /// A set of components that define a color. The color space is defined by the drawing context.
 public struct Color: Equatable {
@@ -115,15 +116,15 @@ public struct Color: Equatable {
         return hexString
     }
     
-//    /// Create a CGColor
-//    public func toCGColor() -> CGColor {
-//        return CGColor(
-//            red: CGFloat(red),
-//            green: CGFloat(green),
-//            blue: CGFloat(blue),
-//            alpha: CGFloat(alpha)
-//        )
-//    }
+    /// Create a CGColor
+    public func toCGColor() -> CGColor {
+        return CGColor(
+            red: CGFloat(red),
+            green: CGFloat(green),
+            blue: CGFloat(blue),
+            alpha: CGFloat(alpha)
+        )
+    }
     
     /// Returns an RGBA string
     public func toRGBA() -> String {

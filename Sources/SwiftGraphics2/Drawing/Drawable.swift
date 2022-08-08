@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Silica
 
 public protocol Drawable {
 //    func asShapes() -> [Shape]
@@ -18,7 +19,7 @@ public extension Drawable {
     }
 }
 
-public struct GroupDrawable: Drawable, SVGDrawable {
+public struct GroupDrawable: Drawable, SVGDrawable, PNGDrawable {
     public let shapes: [Drawable]
 
     public init(_ shapes: [Drawable]) {
@@ -44,6 +45,12 @@ public struct GroupDrawable: Drawable, SVGDrawable {
         
         return element
     }
+
+	public func draw(in context: CGContext) {
+		for case let shape as PNGDrawable in shapes {
+			shape.draw(in: context)
+		}
+	}
     
 }
 
