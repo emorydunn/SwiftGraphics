@@ -13,12 +13,10 @@ public class SVGContext: DrawingContext {
     
     /// The root SVG element
     public var svg: XMLElement
-    
-    
+
     /// Width of the SVG
     public let width: Int
-    
-    
+
     /// Height of the SVG
     public let height: Int
     

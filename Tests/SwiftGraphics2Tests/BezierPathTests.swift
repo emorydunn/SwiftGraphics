@@ -65,7 +65,45 @@ final class BezierPathTests: XCTestCase {
         XCTAssertEqual(paths.1.controlPoints, [Vector (171.8, 82.8), Vector (186.0, 88.0), Vector (200.0, 100.0)])
 
     }
-
+    
+    func testRandomSample() {
+        let path = BezierPath(
+            Vector(55, 150),
+            Vector(130, 40),
+            Vector(200, 100),
+            Vector(300, 150),
+            Vector(276, 75)
+        )
+        let lines = path.randomSample(every: 0.001)
+        { percent, noise in
+            return noise < 0.8 * (1 - percent)
+        }
+        
+        let path2 = BezierPath(
+            Vector(55, 150),
+            Vector(120, 75),
+            Vector(275, 250),
+            Vector(320, 150),
+            Vector(356, 175)
+        )
+        
+        let lines2 = path2.randomSample(every: 0.005)
+        { percent, noise in
+            return noise < 0.8 * (1 - percent)
+        }
+        
+        let svg = SVGContext(width: 300, height: 300)
+        
+        let bgColor = Color(hexString: "#a7ecf2", alpha: 0.5)
+        svg.addShapes(path.strokeColor(bgColor))
+        svg.addShapes(path2.strokeColor(bgColor))
+        
+        svg.addShapes(lines.strokeColor(.black))
+        svg.addShapes(lines2.strokeColor(.black))
+        
+        try! svg.writeSVG(to: "/Users/emorydunn/Desktop/BezierSplit.svg")
+        
+    }
     
 //    func testMatrixBezier() {
 //        let path = Path(
