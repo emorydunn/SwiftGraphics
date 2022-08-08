@@ -26,6 +26,13 @@ public struct Size: Hashable {
         self.height = height
         self.margin = margin
     }
+
+	/// Creates a size with dimensions specified as floating-point values.
+	public init(width: Int, height: Int, margin: Int) {
+		self.width = Double(width)
+		self.height = Double(height)
+		self.margin = Double(margin)
+	}
     
     /// Create a size with the specified dimensions and DPI.
     /// - Parameters:
@@ -97,6 +104,12 @@ public struct Size: Hashable {
             return self
         }
     }
+
+	@inlinable
+	public var ratio: Double { width / height }
+
+	@inlinable
+	public var marginRatio: Double { marginWidth / marginHeight }
     
     /// Length of the long side
     public var longSide: Double { max(width, height) }
@@ -108,6 +121,9 @@ public struct Size: Hashable {
     public var maxX: Double { width - margin }
     public var minY: Double { margin }
     public var maxY: Double { height - margin }
+
+	public var marginWidth: Double { width - margin * 2 }
+	public var marginHeight: Double { height - margin * 2 }
     
     public var boundingBox: Rectangle {
         Rectangle(center: center,
