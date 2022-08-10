@@ -82,6 +82,10 @@ public struct SketchBuilder {
         GroupDrawable(content)
     }
 
+	public static func buildOptional(_ component: Drawable?) -> Drawable {
+		return component ?? EmptyDrawable()
+	}
+
 }
 
 
