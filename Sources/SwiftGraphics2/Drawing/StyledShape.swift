@@ -62,7 +62,7 @@ public struct StyledShape: Drawable, SVGDrawable, PNGDrawable {
 		context.saveGState()
 
 		if let strokeColor {
-			context.strokeColor = strokeColor.toCGColor()
+			context.strokeColor = CGColor(strokeColor)
 		}
 
 		if let strokeWidth {
@@ -70,7 +70,7 @@ public struct StyledShape: Drawable, SVGDrawable, PNGDrawable {
 		}
 
 		if let fillColor {
-			context.fillColor = fillColor.toCGColor()
+			context.fillColor = CGColor(fillColor)
 		}
 
 		if let shape = shape as? PNGDrawable {

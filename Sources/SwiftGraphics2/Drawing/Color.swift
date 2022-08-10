@@ -117,6 +117,7 @@ public struct Color: Equatable {
     }
     
     /// Create a CGColor
+    @available(*, deprecated, message: "Use CGColor(_:)")
     public func toCGColor() -> CGColor {
         return CGColor(
             red: CGFloat(red),
