@@ -22,6 +22,7 @@ public class PNGContext: DrawingContext {
 	public var debug: Bool
 
 	public let image: Surface.Image
+
 	let context: CGContext
 
 
@@ -89,6 +90,10 @@ public class PNGContext: DrawingContext {
 
 	public func addShapes(_ shapes: PNGDrawable...) {
 		shapes.forEach { addShape($0) }
+	}
+
+	public func render() throws -> Data {
+		try image.writePNG()
 	}
 
 	public func writePNG(to url: URL) throws {
