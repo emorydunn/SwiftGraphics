@@ -12,13 +12,13 @@ import Foundation
 public struct Size: Hashable {
     
     /// The width value
-    public let width: Double
+    public var width: Double
     
     /// The height value
-    public let height: Double
+    public var height: Double
     
     // The margin of the size
-    public let margin: Double
+    public var margin: Double
     
     /// Creates a size with dimensions specified as floating-point values.
     public init(width: Double, height: Double, margin: Double) {
