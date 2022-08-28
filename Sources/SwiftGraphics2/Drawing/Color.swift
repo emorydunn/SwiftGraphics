@@ -9,22 +9,22 @@ import Foundation
 import Silica
 
 /// A set of components that define a color. The color space is defined by the drawing context.
-public struct Color: Equatable {
+public struct Color: Equatable, Hashable {
     
     /// Red value
-    public let red: Float
+    public let red: Double
     
     /// Green value
-    public let green: Float
+    public let green: Double
     
     /// Blue value
-    public let blue: Float
+    public let blue: Double
     
     /// Alpha value
-    public let alpha: Float
+    public let alpha: Double
     
     /// The grey value of the color, determined by averaging the channels.
-    public var grey: Float {
+    public var grey: Double {
         return (red + green + blue) / 3
     }
 
@@ -37,7 +37,7 @@ public struct Color: Equatable {
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(red: Float, green: Float, blue: Float, alpha: Float = 1) {
+    public init(red: Double, green: Double, blue: Double, alpha: Double = 1) {
         self.red = red.clamped(to: 0...1)
         self.green = green.clamped(to: 0...1)
         self.blue = blue.clamped(to: 0...1)
@@ -53,11 +53,11 @@ public struct Color: Equatable {
     ///   - g: Green value
     ///   - b: Blue value
     ///   - a: Alpha value
-    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Float = 1) {
+    public init(_ red: Int, _ green: Int, _ blue: Int, _ alpha: Double = 1) {
         self.init(
-            red: Float(red) / 255,
-            green: Float(green) / 255,
-            blue: Float(blue) / 255,
+            red: Double(red) / 255,
+            green: Double(green) / 255,
+            blue: Double(blue) / 255,
             alpha: alpha
         )
     }
@@ -66,13 +66,13 @@ public struct Color: Equatable {
     /// - Parameters:
     ///   - grey: Decimal grey value
     ///   - a: Alpha value, from 0 to 1
-    public init(grey: Float, _ alpha: Float = 1) {
+    public init(grey: Double, _ alpha: Double = 1) {
         self.init(red: grey, green: grey, blue: grey, alpha: alpha)
     }
 
     /// Create  a color from a hex string
     /// From: https://stackoverflow.com/a/26341062
-    public init(hexString: String, alpha: Float = 1) {
+    public init(hexString: String, alpha: Double = 1) {
         var colorString = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         colorString = colorString.replacingOccurrences(of: "#", with: "").uppercased()
 
@@ -81,6 +81,26 @@ public struct Color: Equatable {
         self.green = Color.colorComponentFrom(colorString: colorString, start: 2, length: 2)
         self.blue = Color.colorComponentFrom(colorString: colorString, start: 4, length: 2)
     }
+
+	/// Create a Color from the specified color components.
+	///
+	/// If two components are given the new color will be greyscale, if four are given the new Color will be RGB.
+	/// The last component is always alpha.
+	/// - Parameter components: The color components.
+	public init?(fromComponents components: [Double]) {
+		switch components.count {
+			case 2: // Greyscale Colorspace
+				self.init(grey: components[0], components[1])
+			case 4:
+				self.init(red: components[0],
+									 green: components[1],
+									 blue: components[2],
+									 alpha: components[3])
+			default:
+				return nil
+
+		}
+	}
     
     /// Determine the float value of a color component from it's hex representation in a string
     /// - Parameters:
@@ -88,7 +108,7 @@ public struct Color: Equatable {
     ///   - start: The starting position of the component value
     ///   - length: The length of the component value
     /// - Returns: The floating point value of the color component
-    static func colorComponentFrom(colorString: String, start: Int, length: Int) -> Float {
+    static func colorComponentFrom(colorString: String, start: Int, length: Int) -> Double {
 
         let startIndex = colorString.index(colorString.startIndex, offsetBy: start)
         let endIndex = colorString.index(startIndex, offsetBy: length)
@@ -99,18 +119,17 @@ public struct Color: Equatable {
         guard Scanner(string: String(fullHexString)).scanHexInt32(&hexComponent) else {
             return 0
         }
-        let hexFloat = Float(hexComponent)
-        let floatValue = Float(hexFloat / 255.0)
+        let hexFloat = Double(hexComponent)
+        let floatValue = Double(hexFloat / 255.0)
         return floatValue
     }
 
     /// Convert to a hex string
     /// From: https://stackoverflow.com/a/26341062
     public func toHex() -> String {
-
-        let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
-        let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
-        let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
+        let r = lround(red * 255) // swiftlint:disable:this identifier_name
+        let g = lround(green * 255) // swiftlint:disable:this identifier_name
+        let b = lround(blue * 255) // swiftlint:disable:this identifier_name
 
         let hexString = String.init(format: "#%02lX%02lX%02lX", r, g, b)
         return hexString
@@ -129,9 +148,9 @@ public struct Color: Equatable {
     
     /// Returns an RGBA string
     public func toRGBA() -> String {
-        let r = lroundf(red * 255) // swiftlint:disable:this identifier_name
-        let g = lroundf(green * 255) // swiftlint:disable:this identifier_name
-        let b = lroundf(blue * 255) // swiftlint:disable:this identifier_name
+        let r = lround(red * 255) // swiftlint:disable:this identifier_name
+        let g = lround(green * 255) // swiftlint:disable:this identifier_name
+        let b = lround(blue * 255) // swiftlint:disable:this identifier_name
 
         return "rgba(\(r),\(g),\(b),\(alpha))"
     }
