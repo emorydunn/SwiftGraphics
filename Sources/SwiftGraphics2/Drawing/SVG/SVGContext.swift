@@ -272,16 +272,21 @@ public class SVGContext: DrawingContext {
         try writeSVG(to: URL(fileURLWithPath: path))
     }
     
-    public func writeSVG(named name: String, to directory: URL, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
-        var url = directory
-            .appendingPathComponent("SVG", isDirectory: true)
-            .appendingPathComponent(name, isDirectory: false)
-        
-        if url.pathExtension != "svg" {
-            url.appendPathExtension("svg")
-        }
-        
-        try writeSVG(to: url, options: options)
+    public func writeSVG(named name: String, to directory: URL, includeSubDir: Bool = true, options: XMLNode.Options = [.documentTidyXML, .nodePrettyPrint]) throws {
+
+		var url = directory
+
+		if includeSubDir {
+			url.appendPathComponent("SVG", isDirectory: true)
+		}
+
+		url.appendPathComponent(name, isDirectory: false)
+
+		if url.pathExtension != "svg" {
+			url.appendPathExtension("svg")
+		}
+
+		try writeSVG(to: url, options: options)
 
     }
 
