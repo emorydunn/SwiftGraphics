@@ -9,7 +9,7 @@
 import Foundation
 
 /// A structure that contains width and height values.
-public struct Size: Hashable {
+public struct Size: Hashable, Equatable {
     
     /// The width value
     public var width: Double
