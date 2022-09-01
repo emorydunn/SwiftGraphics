@@ -12,9 +12,9 @@ public protocol Sketch {
     
     /// Size of the sketch
     var size: Size { get set }
-    
-    @SketchBuilder
-    var body: Body { get }
+
+	@SketchBuilder
+	var sketch: Body { get }
 
 }
 

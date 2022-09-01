@@ -100,7 +100,7 @@ public class SVGContext: DrawingContext {
         svg.addAttribute("http://www.w3.org/2000/svg", forKey: "xmlns")
         svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
         
-        addShape(sketch.body)
+        addShape(sketch.sketch)
     }
     
     
