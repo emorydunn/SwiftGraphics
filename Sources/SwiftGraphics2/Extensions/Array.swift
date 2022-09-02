@@ -162,9 +162,3 @@ extension Array where Element == Vector {
 
     }
 }
-
-//extension Array: SVGDrawable where Element: SVGDrawable {
-//    public func svgElement() -> XMLElement {
-//        <#code#>
-//    }
-//}

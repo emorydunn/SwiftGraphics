@@ -6,20 +6,19 @@
 //
 
 import Foundation
-import Silica
 
-public struct StyledShape: Drawable, SVGDrawable, PNGDrawable {
+public struct StyledShape: Drawable, SVGDrawable {
     
     /// Color of the outline of the shape
-    var strokeColor: Color?
+    public var strokeColor: Color?
 
     /// Color of the fill of the shape
-    var fillColor: Color?
+	public var fillColor: Color?
 
     /// Weight of the outline of the shape
-    var strokeWidth: Double?
+	public var strokeWidth: Double?
     
-    var shape: Drawable
+	public var shape: Drawable
     
     init(strokeColor: Color? = nil, fillColor: Color? = nil, strokeWidth: Double? = nil, shape: Drawable) {
         self.strokeColor = strokeColor
@@ -56,30 +55,30 @@ public struct StyledShape: Drawable, SVGDrawable, PNGDrawable {
         return element
     }
 
-	public func draw(in context: Silica.CGContext) {
-
-
-		context.saveGState()
-
-		if let strokeColor {
-			context.strokeColor = CGColor(strokeColor)
-		}
-
-		if let strokeWidth {
-			context.lineWidth = strokeWidth
-		}
-
-		if let fillColor {
-			context.fillColor = CGColor(fillColor)
-		}
-
-		if let shape = shape as? PNGDrawable {
-			shape.draw(in: context)
-		}
-
-
-		context.restoreGState()
-	}
+//	public func draw(in context: Silica.CGContext) {
+//
+//
+//		context.saveGState()
+//
+//		if let strokeColor {
+//			context.strokeColor = CGColor(strokeColor)
+//		}
+//
+//		if let strokeWidth {
+//			context.lineWidth = strokeWidth
+//		}
+//
+//		if let fillColor {
+//			context.fillColor = CGColor(fillColor)
+//		}
+//
+//		if let shape = shape as? PNGDrawable {
+//			shape.draw(in: context)
+//		}
+//
+//
+//		context.restoreGState()
+//	}
 }
 
 public extension Drawable {

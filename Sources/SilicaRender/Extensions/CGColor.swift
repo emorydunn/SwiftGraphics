@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftGraphics2
 import Silica
 
 public extension CGColor {

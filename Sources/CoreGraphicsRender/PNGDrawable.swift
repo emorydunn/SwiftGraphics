@@ -6,23 +6,24 @@
 //
 
 import Foundation
-import Silica
+import CoreGraphics
+import SwiftGraphics2
 
-/// A `Shape` that can be represented as an SVG element
+/// A `Shape` that can be represented as an PNG element
 public protocol PNGDrawable: Drawable {
 
 	/// Draw the receiver in the specified context
 	/// - Parameter context: Context in which to draw
-	func draw(in context: Silica.CGContext)
+	func draw(in context: CGContext)
 
 	/// Draw a representation of the receiver meant for debugging the shape in the specified context
 	/// - Parameter context: Context in which to draw
-	func debugDraw(in context: Silica.CGContext)
+	func debugDraw(in context: CGContext)
 
 }
 
 extension PNGDrawable {
-	public func debugDraw(in context: Silica.CGContext) {
+	public func debugDraw(in context: CGContext) {
 		draw(in: context)
 	}
 }

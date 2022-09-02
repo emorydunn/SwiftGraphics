@@ -14,7 +14,14 @@ let package = Package(
         
         .library(
             name: "SwiftGraphics2",
-            targets: ["SwiftGraphics2"])
+            targets: ["SwiftGraphics2"]),
+
+		.library(
+			name: "SilicaRender",
+			targets: ["SilicaRender"]),
+		.library(
+			name: "CoreGraphicsRender",
+			targets: ["CoreGraphicsRender"]),
         
     ],
     dependencies: [
@@ -36,11 +43,24 @@ let package = Package(
         .target(
             name: "SwiftGraphics2",
             dependencies: [
-				"Silica"
+//				"Silica"
 			]),
         .testTarget(
             name: "SwiftGraphics2Tests",
-            dependencies: ["SwiftGraphics2"])
+            dependencies: ["SwiftGraphics2"]),
+
+		.target(
+			name: "SilicaRender",
+			dependencies: [
+				"SwiftGraphics2",
+				"Silica"
+			]),
+
+		.target(
+			name: "CoreGraphicsRender",
+			dependencies: [
+				"SwiftGraphics2"
+			]),
         
     ]
 )

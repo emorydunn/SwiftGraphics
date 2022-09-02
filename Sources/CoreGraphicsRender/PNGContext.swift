@@ -6,12 +6,15 @@
 //
 
 import Foundation
-import Silica
-import Cairo
+import CoreGraphics
+import SwiftGraphics2
+import AppKit
 
-/// A drawing context which creates SVG files
+/// A drawing context which creates PNG files
 @resultBuilder
 public class PNGContext: DrawingContext {
+
+	static let flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, 512)
 
 	/// Width of the SVG
 	public let width: Int
@@ -21,7 +24,7 @@ public class PNGContext: DrawingContext {
 
 	public var debug: Bool
 
-	public let image: Surface.Image
+//	public let image: Surface.Image
 
 	let context: CGContext
 
@@ -35,21 +38,16 @@ public class PNGContext: DrawingContext {
 		self.height = height
 		self.debug = debug
 
-		self.image = try Surface.Image(format: ImageFormat.argb32, width: width, height: height)
-		self.context = try Silica.CGContext(surface: image, size: CGSize(width: width, height: height))
+		self.context = CGContext(data: nil,
+								 width: width,
+								 height: height,
+								 bitsPerComponent: 8,
+								 bytesPerRow: 0,
+								 space: CGColorSpace(name: CGColorSpace.sRGB)!,
+								 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
-//		self.image = CGImage(width: width,
-//							 height: height,
-//							 bitsPerComponent: 8,
-//							 bitsPerPixel: 24,
-//							 bytesPerRow: <#T##Int#>,
-//							 space: CGColorSpace.adobeRGB1998,
-//							 bitmapInfo: [CGBitmapInfo.byteOrderDefault],
-//							 provider: <#T##CGDataProvider#>,
-//							 decode: <#T##CGFloat?#>,
-//							 shouldInterpolate: <#T##Bool#>,
-//							 intent: <#T##CGColorRenderingIntent#>)
-//		image.lockFocusFlipped(true)
+		context.concatenate(PNGContext.flipVertical)
+
 	}
 
 	public init<C: Sketch>(_ sketch: C, debug: Bool = false) throws {
@@ -57,8 +55,16 @@ public class PNGContext: DrawingContext {
 		self.height = Int(sketch.size.height)
 		self.debug = debug
 
-		self.image = try Surface.Image(format: ImageFormat.argb32, width: width, height: height)
-		self.context = try Silica.CGContext(surface: image, size: CGSize(width: width, height: height))
+		self.context = CGContext(data: nil,
+								 width: width,
+								 height: height,
+								 bitsPerComponent: 8,
+								 bytesPerRow: 0,
+								 space: CGColorSpace(name: CGColorSpace.sRGB)!,
+								 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+
+
+//		context.concatenate(PNGContext.flipVertical)
 
 		addShape(sketch.sketch)
 
@@ -93,7 +99,17 @@ public class PNGContext: DrawingContext {
 	}
 
 	public func render() throws -> Data {
-		try image.writePNG()
+		guard let image = context.makeImage() else {
+			throw RenderError.failedToMakeImage
+		}
+
+		let imageRep = NSBitmapImageRep(cgImage: image)
+
+		if let data = imageRep.representation(using: .png, properties: [:]) {
+			return data
+		}
+
+		throw RenderError.failedToRenderPNGRepresentation
 	}
 
 	public func writePNG(to url: URL) throws {
@@ -102,7 +118,7 @@ public class PNGContext: DrawingContext {
 			at: url.deletingLastPathComponent(),
 			withIntermediateDirectories: true)
 
-		let data = try image.writePNG()
+		let data = try render()
 
 		try data.write(to: url)
 	}
@@ -128,5 +144,12 @@ public class PNGContext: DrawingContext {
 public extension PNGContext {
 	static func buildBlock(_ shapes: PNGDrawable...) -> [PNGDrawable] {
 		shapes
+	}
+}
+
+public extension PNGContext {
+	enum RenderError: Error {
+		case failedToMakeImage
+		case failedToRenderPNGRepresentation
 	}
 }
