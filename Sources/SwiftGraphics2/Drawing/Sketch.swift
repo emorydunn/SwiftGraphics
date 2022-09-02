@@ -70,6 +70,10 @@ public struct SketchBuilder {
         content
     }
 
+	public static func buildBlock<Content: Drawable>(_ content: () -> Content) -> Content {
+		content()
+	}
+
     public static func buildBlock(_ content: Drawable...) -> GroupDrawable {
         GroupDrawable(content)
     }
@@ -82,50 +86,12 @@ public struct SketchBuilder {
         GroupDrawable(content)
     }
 
+	public static func buildArray(_ content: [Drawable]?) -> GroupDrawable {
+		GroupDrawable(content ?? [])
+	}
+
 	public static func buildOptional(_ component: Drawable?) -> Drawable {
 		return component ?? EmptyDrawable()
 	}
 
 }
-
-
-//@resultBuilder
-//public struct SketchBuilder {
-//
-//    let shapes: [Shape]
-//
-//    public init(@SketchBuilder _ content: () -> [Shape]) {
-//        self.shapes = content()
-//    }
-//
-//}
-//
-//public extension SketchBuilder {
-//
-//    static func buildBlock() -> [Drawable] { [] }
-//
-//    static func buildBlock(_ content: [Drawable]) -> [Shape] {
-//        content.flatMap { $0.asShapes() }
-//    }
-//
-//    static func buildBlock(_ content: Drawable...) -> [Shape] {
-//        content.flatMap { $0.asShapes() }
-//    }
-//}
-//
-//public struct Group: Drawable {
-//    public let shapes: [Drawable]
-//
-//    public init(@SketchBuilder _ builder: () -> [Drawable]) {
-//        self.shapes = builder()
-//    }
-//
-////    public init(_ shapes: [ShapeConvertible]) {
-////        self.shapes = shapes
-////    }
-//
-//    public func asShapes() -> [Shape] {
-//        shapes.flatMap { $0.asShapes() }
-//    }
-//
-//}
