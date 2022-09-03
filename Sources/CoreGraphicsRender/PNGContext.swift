@@ -34,6 +34,11 @@ public class PNGContext: DrawingContext {
 	///   - width: Width of the PNG
 	///   - height: Height of the PNG
 	init(width: Int, height: Int, debug: Bool = false) throws {
+
+		guard width > 0 && height > 0 else {
+			throw RenderError.dimensionIsZero(width: width, height: height)
+		}
+
 		self.width = width
 		self.height = height
 		self.debug = debug
@@ -51,6 +56,10 @@ public class PNGContext: DrawingContext {
 	}
 
 	public init<C: Sketch>(_ sketch: C, debug: Bool = false) throws {
+		guard sketch.size.width > 0 && sketch.size.height > 0 else {
+			throw RenderError.dimensionIsZero(width: sketch.size.width, height: sketch.size.height)
+		}
+
 		self.width = Int(sketch.size.width)
 		self.height = Int(sketch.size.height)
 		self.debug = debug
@@ -149,6 +158,7 @@ public extension PNGContext {
 
 public extension PNGContext {
 	enum RenderError: Error {
+		case dimensionIsZero(width: any Numeric, height: any Numeric)
 		case failedToMakeImage
 		case failedToRenderPNGRepresentation
 	}
