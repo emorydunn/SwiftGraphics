@@ -9,7 +9,7 @@ import Foundation
 //import Silica
 
 /// A set of components that define a color. The color space is defined by the drawing context.
-public struct Color: Equatable, Hashable {
+public struct Color: Equatable, Hashable, Codable {
     
     /// Red value
     public let red: Double
