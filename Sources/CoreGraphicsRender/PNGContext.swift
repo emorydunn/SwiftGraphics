@@ -28,12 +28,11 @@ public class PNGContext: DrawingContext {
 
 	let context: CGContext
 
-
 	/// Create a new PNG with the specified dimensions
 	/// - Parameters:
 	///   - width: Width of the PNG
 	///   - height: Height of the PNG
-	init(width: Int, height: Int, debug: Bool = false) throws {
+	init(width: Int, height: Int, context: CGContext? = nil, debug: Bool = false) throws {
 
 		guard width > 0 && height > 0 else {
 			throw RenderError.dimensionIsZero(width: width, height: height)
@@ -43,19 +42,24 @@ public class PNGContext: DrawingContext {
 		self.height = height
 		self.debug = debug
 
-		self.context = CGContext(data: nil,
-								 width: width,
-								 height: height,
-								 bitsPerComponent: 8,
-								 bytesPerRow: 0,
-								 space: CGColorSpace(name: CGColorSpace.sRGB)!,
-								 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+		if let context {
+			self.context = context
+		} else {
+			self.context = CGContext(data: nil,
+									 width: width,
+									 height: height,
+									 bitsPerComponent: 8,
+									 bytesPerRow: 0,
+									 space: CGColorSpace(name: CGColorSpace.sRGB)!,
+									 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
-		context.concatenate(PNGContext.flipVertical)
+
+			self.context.concatenate(PNGContext.flipVertical)
+		}
 
 	}
 
-	public init<C: Sketch>(_ sketch: C, debug: Bool = false) throws {
+	public init<C: Sketch>(_ sketch: C, context: CGContext? = nil, debug: Bool = false) throws {
 		guard sketch.size.width > 0 && sketch.size.height > 0 else {
 			throw RenderError.dimensionIsZero(width: sketch.size.width, height: sketch.size.height)
 		}
@@ -64,16 +68,20 @@ public class PNGContext: DrawingContext {
 		self.height = Int(sketch.size.height)
 		self.debug = debug
 
-		self.context = CGContext(data: nil,
-								 width: width,
-								 height: height,
-								 bitsPerComponent: 8,
-								 bytesPerRow: 0,
-								 space: CGColorSpace(name: CGColorSpace.sRGB)!,
-								 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
+		if let context {
+			self.context = context
+		} else {
+			self.context = CGContext(data: nil,
+									 width: width,
+									 height: height,
+									 bitsPerComponent: 8,
+									 bytesPerRow: 0,
+									 space: CGColorSpace(name: CGColorSpace.sRGB)!,
+									 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
 
-//		context.concatenate(PNGContext.flipVertical)
+//			self.context.concatenate(PNGContext.flipVertical)
+		}
 
 		addShape(sketch.sketch)
 
