@@ -43,11 +43,6 @@ public extension CGContext {
 	/// If the body of the Sketch conforms to `PNGDrawable` it will be drawn. If not this method does nothing.
 	/// - Parameter sketch: The `Sketch` to draw.
 	func draw<S: Sketch>(sketch: S) {
-		switch sketch.body {
-		case let shape as PNGDrawable:
-			shape.draw(in: self)
-		default:
-			break
-		}
+		sketch.body.draw(in: self)
 	}
 }
