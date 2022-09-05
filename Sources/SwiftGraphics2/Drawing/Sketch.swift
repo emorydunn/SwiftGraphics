@@ -14,7 +14,7 @@ public protocol Sketch {
     var size: Size { get set }
 
 	@SketchBuilder
-	var sketch: Body { get }
+	var body: Body { get }
 
 }
 

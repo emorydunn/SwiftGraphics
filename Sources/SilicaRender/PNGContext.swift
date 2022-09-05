@@ -61,7 +61,7 @@ public class PNGContext: DrawingContext {
 		self.image = try Surface.Image(format: ImageFormat.argb32, width: width, height: height)
 		self.context = try Silica.CGContext(surface: image, size: CGSize(width: width, height: height))
 
-		addShape(sketch.sketch)
+		addShape(sketch.body)
 
 	}
 

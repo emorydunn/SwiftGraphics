@@ -24,8 +24,6 @@ public class PNGContext: DrawingContext {
 
 	public var debug: Bool
 
-//	public let image: Surface.Image
-
 	let context: CGContext
 
 	/// Create a new PNG with the specified dimensions
@@ -83,7 +81,7 @@ public class PNGContext: DrawingContext {
 //			self.context.concatenate(PNGContext.flipVertical)
 		}
 
-		addShape(sketch.sketch)
+		addShape(sketch.body)
 
 	}
 
@@ -97,7 +95,7 @@ public class PNGContext: DrawingContext {
 		}
 	}
 
-	/// Append a shape to the SVG
+	/// Append a shape to the PNG
 	/// - Parameter shape: Shape to add
 	public func addShape(_ shape: PNGDrawable) {
 		if debug {
