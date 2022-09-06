@@ -12,9 +12,9 @@ let package = Package(
 //            name: "SwiftGraphics",
 //            targets: ["SwiftGraphics"]),
 //
-//        .library(
-//            name: "SwiftGraphics2",
-//            targets: ["SwiftGraphics2"]),
+        .library(
+            name: "SwiftGraphics2",
+            targets: ["SwiftGraphics2"]),
 
 		.library(
 			name: "SilicaRendering",
