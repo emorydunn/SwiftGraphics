@@ -18,7 +18,7 @@ final class PathTests: XCTestCase {
             Vector(200, 100)
         )
 
-        let point = path.lerp(percent: 0.5)
+        let point = path.lerp(0.5)
         
         XCTAssertEqual(point, Vector(118.46854449606303, 56.91280140577422))
 

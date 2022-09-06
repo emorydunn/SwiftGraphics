@@ -21,8 +21,6 @@ final class PolygonTests: XCTestCase {
             Vector(30, 35),
             Vector(10, 35)
         ])
-        
-        print(polygon.strokeColor(.black).svgElement())
 
     }
     

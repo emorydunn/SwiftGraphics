@@ -31,6 +31,10 @@ public struct Path: Equatable, Shape, Drawable {
         points.lerp(percent: t)
     }
 
+	public func lerp(_ t: Double) -> Vector {
+		points.lerp(percent: t)
+	}
+
 }
 
 public extension Path {
