@@ -9,9 +9,9 @@ import Foundation
 import SwiftGraphics2
 import Silica
 
-extension GroupDrawable: PNGDrawable {
+extension GroupDrawable: SIDrawable {
 	public func draw(in context: CGContext) {
-		for case let shape as PNGDrawable in shapes {
+		for case let shape as SIDrawable in shapes {
 			shape.draw(in: context)
 		}
 	}

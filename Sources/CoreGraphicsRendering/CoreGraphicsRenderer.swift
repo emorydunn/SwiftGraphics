@@ -54,7 +54,7 @@ public class CoreGraphicsRenderer {
 
 	}
 
-	public convenience init<C: Sketch>(_ sketch: C, context: CGContext? = nil, debug: Bool = false) throws where C.Body: PNGDrawable {
+	public convenience init<C: Sketch>(_ sketch: C, context: CGContext? = nil, debug: Bool = false) throws where C.Body: CGDrawable {
 		try self.init(width: Int(sketch.size.width),
 				  height: Int(sketch.size.height),
 				  context: context,
@@ -66,7 +66,7 @@ public class CoreGraphicsRenderer {
 
 	/// Draw a shape in the renderer's context.
 	/// - Parameter shape: Shape to draw.
-	public func addShape(_ shape: PNGDrawable) {
+	public func addShape(_ shape: CGDrawable) {
 		if debug {
 			shape.debugDraw(in: context)
 		} else {
@@ -76,18 +76,18 @@ public class CoreGraphicsRenderer {
 
 	/// Draw shapes in the renderer's context.
 	/// - Parameter shapes: The shape to draw.
-	public func addShapes(_ shapes: [PNGDrawable]) {
+	public func addShapes(_ shapes: [CGDrawable]) {
 		shapes.forEach { addShape($0) }
 	}
 
 	/// Draw shapes in the renderer's context.
 	/// - Parameter shapes: The shape to draw.
-	public func addShapes(_ shapes: PNGDrawable...) {
+	public func addShapes(_ shapes: CGDrawable...) {
 		shapes.forEach { addShape($0) }
 	}
 
 	/// Render the context to a bitmap image.
-	/// - Returns: A data object containing the receiver’s image data in the specified format. You can write this data to a file or use it to create a new NSBitmapImageRep object.
+	/// - Returns: A data object containing the receiver’s image data in the specified format.
 	/// - Parameter storageType: The file type for the rendered image.
 	public func render(using storageType: NSBitmapImageRep.FileType = .png) throws -> Data {
 		guard let image = context.makeImage() else {

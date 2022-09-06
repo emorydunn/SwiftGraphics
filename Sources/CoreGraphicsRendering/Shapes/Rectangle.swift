@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 import SwiftGraphics2
 
-extension Rectangle: PNGDrawable {
+extension Rectangle: CGDrawable {
 	public func draw(in context: CGContext) {
 
 		// Create the rectangle

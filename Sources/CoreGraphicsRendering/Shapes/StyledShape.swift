@@ -9,7 +9,7 @@ import Foundation
 import CoreGraphics
 import SwiftGraphics2
 
-extension StyledShape: PNGDrawable {
+extension StyledShape: CGDrawable {
 	public func draw(in context: CGContext) {
 		context.saveGState()
 
@@ -25,7 +25,7 @@ extension StyledShape: PNGDrawable {
 			context.setFillColor(red: fillColor.red, green: fillColor.green, blue: fillColor.blue, alpha: fillColor.alpha)
 		}
 
-		if let shape = shape as? PNGDrawable {
+		if let shape = shape as? CGDrawable {
 			shape.draw(in: context)
 		}
 

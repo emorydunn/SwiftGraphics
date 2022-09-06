@@ -9,7 +9,7 @@ import Foundation
 import SwiftGraphics2
 import Silica
 
-extension StyledShape: PNGDrawable {
+extension StyledShape: SIDrawable {
 	public func draw(in context: Silica.CGContext) {
 		context.saveGState()
 
@@ -25,7 +25,7 @@ extension StyledShape: PNGDrawable {
 			context.fillColor = CGColor(fillColor)
 		}
 
-		if let shape = shape as? PNGDrawable {
+		if let shape = shape as? SIDrawable {
 			shape.draw(in: context)
 		}
 

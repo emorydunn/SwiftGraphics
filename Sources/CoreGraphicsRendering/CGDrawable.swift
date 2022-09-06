@@ -1,5 +1,5 @@
 //
-//  PNGDrawable.swift
+//  CGDrawable.swift
 //  
 //
 //  Created by Emory Dunn on 8/7/22.
@@ -10,7 +10,7 @@ import CoreGraphics
 import SwiftGraphics2
 
 /// A `Shape` that can be represented as an PNG element
-public protocol PNGDrawable: Drawable {
+public protocol CGDrawable: Drawable {
 
 	/// Draw the receiver in the specified context
 	/// - Parameter context: Context in which to draw
@@ -22,7 +22,7 @@ public protocol PNGDrawable: Drawable {
 
 }
 
-extension PNGDrawable {
+extension CGDrawable {
 	public func debugDraw(in context: CGContext) {
 		draw(in: context)
 	}
@@ -32,7 +32,7 @@ extension Drawable {
 	/// Draw the receiver in the specified context
 	/// - Parameter context: Context in which to draw
 	func draw(in context: CGContext) {
-		if let drawable = self as? PNGDrawable {
+		if let drawable = self as? CGDrawable {
 			drawable.draw(in: context)
 		}
 	}

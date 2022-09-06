@@ -11,8 +11,7 @@ import Silica
 import Cairo
 
 /// A drawing context which creates PNG files
-@resultBuilder
-public class PNGContext: DrawingContext {
+public class SilicaRenderer {
 
 	/// Width of the SVG
 	public let width: Int
@@ -26,7 +25,6 @@ public class PNGContext: DrawingContext {
 
 	let context: CGContext
 
-
 	/// Create a new PNG with the specified dimensions
 	/// - Parameters:
 	///   - width: Width of the PNG
@@ -39,45 +37,18 @@ public class PNGContext: DrawingContext {
 		self.image = try Surface.Image(format: ImageFormat.argb32, width: width, height: height)
 		self.context = try Silica.CGContext(surface: image, size: CGSize(width: width, height: height))
 
-//		self.image = CGImage(width: width,
-//							 height: height,
-//							 bitsPerComponent: 8,
-//							 bitsPerPixel: 24,
-//							 bytesPerRow: <#T##Int#>,
-//							 space: CGColorSpace.adobeRGB1998,
-//							 bitmapInfo: [CGBitmapInfo.byteOrderDefault],
-//							 provider: <#T##CGDataProvider#>,
-//							 decode: <#T##CGFloat?#>,
-//							 shouldInterpolate: <#T##Bool#>,
-//							 intent: <#T##CGColorRenderingIntent#>)
-//		image.lockFocusFlipped(true)
 	}
 
-	public init<C: Sketch>(_ sketch: C, debug: Bool = false) throws {
-		self.width = Int(sketch.size.width)
-		self.height = Int(sketch.size.height)
-		self.debug = debug
+	public convenience init<C: Sketch>(_ sketch: C, debug: Bool = false) throws where C.Body: SIDrawable {
+		try self.init(width: Int(sketch.size.width), height: Int(sketch.size.width), debug: debug)
 
-		self.image = try Surface.Image(format: ImageFormat.argb32, width: width, height: height)
-		self.context = try Silica.CGContext(surface: image, size: CGSize(width: width, height: height))
-
-		addShape(sketch.body)
+		sketch.body.draw(in: self.context)
 
 	}
 
-	public func addShape(_ shape: Drawable) {
-
-		switch shape {
-		case let shape as PNGDrawable:
-			addShape(shape)
-		default:
-			break
-		}
-	}
-
-	/// Append a shape to the SVG
-	/// - Parameter shape: Shape to add
-	public func addShape(_ shape: PNGDrawable) {
+	/// Draw a shape in the renderer's context.
+	/// - Parameter shape: Shape to draw.
+	public func addShape(_ shape: SIDrawable) {
 		if debug {
 			shape.debugDraw(in: context)
 		} else {
@@ -85,18 +56,26 @@ public class PNGContext: DrawingContext {
 		}
 	}
 
-	public func addShapes(_ shapes: [PNGDrawable]) {
+	/// Draw shapes in the renderer's context.
+	/// - Parameter shapes: The shape to draw.
+	public func addShapes(_ shapes: [SIDrawable]) {
 		shapes.forEach { addShape($0) }
 	}
 
-	public func addShapes(_ shapes: PNGDrawable...) {
+	/// Draw shapes in the renderer's context.
+	/// - Parameter shapes: The shape to draw.
+	public func addShapes(_ shapes: SIDrawable...) {
 		shapes.forEach { addShape($0) }
 	}
 
+	/// Render the context to a bitmap image.
+	/// - Returns: A object containing the image data.
 	public func render() throws -> Data {
 		try image.writePNG()
 	}
 
+	/// Write a PNG to the specified URL.
+	/// - Parameter url: The location to write the data into.
 	public func writePNG(to url: URL) throws {
 		// Create the folder if needed
 		try FileManager.default.createDirectory(
@@ -108,6 +87,11 @@ public class PNGContext: DrawingContext {
 		try data.write(to: url)
 	}
 
+	/// Render the image and write to inside the specified directory.
+	/// - Parameters:
+	///   - name: The name of the file to write. The appropriate extension is added automatically if needed.
+	///   - directory: The directory to save the image into.
+	///   - includeSubDir: Whether or not to write the image in a format specific subdirectory.
 	public func writePNG(named name: String, to directory: URL, includeSubDir: Bool = true) throws {
 		var url = directory
 
@@ -123,11 +107,5 @@ public class PNGContext: DrawingContext {
 
 		try writePNG(to: url)
 
-	}
-}
-
-public extension PNGContext {
-	static func buildBlock(_ shapes: PNGDrawable...) -> [PNGDrawable] {
-		shapes
 	}
 }

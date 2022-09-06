@@ -9,9 +9,9 @@ import Foundation
 import SwiftGraphics2
 import CoreGraphics
 
-extension GroupDrawable: PNGDrawable {
+extension GroupDrawable: CGDrawable {
 	public func draw(in context: CGContext) {
-		for case let shape as PNGDrawable in shapes {
+		for case let shape as CGDrawable in shapes {
 			shape.draw(in: context)
 		}
 	}

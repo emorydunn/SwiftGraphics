@@ -9,7 +9,7 @@ import Foundation
 import SwiftGraphics2
 import Silica
 
-extension Rectangle: PNGDrawable {
+extension Rectangle: SIDrawable {
 	public func draw(in context: Silica.CGContext) {
 
 		// Create the rectangle
