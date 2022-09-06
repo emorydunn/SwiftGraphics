@@ -11,7 +11,7 @@ import SwiftGraphics2
 import AppKit
 
 /// A drawing context which creates bitmap files
-public class PNGContext {
+public class CoreGraphicsRenderer {
 
 	/// Width of the SVG
 	public let width: Int
@@ -157,7 +157,7 @@ public class PNGContext {
 }
 
 
-public extension PNGContext {
+public extension CoreGraphicsRenderer {
 	enum RenderError: Error {
 		case dimensionIsZero(width: any Numeric, height: any Numeric)
 		case failedToMakeImage

@@ -17,11 +17,11 @@ let package = Package(
             targets: ["SwiftGraphics2"]),
 
 		.library(
-			name: "SilicaRender",
-			targets: ["SilicaRender"]),
+			name: "SilicaRendering",
+			targets: ["SilicaRendering"]),
 		.library(
-			name: "CoreGraphicsRender",
-			targets: ["CoreGraphicsRender"]),
+			name: "CoreGraphicsRendering",
+			targets: ["CoreGraphicsRendering"]),
         
     ],
     dependencies: [
@@ -50,14 +50,14 @@ let package = Package(
             dependencies: ["SwiftGraphics2"]),
 
 		.target(
-			name: "SilicaRender",
+			name: "SilicaRendering",
 			dependencies: [
 				"SwiftGraphics2",
 				"Silica"
 			]),
 
 		.target(
-			name: "CoreGraphicsRender",
+			name: "CoreGraphicsRendering",
 			dependencies: [
 				"SwiftGraphics2"
 			]),
