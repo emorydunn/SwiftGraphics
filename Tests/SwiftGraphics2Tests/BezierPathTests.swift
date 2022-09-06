@@ -19,7 +19,7 @@ final class BezierPathTests: XCTestCase {
         )
         
         measure {
-            let point = path.bezier(0.8)
+			let point = path.pointOnPerimeter(0.8)
             XCTAssertEqual(point, Vector(171.8, 82.8))
         }
         
@@ -33,7 +33,7 @@ final class BezierPathTests: XCTestCase {
         )
         
         let curve = Path(strideFrom: 0, through: 1, by: 0.1) {
-            path.bezier($0)
+			path.pointOnPerimeter($0)
         }
         
 //        curve
@@ -95,11 +95,11 @@ final class BezierPathTests: XCTestCase {
         let svg = SVGContext(width: 300, height: 300)
         
         let bgColor = Color(hexString: "#a7ecf2", alpha: 0.5)
-        svg.addShapes(path.strokeColor(bgColor))
-        svg.addShapes(path2.strokeColor(bgColor))
-        
-        svg.addShapes(lines.strokeColor(.black))
-        svg.addShapes(lines2.strokeColor(.black))
+        svg.addShape(path.strokeColor(bgColor))
+        svg.addShape(path2.strokeColor(bgColor))
+
+        svg.addShape(lines.strokeColor(.black))
+        svg.addShape(lines2.strokeColor(.black))
         
         try! svg.writeSVG(to: "/Users/emorydunn/Desktop/BezierSplit.svg")
         

@@ -107,18 +107,12 @@ public class SVGContext: DrawingContext {
     public func addShape(_ shape: Drawable) {
         
         switch shape {
-//        case let shape as GroupDrawable:
-//            print("Adding \(shape.shapes.count) group to SVG")
-//            shape.shapes.forEach { $0.draw(in: self) }
         case let shape as SVGDrawable:
             print("Adding \(type(of: shape)) to SVG")
             addShape(shape)
         default:
             break
         }
-//        guard let shape = shape as? SVGDrawable else { return }
-//
-//        addShape(shape)
     }
     
     

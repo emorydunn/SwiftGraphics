@@ -162,3 +162,5 @@ extension Array where Element == Vector {
 
     }
 }
+
+extension Array: Drawable where Element: Drawable { }

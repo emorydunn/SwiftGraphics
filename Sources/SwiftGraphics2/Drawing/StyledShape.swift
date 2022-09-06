@@ -55,30 +55,6 @@ public struct StyledShape: Drawable, SVGDrawable {
         return element
     }
 
-//	public func draw(in context: Silica.CGContext) {
-//
-//
-//		context.saveGState()
-//
-//		if let strokeColor {
-//			context.strokeColor = CGColor(strokeColor)
-//		}
-//
-//		if let strokeWidth {
-//			context.lineWidth = strokeWidth
-//		}
-//
-//		if let fillColor {
-//			context.fillColor = CGColor(fillColor)
-//		}
-//
-//		if let shape = shape as? PNGDrawable {
-//			shape.draw(in: context)
-//		}
-//
-//
-//		context.restoreGState()
-//	}
 }
 
 public extension Drawable {
