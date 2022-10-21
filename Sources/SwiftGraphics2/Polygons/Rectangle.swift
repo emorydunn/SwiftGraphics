@@ -40,6 +40,13 @@ public struct Rectangle: Polygon {
         self.width = width
         self.rotation = rotation
     }
+
+	public init(size: Size, rotation: Angle = .degrees(0)) {
+		self.origin = size.center
+		self.width = size.width
+		self.height = size.height
+		self.rotation = rotation
+	}
     
     /// Calculates the points of the rectangle by applying a matrix transformation.
     ///
