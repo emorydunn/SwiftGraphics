@@ -49,7 +49,10 @@ public class CoreGraphicsRenderer {
 									 bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)!
 
 			// Flip the drawing to top-left (0,0)
-			self.context.concatenate(CGAffineTransformMake(1, 0, 0, -1, 0, CGFloat(height)))
+			let transform = CGAffineTransform(a: 1, b: 0,
+											  c: 0, d: -1,
+											  tx: 0, ty: CGFloat(height))
+			self.context.concatenate(transform)
 		}
 
 	}
