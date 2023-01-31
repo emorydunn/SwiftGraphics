@@ -28,10 +28,8 @@ extension Rectangle: CGDrawable {
 		context.rotate(by: rotation.degrees)
 
 		// Draw the rect
-		context.addRect(rect)
-
-		context.strokePath()
-		context.fillPath()
+		context.fill([rect])
+		context.stroke(rect)
 
 		// Restore the state
 		context.restoreGState()
