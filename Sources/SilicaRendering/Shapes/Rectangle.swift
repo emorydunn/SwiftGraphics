@@ -10,12 +10,17 @@ import SwiftGraphics2
 import Silica
 
 extension Rectangle: SIDrawable {
-	public func draw(in context: Silica.CGContext) {
 
+	public func makeCGRect() -> CGRect {
 		// Create the rectangle
 		let transMatrix = MatrixTransformation.translate(vector: origin)
 		let corner = Vector(-width / 2,  -height / 2, transformation: transMatrix)
-		let rect = CGRect(x: corner.x, y: corner.y, width: width, height: height)
+		return CGRect(x: corner.x, y: corner.y, width: width, height: height)
+	}
+
+	public func draw(in context: Silica.CGContext) {
+
+		let rect = makeCGRect()
 
 		// Save the state and rotate
 		context.saveGState()
