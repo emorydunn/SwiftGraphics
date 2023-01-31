@@ -22,7 +22,10 @@ extension StyledShape: CGDrawable {
 		}
 
 		if let fillColor {
-			context.setFillColor(red: fillColor.red, green: fillColor.green, blue: fillColor.blue, alpha: fillColor.alpha)
+			context.setFillColor(red: fillColor.red,
+								 green: fillColor.green,
+								 blue: fillColor.blue,
+								 alpha: fillColor.alpha)
 		}
 
 		if let shape = shape as? CGDrawable {
