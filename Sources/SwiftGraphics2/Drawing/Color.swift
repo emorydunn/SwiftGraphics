@@ -190,6 +190,10 @@ public struct Color: Equatable, Hashable, Codable {
 		Color(red: red, green: green, blue: blue)
 	}
 
+	public func withAlpha(_ alpha: Double) -> Color {
+		Color(red: red, green: green, blue: blue, alpha: alpha)
+	}
+
 	/// Clear
 	public static let clear = Color(grey: 0, 0)
     
