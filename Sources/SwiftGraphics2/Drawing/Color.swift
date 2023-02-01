@@ -184,6 +184,14 @@ public struct Color: Equatable, Hashable, Codable {
 
         return "rgba(\(r),\(g),\(b),\(alpha))"
     }
+
+	/// Return the color without transparency. 
+	public var withoutAlpha: Color {
+		Color(red: red, green: green, blue: blue)
+	}
+
+	/// Clear
+	public static let clear = Color(grey: 0, 0)
     
 	/// CSS `aliceblue`
 	public static let aliceblue = Color(hexString: "#F0F8FF")
