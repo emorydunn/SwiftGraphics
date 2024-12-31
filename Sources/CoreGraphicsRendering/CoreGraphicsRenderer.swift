@@ -106,6 +106,14 @@ public class CoreGraphicsRenderer {
 		throw RenderError.failedToRenderPNGRepresentation
 	}
 
+	public func render() throws -> CGImage {
+		guard let image = context.makeImage() else {
+			throw RenderError.failedToMakeImage
+		}
+
+		return image
+	}
+
 	/// Write a PNG to the specified URL.
 	/// - Parameter url: The location to write the data into.
 	@available(*, deprecated, renamed: "writeImage(_:to:)")
