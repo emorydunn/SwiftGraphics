@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// Represents a line between two points
 open class Line: Shape, Intersectable, RayTracable {

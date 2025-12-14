@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// A rectangle
 open class Rectangle: Polygon, CGDrawable, SVGDrawable, RayTracable {

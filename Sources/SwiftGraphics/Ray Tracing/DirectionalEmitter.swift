@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// An emitter that casts a single ray at a given angle
 public class DirectionalEmitter: Emitter {

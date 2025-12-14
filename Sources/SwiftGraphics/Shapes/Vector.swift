@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// Represents a Euclidean vector
 public class Vector: Shape {

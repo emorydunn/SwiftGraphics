@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// A set of components that define a color. The color space is defined by the drawing context.
 public struct Color: Equatable {

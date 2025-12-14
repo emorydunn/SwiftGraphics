@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// A `Shape` that can be drawn in Core Graphics
 public protocol CGDrawable: Shape {

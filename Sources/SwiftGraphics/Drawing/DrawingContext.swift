@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// Holds values related to how objects should be drawn
 public class SwiftGraphicsContext {

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// An object representing a set of straight lines originating from a point.
 /// 

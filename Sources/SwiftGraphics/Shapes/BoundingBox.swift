@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 /// A specialized `Rectangle` which is inset from the canvas size
 public class BoundingBox: Rectangle {
