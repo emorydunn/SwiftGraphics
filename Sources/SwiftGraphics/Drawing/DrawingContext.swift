@@ -26,6 +26,8 @@ public class SwiftGraphicsContext {
     /// Color blending mode
     public static var blendMode: BlendMode = .normal
 
+	public static var lineCap: LineCap = .butt
+
 }
 
 /// A 2D drawing environment

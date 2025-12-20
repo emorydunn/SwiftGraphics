@@ -40,6 +40,7 @@ extension Circle: CGDrawable {
         context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
         context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
         context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
+
         context.strokeEllipse(in: bb)
         context.fillEllipse(in: bb)
         
