@@ -94,10 +94,6 @@ extension Path: CGDrawable {
     /// - Parameter context: Context in which to draw
     public func draw(in context: CGContext) {
 
-        context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
-        context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
-        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
-
         let path = NSBezierPath()
 
         path.move(to: CGPoint(x: points[0].x, y: points[0].y))
@@ -110,7 +106,10 @@ extension Path: CGDrawable {
             path.line(to: CGPoint(x: points[0].x, y: points[0].y))
         }
 
-        path.stroke()
+		context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
+		path.lineWidth = CGFloat(SwiftGraphicsContext.strokeWeight)
+
+		path.stroke()
 
     }
 

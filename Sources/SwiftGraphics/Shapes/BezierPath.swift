@@ -130,11 +130,11 @@ extension BezierPath: CGDrawable {
 
         context.setStrokeColor(SwiftGraphicsContext.strokeColor.toCGColor())
         context.setFillColor(SwiftGraphicsContext.fillColor.toCGColor())
-        context.setLineWidth(CGFloat(SwiftGraphicsContext.strokeWeight))
 
         let path = makeBezier()
-        path.stroke()
+		path.lineWidth = CGFloat(SwiftGraphicsContext.strokeWeight)
 
+        path.stroke()
     }
 
     /// Draw a representation of the receiver meant for debugging the shape in the specified context
