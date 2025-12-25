@@ -384,3 +384,10 @@ extension Vector {
         return start + ((end - start) * percent)
     }
 }
+
+extension Vector: SVGDrawable {
+	public func svgElement() -> XMLElement? {
+		Circle(center: self, radius: 2)
+			.svgElement()
+	}
+}
