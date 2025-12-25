@@ -43,12 +43,16 @@ public struct Circle: Shape, Drawable {
     /// Return the intersection point of the specified angle from the center of the circle
     /// - Parameter angle:The angle
     public func point(at angle: Angle) -> Vector {
-        
         let x = center.x + radius * cos(angle.radians)
         let y = center.y + radius * sin(angle.radians)
         
         return Vector(x, y)
     }
+
+	public func angle(ofPoint point: Vector) -> Angle {
+		let unitInt = point - center
+		return .radians(atan2(unitInt.y, unitInt.x))
+	}
 
     /// A Rectangle that contains the receiver
     public var boundingBox: Rectangle {
