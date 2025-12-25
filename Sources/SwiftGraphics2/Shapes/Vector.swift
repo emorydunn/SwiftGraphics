@@ -49,6 +49,13 @@ public struct Vector {
     init(_ simdVector: simd_double3) {
         self.simdVector = simdVector
     }
+
+	/// Instantiate a new `Vector` with the specified angle
+	/// - Parameter angle: The angle, in Radians, of the vector
+	public init(angle: Angle) {
+		let angle = angle.radians
+		self.init(cos(angle), sin(angle), 0)
+	}
 }
 
 extension Vector: Equatable, CustomStringConvertible {
@@ -157,7 +164,27 @@ public extension Vector {
     func heading() -> Angle {
         return Angle(radians: atan2(self.y, self.x))
     }
-    
+
+	/// Calculates and returns the angle (in radians) between two vectors.
+	public func angleBetween(_ vector: Vector) -> Angle {
+		let dotmagmag = self.dot(vector) / (self.mag() * vector.mag())
+		// Mathematically speaking: the dotmagmag variable will be between -1 and 1
+		// inclusive. Practically though it could be slightly outside this range due
+		// to floating-point rounding issues. This can make Math.acos return NaN.
+		//
+		// Solution: we'll clamp the value to the -1,1 range
+
+		var angle = acos(min(1, max(-1, dotmagmag)))
+		angle *= sign(self.cross(vector).z)
+
+		return .radians(angle)
+
+	}
+
+	private func sign(_ num: Double) -> Double {
+		return num >= 0 ? 1 : -1
+	}
+
     // MARK: - Transformations
     /// Set the heading of the receiver to the specified angle
     /// - Parameter theta: The new heading
@@ -166,9 +193,16 @@ public extension Vector {
 
         self.x = cos(newHeading) * length()
         self.y = sin(newHeading) * length()
-
     }
-    
+
+	/// Set the heading of the receiver to the specified angle
+	/// - Parameter theta: The new heading
+	func rotated(to theta: Angle) -> Vector {
+		var copy = self
+		copy.rotate(to: theta)
+		return copy
+	}
+
     /// Rotate the receiver by the specified angle
     /// - Parameter theta: Angle, in radians, to rotate
     mutating func rotate(by theta: Angle) {
