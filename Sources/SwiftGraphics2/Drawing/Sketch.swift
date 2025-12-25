@@ -94,4 +94,11 @@ public struct SketchBuilder {
 		return component ?? EmptyDrawable()
 	}
 
+	public static func buildEither(first component: Drawable) -> Drawable {
+		component
+	}
+
+	public static func buildEither(second component: Drawable) -> Drawable {
+		component
+	}
 }
