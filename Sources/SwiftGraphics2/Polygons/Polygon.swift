@@ -17,7 +17,10 @@ public protocol Polygon: Shape {
     var boundingBox: Rectangle { get }
     
     func contains(point: Vector) -> Bool
-    
+
+	/// The angle of a point relative to the center
+	/// - Parameter point: The point to to determine the angle between.
+	func angle(ofPoint point: Vector) -> Angle
 }
 
 public extension Polygon {
@@ -35,7 +38,8 @@ public extension Polygon {
     func contains(point: Vector) -> Bool {
         windingNumber(of: point, polygon: points)
     }
-    
+	
+	/// A point at the given percentage along the perimeter.
     func pointOnPerimeter(_ t: Double) -> Vector {
         points.lerp(percent: t)
     }

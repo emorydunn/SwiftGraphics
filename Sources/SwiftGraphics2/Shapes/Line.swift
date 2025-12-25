@@ -40,14 +40,44 @@ public struct Line: Shape, Drawable {
         self.start = Vector(x1, y1)
         self.end = Vector(x2, y2)
     }
-    
+
+	/// Instantiate a new `Line` from a center point
+	/// - Parameters:
+	///   - center: The center of the line
+	///   - direction: The direction of the line
+	///   - length: The length of the line
+	public init(center: Vector, direction: Angle, length: Double) {
+		let dir = Vector(angle: direction)
+		self.init(
+			center.x - dir.x * (length / 2),
+			center.y - dir.y * (length / 2),
+			center.x + dir.x * (length / 2),
+			center.y + dir.y * (length / 2)
+		)
+	}
+
+	/// Instantiate a new `Line` from an origin of a specified length
+	/// - Parameters:
+	///   - origin: The origin of the line
+	///   - direction: The direction of the line
+	///   - length: The length of the line
+	public init(origin: Vector, direction: Angle, length: Double) {
+		let dir = Vector(angle: direction)
+		self.init(
+			origin.x,
+			origin.y,
+			origin.x + dir.x * length,
+			origin.y + dir.y * length
+		)
+	}
+
     /// Determine whether a point is on the line
     ///
     /// From https://gamedev.stackexchange.com/a/57746
     ///
     /// - Parameter point: Whether the point is on the line
     public func contains(_ point: Vector) -> Bool {
-        return start + (end - start) * (start.distance(to: point)) / end.distance(to: start) == point
+		start.cross(point).sign() == point.cross(end).sign()
     }
     
     /// Calculate the vector normal of the line
@@ -102,6 +132,26 @@ public struct Line: Shape, Drawable {
 //        )
 
 //    }
+
+	/// Calculate the intersection point of a ray and a plane defined by the Line
+	/// - Parameters:
+	///   - origin: Origin of the ray
+	///   - dir: Direction of the ray
+	/// - Returns: The point of intersection, if the ray intersections the plane
+	public func rayPlaneIntersection(origin: Vector, dir: Vector) -> Vector? {
+		let denom = normal().dot(dir)
+
+		let p0 = center - origin
+		let t = p0.dot(normal()) / denom
+
+		guard t >= 0 else { return nil }
+		let pHit = origin + (dir * t)
+
+		guard self.contains(pHit) else { return nil }
+
+		// FIXME: A point is returned when ray is parallel to line
+		return pHit
+	}
 }
 
 extension Line: SVGDrawable {

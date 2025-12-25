@@ -60,21 +60,127 @@ public struct Rectangle: Polygon {
     /// ```
     /// - Returns: An array of Vectors making up the polygon.
     public func makePolygon() -> [Vector] {
-        let transMatrix = MatrixTransformation.translate(vector: origin)
-        let rotMatrix = MatrixTransformation.rotate(by: rotation)
-        let compoundMatrix = transMatrix * rotMatrix
-        
         // Center rectangle
-        return [
+        [
             Vector(-width / 2, -height / 2, transformation: compoundMatrix),
             Vector( width / 2, -height / 2, transformation: compoundMatrix),
             Vector( width / 2,  height / 2, transformation: compoundMatrix),
             Vector(-width / 2,  height / 2, transformation: compoundMatrix)
         ]
-
-
     }
+}
 
+extension Rectangle {
+	/// Returns the point on the rectangle where the specified angle originating from the center intersects
+	/// - Parameter theta: Angle in radians
+	public func point(at angle: Angle) -> Vector {
+		let angleVector = Vector(angle: angle)
+
+		if let inter = topEdge.rayPlaneIntersection(origin: origin, dir: angleVector) {
+			return inter
+		} else if let inter = rightEdge.rayPlaneIntersection(origin: origin, dir: angleVector) {
+			return inter
+		} else if let inter = bottomEdge.rayPlaneIntersection(origin: origin, dir: angleVector) {
+			return inter
+		} else if let inter = leftEdge.rayPlaneIntersection(origin: origin, dir: angleVector) {
+			return inter
+		} else {
+			fatalError("Invalid origin in Rectangle.")
+		}
+	}
+
+	public func angle(ofPoint point: Vector) -> Angle {
+		let hypot = sqrt(width.squared() + height.squared())
+		let circle = Circle(center: origin, radius: hypot)
+
+		return circle.angle(ofPoint: point)
+	}
+}
+
+extension Rectangle {
+
+	var compoundMatrix: double3x3 {
+		let transMatrix = MatrixTransformation.translate(vector: origin)
+		let rotMatrix = MatrixTransformation.rotate(by: rotation)
+
+		return transMatrix * rotMatrix
+	}
+
+	/// A `Line` representing the top edge
+	public var topEdge: Line {
+		Line(start: topLeft, end: topRight)
+	}
+
+	/// A `Line` representing the bottom edge
+	public var bottomEdge: Line {
+		Line(start: bottomLeft, end: bottomRight)
+	}
+
+	/// A `Line` representing the left edge
+	public var leftEdge: Line {
+		Line(start: topLeft, end: bottomLeft)
+	}
+
+	/// A `Line` representing the right edge
+	public var rightEdge: Line {
+		Line(start: topRight, end: bottomRight)
+	}
+
+	/// Calculates the top-left point of the rectangle by applying a matrix transformation.
+	///
+	/// The points start in the top left and proceed clockwise:
+	/// ```
+	/// +--------+
+	/// |0      1|
+	/// |        |
+	/// |3      2|
+	/// +--------+
+	/// ```
+	public var topLeft: Vector {
+		Vector(-width / 2, -height / 2, transformation: compoundMatrix)
+	}
+
+	/// Calculates the top-right point of the rectangle by applying a matrix transformation.
+	///
+	/// The points start in the top left and proceed clockwise:
+	/// ```
+	/// +--------+
+	/// |0      1|
+	/// |        |
+	/// |3      2|
+	/// +--------+
+	/// ```
+	public var topRight: Vector {
+		Vector( width / 2, -height / 2, transformation: compoundMatrix)
+	}
+
+	/// Calculates the bottom-left point of the rectangle by applying a matrix transformation.
+	///
+	/// The points start in the top left and proceed clockwise:
+	/// ```
+	/// +--------+
+	/// |0      1|
+	/// |        |
+	/// |3      2|
+	/// +--------+
+	/// ```
+	public var bottomLeft: Vector {
+		Vector(-width / 2,  height / 2, transformation: compoundMatrix)
+	}
+
+	/// Calculates the bottom-right point of the rectangle by applying a matrix transformation.
+	///
+	/// The points start in the top left and proceed clockwise:
+	/// ```
+	/// +--------+
+	/// |0      1|
+	/// |        |
+	/// |3      2|
+	/// +--------+
+	/// ```
+	public var bottomRight: Vector {
+		Vector( width / 2,  height / 2, transformation: compoundMatrix)
+	}
 }
 
 extension Rectangle: SVGDrawable {
