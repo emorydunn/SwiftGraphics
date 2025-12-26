@@ -8,14 +8,14 @@
 import Foundation
 import SwiftGraphics2
 
-struct RayTracingGroup: Drawable, SVGDrawable {
+public struct RayTracingGroup: Drawable, SVGDrawable {
 
 	public let emitters: [Emitter]
 	public let shapes: [RayDrawable]
 
 	public let drawShapes: Bool
 
-	init(drawShapes: Bool = true, @RenderBuilder body: () -> [RayDrawable], @EmitterBuilder emitters: () -> [Emitter]) {
+	public init(drawShapes: Bool = true, @RenderBuilder body: () -> [RayDrawable], @EmitterBuilder emitters: () -> [Emitter]) {
 		self.drawShapes = drawShapes
 		self.shapes = body()
 		self.emitters = emitters()
@@ -51,6 +51,3 @@ struct RayTracingGroup: Drawable, SVGDrawable {
 
 }
 
-extension RayTracingGroup {
-
-}
