@@ -19,7 +19,11 @@ public struct Path: Equatable, Shape, Drawable {
     mutating func addPoint(_ point: Vector) {
         points.append(point)
     }
-    
+
+	mutating func removeAll() {
+		self.points = []
+	}
+
     /// The combined length of each line segment
     public var length: Double {
         points.paired().reduce(into: 0) { partialResult, vectors in
