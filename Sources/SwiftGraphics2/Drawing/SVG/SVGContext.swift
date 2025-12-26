@@ -40,7 +40,6 @@ public class SVGContext: DrawingContext {
         svg.addAttribute("http://www.inkscape.org/namespaces/inkscape", forKey: "xmlns:inkscape")
 
         addBlendMode()
-
     }
     
     public init(width: Int, height: Int, debug: Bool = false, @SVGContext shapes: () -> [SVGDrawable] = { [] }) {
