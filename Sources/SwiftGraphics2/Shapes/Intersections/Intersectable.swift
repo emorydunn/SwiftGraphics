@@ -15,18 +15,3 @@ public protocol Intersectable: Shape {
 	func intersections(with otherShape: Intersectable) -> [Vector]
 }
 
-extension Intersectable where Self: Polygon {
-	/// Return an array of points at the specified angular distance apart
-	/// - Parameter angle: Angle in degrees
-	public func pointsDistributed(every angle: Angle,
-								  starting: Angle = .degrees(0),
-								  ending: Angle = .degrees(360)) -> [Vector] {
-
-//		stride(from: starting, to: ending, by: angle).map { angle in
-//			point(at: angle.toRadians())
-//		}
-		// TODO: Fix this
-		[]
-
-	}
-}

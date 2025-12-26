@@ -10,7 +10,7 @@ import simd
 //import Silica
 
 /// A rectangle defined by its center, width, and height.
-public struct Rectangle: Polygon {
+public struct Rectangle: Polygon, Drawable, Intersectable {
     
     /// The center of the rectangle
     public var origin: Vector
@@ -68,6 +68,26 @@ public struct Rectangle: Polygon {
             Vector(-width / 2,  height / 2, transformation: compoundMatrix)
         ]
     }
+
+	public func modifyRay(_ ray: Ray) {
+		ray.terminateRay()
+	}
+}
+
+extension Rectangle: RayTracable {
+	public func rayIntersection(_ ray: Ray) -> Vector? {
+		[
+			topEdge.rayPlaneIntersection(origin: ray.origin, dir: ray.direction),
+			rightEdge.rayPlaneIntersection(origin: ray.origin, dir: ray.direction),
+			bottomEdge.rayPlaneIntersection(origin: ray.origin, dir: ray.direction),
+			leftEdge.rayPlaneIntersection(origin: ray.origin, dir: ray.direction)
+		]
+			.compactMap { $0 }
+			.sorted { lhs, rhs in
+				lhs.distance(to: ray.origin) < rhs.distance(to: ray.origin)
+			}
+			.first
+	}
 }
 
 extension Rectangle {
@@ -196,7 +216,7 @@ extension Rectangle: SVGDrawable {
         element.addAttribute(height, forKey: "height")
         
         if rotation.degrees != 0 {
-            element.addAttribute("rotate(\(rotation.degrees),\(origin.x),\(origin.y))", forKey: "transform")
+			element.addAttribute("rotate(\(rotation.negated().degrees),\(origin.x),\(origin.y))", forKey: "transform")
         }
         
         element.strokeColor(Color.black)
@@ -229,3 +249,9 @@ extension Rectangle: SVGDrawable {
 //		context.restoreGState()
 //	}
 //}
+
+extension Rectangle: CustomStringConvertible {
+	public var description: String {
+		"Rect \(origin.x), \(origin.y) \(width) x \(height)"
+	}
+}

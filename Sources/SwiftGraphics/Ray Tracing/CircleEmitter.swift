@@ -9,7 +9,7 @@
 import Foundation
 
 /// A circle that emits rays radiating out from its perimeter
-public class CircleEmitter: Circle, Emitter {
+public class CircleEmitter: Circle, Emitter, RayTracable {
 
     /// Angle of the step between emitted rays
     ///

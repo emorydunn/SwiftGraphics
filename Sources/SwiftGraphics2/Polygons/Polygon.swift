@@ -10,17 +10,9 @@ import simd
 
 
 /// A figure defined by three or more points.
-public protocol Polygon: Shape {
+public protocol Polygon: ClosedShape {
     
     var points: [Vector] { get }
-    
-    var boundingBox: Rectangle { get }
-    
-    func contains(point: Vector) -> Bool
-
-	/// The angle of a point relative to the center
-	/// - Parameter point: The point to to determine the angle between.
-	func angle(ofPoint point: Vector) -> Angle
 }
 
 public extension Polygon {

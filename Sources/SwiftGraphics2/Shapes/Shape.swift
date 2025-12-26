@@ -8,13 +8,14 @@
 import Foundation
 
 public protocol Shape {
-    
-    func pointOnPerimeter(_ t: Double) -> Vector
-    
-    func sampled(every interval: Double) -> Path
-    func sampled(every interval: Double) -> [Vector]
-    func randomSample(every interval: Double, threshold: Double) -> [Path]
-    func randomSample(every interval: Double, threshold: (Double, Double) -> Bool) -> [Path] 
+
+	func pointOnPerimeter(_ t: Double) -> Vector
+
+	func sampled(every interval: Double) -> Path
+	func sampled(every interval: Double) -> [Vector]
+	func randomSample(every interval: Double, threshold: Double) -> [Path]
+	func randomSample(every interval: Double, threshold: (Double, Double) -> Bool) -> [Path]
+
 }
 
 extension Shape {

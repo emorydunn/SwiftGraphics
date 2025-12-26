@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct Circle: Shape, Drawable {
+public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
+
     /// Radius of the circle
     public var radius: Double
 
