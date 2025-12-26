@@ -139,15 +139,17 @@ public struct Line: Shape, Drawable {
 	///   - dir: Direction of the ray
 	/// - Returns: The point of intersection, if the ray intersections the plane
 	public func rayPlaneIntersection(origin: Vector, dir: Vector) -> Vector? {
-		let denom = normal().dot(dir)
+		let norm = normal()
+		let denom = norm.dot(dir)
 
 		let p0 = center - origin
-		let t = p0.dot(normal()) / denom
+		let t = p0.dot(norm) / denom
 
 		guard t >= 0 else { return nil }
 		let pHit = origin + (dir * t)
 
-		guard self.contains(pHit) else { return nil }
+		// TODO: This isn't a real solution
+		guard self.contains(pHit.rounded()) else { return nil }
 
 		// FIXME: A point is returned when ray is parallel to line
 		return pHit
