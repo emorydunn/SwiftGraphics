@@ -76,6 +76,7 @@ public struct ShapeEmitter: Emitter {
 				origin: origin,
 				direction: Vector(angle: angle)
 			)
+
 			ray.run(objects: objects)
 			return ray
 		}
@@ -90,7 +91,12 @@ extension ShapeEmitter: SVGDrawable {
 		element.addChild(emitterSource.svgElement())
 
 		for ray in rays {
-			element.addChild(ray.path.svgElement())
+			switch style {
+			case .line:
+				element.addChild(ray.path.svgElement())
+			case .point:
+				element.addChild(ray.path.points.last?.svgElement())
+			}
 		}
 
 		return element

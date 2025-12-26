@@ -19,13 +19,15 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 
 	public var shape: Emitter
 
-	public var style: RayTraceStyle
+	public var style: RayTraceStyle {
+		get { shape.style }
+		set { shape.style = newValue }
+	}
 
 	init(strokeColor: Color? = nil, fillColor: Color? = nil, strokeWidth: Double? = nil, style: RayTraceStyle = .line, shape: Emitter) {
 		self.strokeColor = strokeColor
 		self.fillColor = fillColor
 		self.strokeWidth = strokeWidth
-		self.style = style
 		self.shape = shape
 	}
 
@@ -56,7 +58,6 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 			child.fillColor(fillColor)
 		}
 
-//		print(element!.xmlString)
 		return element
 	}
 
