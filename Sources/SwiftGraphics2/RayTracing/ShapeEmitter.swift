@@ -9,24 +9,15 @@
 import Foundation
 
 /// A circle that emits rays radiating out from its perimeter
-public struct CircleEmitter: Emitter {
+public struct ShapeEmitter: Emitter {
 
-	let circle: Circle
+	public typealias Source = ClosedShape & RayTracable & SVGDrawable
+
+	let emitterSource: Source
 
 	let startAngle: Angle
 	let endAngle: Angle
 	let stepAngle: Angle
-
-	/// Angle of the step between emitted rays
-	///
-	/// The value is clamped to a minimum of `0`
-	public var rayStep: Int {
-		didSet {
-			if rayStep < 1 {
-				rayStep = 1
-			}
-		}
-	}
 
 	/// Visual style for the emitter's rays
 	public var style: RayTraceStyle = .line
@@ -40,9 +31,8 @@ public struct CircleEmitter: Emitter {
 	///   - y: Center Y coordinate
 	///   - radius: Radius of the emitter
 	///   - rayStep: Angle between emitted rays
-	public init(x: Double, y: Double, radius: Double, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle, rayStep: Int) {
-		self.rayStep = rayStep
-		self.circle = Circle(x: x, y: y, radius: radius)
+	public init(x: Double, y: Double, radius: Double, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle) {
+		self.emitterSource = Circle(x: x, y: y, radius: radius)
 		self.startAngle = startAngle
 		self.endAngle = endAngle
 		self.stepAngle = stepAngle
@@ -54,9 +44,21 @@ public struct CircleEmitter: Emitter {
 	///   - y: Center Y coordinate
 	///   - radius: Radius of the emitter
 	///   - rayStep: Angle between emitted rays
-	public init(center: Vector, radius: Double, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle,  rayStep: Int) {
-		self.rayStep = rayStep
-		self.circle = Circle(center: center, radius: radius)
+	public init(center: Vector, radius: Double, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle) {
+		self.emitterSource = Circle(center: center, radius: radius)
+		self.startAngle = startAngle
+		self.endAngle = endAngle
+		self.stepAngle = stepAngle
+	}
+
+	/// Instantiate a new emitter at the specified coordinates
+	/// - Parameters:
+	///   - x: Center X coordinate
+	///   - y: Center Y coordinate
+	///   - radius: Radius of the emitter
+	///   - rayStep: Angle between emitted rays
+	public init(_ shape: Source, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle) {
+		self.emitterSource = shape
 		self.startAngle = startAngle
 		self.endAngle = endAngle
 		self.stepAngle = stepAngle
@@ -68,17 +70,8 @@ public struct CircleEmitter: Emitter {
 	/// Any previous rays will be overwritten.
 	/// - Parameter objects: The objects with which the rays will interact
 	public mutating func run(objects: [RayTracable]) {
-
-		// Nothing to do if there are no rays
-		guard rayStep > 0 else { return }
-
-//		let stepAngle = Angle(degrees: 360 / Double(rayStep))
-
 		self.rays = stride(from: startAngle, to: endAngle, by: stepAngle).map { angle in
-			let origin = circle.point(at: angle)
-
-			print(angle, origin)
-
+			let origin = emitterSource.point(at: angle)
 			let ray = Ray(
 				origin: origin,
 				direction: Vector(angle: angle)
@@ -90,11 +83,11 @@ public struct CircleEmitter: Emitter {
 
 }
 
-extension CircleEmitter: SVGDrawable {
+extension ShapeEmitter: SVGDrawable {
 	public func svgElement() -> XMLElement? {
 		let element = XMLElement(name: "g")
 
-		element.addChild(circle.svgElement())
+		element.addChild(emitterSource.svgElement())
 
 		for ray in rays {
 			element.addChild(ray.path.svgElement())
@@ -104,8 +97,8 @@ extension CircleEmitter: SVGDrawable {
 	}
 }
 
-extension CircleEmitter: RayTracable {
+extension ShapeEmitter: RayTracable {
 	public func rayIntersection(_ ray: Ray) -> Vector? {
-		circle.rayIntersection(ray)
+		emitterSource.rayIntersection(ray)
 	}
 }
