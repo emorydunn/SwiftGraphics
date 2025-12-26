@@ -79,7 +79,7 @@ extension ClosedShape where Self: Intersectable {
 
 			let (start, end) = arg1
 
-			let halfPoint = self.point(at: .radians((end + start).radians / 2))
+			let halfPoint = self.point(at: (end + start) / 2)
 			let inOtherShape = shapes.map { $0.contains(point: halfPoint) }
 
 			switch operation {

@@ -69,9 +69,21 @@ public extension Angle {
 	}
 
 	/// Add two angles together.
+	/// - Returns: The sum of the two angles.
+	static func += (lhs: inout Angle, rhs: Angle) {
+		lhs = lhs + rhs
+	}
+
+	/// Add two angles together.
 	/// - Returns: The difference of the two angles.
 	static func - (lhs: Angle, rhs: Angle) -> Angle {
 		Angle(degrees: lhs.degrees - rhs.degrees)
+	}
+
+	/// Add two angles together.
+	/// - Returns: The sum of the two angles.
+	static func -= (lhs: inout Angle, rhs: Angle) {
+		lhs = lhs - rhs
 	}
 
 	public static func * (lhs: Angle, rhs: Angle) -> Angle {
@@ -79,8 +91,18 @@ public extension Angle {
 	}
 
 	public static func *= (lhs: inout Angle, rhs: Angle) {
-		lhs = Angle(degrees: lhs.degrees * rhs.degrees)
+		lhs = lhs * rhs
 	}
+
+	public static func / (lhs: Angle, rhs: Angle) -> Angle {
+		Angle(degrees: lhs.degrees / rhs.degrees)
+	}
+
+	public static func /= (lhs: inout Angle, rhs: Angle) {
+		lhs = lhs / rhs
+	}
+
+
 }
 
 public extension Angle {
