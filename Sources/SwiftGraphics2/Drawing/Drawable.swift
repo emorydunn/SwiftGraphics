@@ -37,12 +37,12 @@ public struct GroupDrawable: Drawable, SVGDrawable {
     public func svgElement() -> XMLElement? {
         // Break single element groups
         guard shapes.count > 1 else {
-            return (shapes[0] as? SVGDrawable)?.svgElement()
+			return shapes.first?.svgElement()
         }
         
         let element = XMLElement(name: "g")
-        element.setChildren(shapes.compactMap { ($0 as? SVGDrawable)?.svgElement() })
-        
+		element.setChildren(shapes.compactMap { $0.svgElement() })
+
         return element
     }
 
