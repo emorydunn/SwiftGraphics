@@ -229,8 +229,15 @@ public extension Vector {
         
         // Restore the point
         self += point
-
     }
+
+	mutating func round(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) {
+		simdVector.round(rule)
+	}
+
+	func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Vector {
+		Vector(simdVector.rounded(rule))
+	}
 }
 
 extension Vector {
