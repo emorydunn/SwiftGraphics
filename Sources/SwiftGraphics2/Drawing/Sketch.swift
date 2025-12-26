@@ -78,8 +78,8 @@ public struct SketchBuilder {
         GroupDrawable(content)
     }
     
-    public static func buildBlock<Content: Drawable>(_ content: Content...) -> [Content] {
-        content
+    public static func buildBlock<Content: Drawable>(_ content: Content...) -> GroupDrawable {
+		GroupDrawable(content)
     }
     
     public static func buildArray(_ content: [Drawable]) -> GroupDrawable {
