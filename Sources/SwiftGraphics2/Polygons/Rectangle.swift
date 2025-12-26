@@ -68,10 +68,6 @@ public struct Rectangle: Polygon, Drawable, Intersectable {
             Vector(-width / 2,  height / 2, transformation: compoundMatrix)
         ]
     }
-
-	public func modifyRay(_ ray: Ray) {
-		ray.terminateRay()
-	}
 }
 
 extension Rectangle: RayTracable {

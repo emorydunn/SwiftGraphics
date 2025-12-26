@@ -96,14 +96,6 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 		) * radius + center
 		let pointD = Vector(cos(start.radians + size.radians), sin(start.radians + size.radians), 0) * radius + center
 
-//		let points = [
-//			BezierPath.Point(point: pointD,
-//							 control1: pointB,
-//							 control2: pointC)
-//		]
-
-		print(pointA, pointB, pointC, pointD)
-
 		return BezierPath(pointA, pointB, pointC, pointD)
 	}
 
@@ -139,10 +131,6 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 		}
 
 		return ray.origin + ray.direction * tValue
-	}
-
-	public func modifyRay(_ ray: Ray) {
-		deflectRay(ray)
 	}
 }
 

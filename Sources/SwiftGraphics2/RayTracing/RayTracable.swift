@@ -85,10 +85,52 @@ public extension RayTracable where Self: ClosedShape {
     func criticalAngle(refraction: Double, extIndex: Double) -> Angle {
 		return Angle.radians(asin(extIndex / refraction))
     }
-    
-    /// Modify the path of a ray by deflecting the ray through the object.
-    /// - Parameter ray: The ray to modify
-    func modifyRay(_ ray: Ray) {
-        deflectRay(ray)
-    }
+}
+
+struct Material: RayDrawable {
+	let shape: RayTracable & ClosedShape
+
+	var refraction: Double
+	var extIndex: Double
+
+
+	func rayIntersection(_ ray: Ray) -> Vector? {
+		shape.rayIntersection(ray)
+	}
+
+	func modifyRay(_ ray: Ray) {
+		let interface = shape.interface(of: ray.origin)
+		ray.direction = shape.deflectionAngle(for: ray.direction,
+											  at: interface,
+											  refraction: refraction,
+											  extIndex: extIndex)
+	}
+
+}
+
+extension ClosedShape where Self: RayTracable {
+	public func material(refraction: Double, extIndex: Double) -> some RayDrawable {
+		if var styled = self as? Material {
+			styled.refraction = refraction
+			styled.extIndex = extIndex
+			return styled
+		}
+
+		return Material(shape: self, refraction: refraction, extIndex: extIndex)
+	}
+}
+
+public enum RefractiveIndex {
+	public static let vacuum: Double = 1
+	public static let air: Double = 1.000293
+
+	public static let water: Double = 1.333
+	public static let oliveOil: Double = 1.47
+
+	public static let ice: Double = 1.31
+	public static let quartz: Double = 1.46
+	public static let windowGlass: Double = 1.52
+	public static let sapphire: Double = 1.77
+	public static let diamond: Double = 2.417
+
 }
