@@ -163,4 +163,10 @@ extension Array where Element == Vector {
     }
 }
 
-extension Array: Drawable where Element: Drawable { }
+extension Array where Element == Bool {
+	/// Returns a boolean indicating whether all elements of the array are `true`
+	public func allTrue() -> Bool { allSatisfy { $0 } }
+
+	/// Returns a boolean indicating whether all elements of the array are `false`
+	public func allFalse() -> Bool { allSatisfy { !$0 } }
+}
