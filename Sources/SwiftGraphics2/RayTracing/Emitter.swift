@@ -20,10 +20,6 @@ public protocol Emitter: Drawable {
     /// - Parameter objects: The objects with which the rays will interact
     mutating func run(objects: [RayTracable])
 
-//    /// Draw the paths taken by the emitter's rays.
-//    ///
-//    /// This method does not perform any ray tracing.
-//	mutating func draw(in context: DrawingContext)
 }
 
 extension Emitter {
