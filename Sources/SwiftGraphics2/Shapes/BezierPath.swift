@@ -113,7 +113,8 @@ extension BezierPath: SVGDrawable {
     /// Create an `XMLElement` for the Path in its drawing style
     public func svgElement() -> XMLElement? {
         let element = XMLElement(name: "path")
-        
+		print("Adding curve to SVG")
+
         // For large paths, sample
         guard controlPoints.count <= 4 else {
             return sampled()
@@ -126,7 +127,7 @@ extension BezierPath: SVGDrawable {
 
         let lines = controlPoints
             .dropFirst()
-            .map{ "\($0.x),\($0.y)" }
+            .map { "\($0.x),\($0.y)" }
             .joined(separator: " ")
         
         // Three point curves need to be treated as quadratic curves,
@@ -155,4 +156,10 @@ extension BezierPath: SVGDrawable {
         
         return element
     }
+}
+
+extension BezierPath: CustomStringConvertible {
+	public var description: String {
+		"Bezier \(controlPoints[0])"
+	}
 }

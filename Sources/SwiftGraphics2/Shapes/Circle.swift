@@ -59,6 +59,91 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
     public var boundingBox: Rectangle {
         Rectangle(center: center, width: diameter, height: diameter)
     }
+
+	/// Generate a cubic Bézier representing an arc around a circle.
+	///
+	/// Adapted from [Joe Cridge](https://www.joecridge.me/bezier.pdf)
+	/// - Note: Bézier approximations of circles only work up to ~90º
+	/// - Parameters:
+	///   - start: Starting angle of the arc, in radians
+	///   - size: Size of the arc, in radians
+	///   - circle: Circle to make the arc on
+	public func acuteArc(start: Angle, size: Angle) -> BezierPath {
+
+		let alpha = size.radians / 2
+		let cosAlpha = cos(alpha)
+		let sinAlpha = sin(alpha)
+		let cotAlpha = 1 / tan(alpha)
+
+		let phi = start.radians + alpha  // This is how far the arc needs to be rotated.
+		let cosPhi = cos(phi)
+		let sinPhi = sin(phi)
+
+		let lambda = (4 - cosAlpha) / 3
+		
+		let mu = sinAlpha + (cosAlpha - lambda) * cotAlpha
+
+		let pointA = Vector(cos(start.radians), sin(start.radians), 0) * radius + center
+		let pointB = Vector(
+			lambda * cosPhi + mu * sinPhi,
+			lambda * sinPhi - mu * cosPhi,
+			0
+		) * radius + center
+		let pointC = Vector(
+			lambda * cosPhi - mu * sinPhi,
+			lambda * sinPhi + mu * cosPhi,
+			0
+		) * radius + center
+		let pointD = Vector(cos(start.radians + size.radians), sin(start.radians + size.radians), 0) * radius + center
+
+//		let points = [
+//			BezierPath.Point(point: pointD,
+//							 control1: pointB,
+//							 control2: pointC)
+//		]
+
+		print(pointA, pointB, pointC, pointD)
+
+		return BezierPath(pointA, pointB, pointC, pointD)
+	}
+
+	/// Determine whether the specified point is inside the circle
+	///
+	/// This method compares the distance between the center and point to the radius of the circle.
+	/// - Parameter point: A Boolean indicating whether the point is contained by the circle
+	public func contains(point: Vector) -> Bool {
+		let unitPoint = point - center
+		return sqrt(unitPoint.x.squared() + unitPoint.y.squared()) < radius
+	}
+
+	public func rayIntersection(_ ray: Ray) -> Vector? {
+		let originDiffs = ray.origin - center
+
+		let a = ray.direction.magSq()
+		let b = 2 * ray.direction.dot(originDiffs)
+		let c = originDiffs.magSq() - radius.squared()
+
+		let discr = b.squared() - 4 * a * c
+
+		guard discr > 0 else { return nil }
+
+		let g = 1 / (2 * a)
+		let determ = g * sqrt(discr)
+		let newB = -b * g
+
+		let t0 = newB + determ
+		let t1 = newB - determ
+
+		guard let tValue = [t0, t1].filter({ $0 > 0 && $0.rounded() != 0}).sorted().first else {
+			return nil
+		}
+
+		return ray.origin + ray.direction * tValue
+	}
+
+	public func modifyRay(_ ray: Ray) {
+		deflectRay(ray)
+	}
 }
 
 extension Circle: SVGDrawable {
