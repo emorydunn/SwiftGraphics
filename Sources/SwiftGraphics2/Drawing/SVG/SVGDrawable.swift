@@ -26,7 +26,7 @@ extension SVGDrawable {
 extension Drawable {
 	/// Draw the receiver in the specified context
 	/// - Parameter context: Context in which to draw
-	func svgElement() -> XMLElement? {
+	public func svgElement() -> XMLElement? {
 		if let drawable = self as? SVGDrawable {
 			return drawable.svgElement()
 		}
@@ -35,7 +35,7 @@ extension Drawable {
 
 	/// Draw a representation of the receiver meant for debugging the shape in the specified context
 	/// - Parameter context: Context in which to draw
-	func debugSVG() -> XMLElement? {
+	public func debugSVG() -> XMLElement? {
 		if let drawable = self as? SVGDrawable {
 			return drawable.debugSVG()
 		}
