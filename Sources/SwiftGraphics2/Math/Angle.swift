@@ -52,11 +52,11 @@ public struct Angle {
 
 extension Angle: Comparable, Equatable {
 	public static func == (lhs: Self, rhs: Self) -> Bool {
-		lhs.radians == rhs.radians
+		lhs.degrees == rhs.degrees
 	}
 
 	public static func < (lhs: Self, rhs: Self) -> Bool {
-		lhs.radians < rhs.radians
+		lhs.degrees < rhs.degrees
 	}
 }
 

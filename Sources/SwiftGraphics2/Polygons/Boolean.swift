@@ -45,9 +45,6 @@ extension ClosedShape where Self: Intersectable {
 	/// - Returns: An array of the resulting paths
 	public func booleanOperation(_ shapes: [Intersectable & ClosedShape], _ operation: BooleanOperation = .add) -> [BezierPath] {
 
-//		var shapes = shapes
-//		shapes.removeAll { $0 == self }
-
 		var intersections = shapes.reduce(into: [Vector]()) { (result, poly) in
 			result.append(contentsOf: self.intersections(with: poly))
 		}
@@ -65,6 +62,7 @@ extension ClosedShape where Self: Intersectable {
 		var angles: [Angle] = intersections.map {
 			angle(ofPoint: $0)
 		}
+
 		angles.sort()
 
 		if let firstAngle = angles.first, let lastAngle = angles.last {
