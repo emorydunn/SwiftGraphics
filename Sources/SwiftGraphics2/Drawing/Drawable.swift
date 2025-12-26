@@ -55,5 +55,17 @@ public struct GroupDrawable: Drawable, SVGDrawable {
 }
 
 public struct EmptyDrawable: Drawable {
-    public init() { }
+	public init() { }
+}
+
+extension EmptyDrawable: RayTracable {
+	public func rayIntersection(_ ray: Ray) -> Vector? { nil }
+
+	public func intersections(with otherShape: any Intersectable) -> [Vector] {
+		[]
+	}
+
+	public func pointOnPerimeter(_ t: Double) -> Vector {
+		Vector(0, 0)
+	}
 }
