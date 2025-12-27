@@ -124,10 +124,16 @@ public struct Size: Hashable, Equatable, Codable {
 
 	public var marginWidth: Double { width - margin * 2 }
 	public var marginHeight: Double { height - margin * 2 }
-    
-    public var boundingBox: Rectangle {
-        Rectangle(center: center,
-                  width: width - margin * 2,
-                  height: height - margin * 2)
-    }
+	
+	public var margins: Rectangle {
+		Rectangle(center: center,
+				  width: width - margin * 2,
+				  height: height - margin * 2)
+	}
+
+	public var boundingBox: Rectangle {
+		Rectangle(center: center,
+				  width: width,
+				  height: height)
+	}
 }
