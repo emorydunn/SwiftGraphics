@@ -44,6 +44,19 @@ public struct ShapeEmitter: Emitter {
 	///   - y: Center Y coordinate
 	///   - radius: Radius of the emitter
 	///   - rayStep: Angle between emitted rays
+	public init(x: Double, y: Double, radius: Double, direction: Angle, spread: Angle, stepAngle: Angle) {
+		self.emitterSource = Circle(x: x, y: y, radius: radius)
+		self.startAngle = direction - spread / 2
+		self.endAngle = direction + spread / 2
+		self.stepAngle = stepAngle
+	}
+
+	/// Instantiate a new emitter at the specified coordinates
+	/// - Parameters:
+	///   - x: Center X coordinate
+	///   - y: Center Y coordinate
+	///   - radius: Radius of the emitter
+	///   - rayStep: Angle between emitted rays
 	public init(center: Vector, radius: Double, startAngle: Angle = 0, endAngle: Angle = 360, stepAngle: Angle) {
 		self.emitterSource = Circle(center: center, radius: radius)
 		self.startAngle = startAngle
@@ -64,6 +77,19 @@ public struct ShapeEmitter: Emitter {
 		self.stepAngle = stepAngle
 	}
 
+	/// Instantiate a new emitter at the specified coordinates
+	/// - Parameters:
+	///   - x: Center X coordinate
+	///   - y: Center Y coordinate
+	///   - radius: Radius of the emitter
+	///   - rayStep: Angle between emitted rays
+	public init(_ shape: Source, direction: Angle, spread: Angle, stepAngle: Angle) {
+		self.emitterSource = shape
+		self.startAngle = direction - spread / 2
+		self.endAngle = direction + spread / 2
+		self.stepAngle = stepAngle
+	}
+
 	/// Process the ray casting operations for this emitter.
 	///
 	/// This method calculates the paths of the emitter's rays, but does not draw them.
@@ -81,7 +107,6 @@ public struct ShapeEmitter: Emitter {
 			return ray
 		}
 	}
-
 }
 
 extension ShapeEmitter: SVGDrawable {
@@ -106,5 +131,9 @@ extension ShapeEmitter: SVGDrawable {
 extension ShapeEmitter: RayTracable {
 	public func rayIntersection(_ ray: Ray) -> Vector? {
 		emitterSource.rayIntersection(ray)
+	}
+
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		emitterSource.rayIntersectionDistance(ray)
 	}
 }

@@ -31,13 +31,11 @@ public struct RayTracingGroup: Drawable, SVGDrawable {
 
 		// Process emitters
 		for var emitter in emitters {
-			print("Running \(emitter)")
 			emitter.run(objects: shapes)
 
 			if let svg = emitter.svgElement() {
 				element.addChild(svg)
 			}
-
 		}
 
 		if drawShapes {

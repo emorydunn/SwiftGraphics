@@ -34,7 +34,6 @@ extension Emitter {
     /// Draw the specified array of lines using the emitter's style
     /// - Parameter intersections: Lines to draw
     func drawIntersections(_ intersections: [Line], in context: any DrawingContext) {
-
         intersections.forEach {
             drawLine($0, in: context)
         }
@@ -43,7 +42,6 @@ extension Emitter {
     /// Draw the specified line using the emitter's style
     /// - Parameter line: Line to draw
 	func drawLine(_ line: Line, in context: any DrawingContext) {
-
         switch style {
         case .line:
             line.draw(in: context)
