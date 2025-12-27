@@ -109,6 +109,12 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 	}
 
 	public func rayIntersection(_ ray: Ray) -> Vector? {
+		guard let distance = rayIntersectionDistance(ray) else { return nil }
+
+		return ray.origin + ray.direction * distance
+	}
+
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
 		let originDiffs = ray.origin - center
 
 		let a = ray.direction.magSq()
@@ -130,7 +136,7 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 			return nil
 		}
 
-		return ray.origin + ray.direction * tValue
+		return tValue
 	}
 }
 

@@ -139,6 +139,10 @@ public struct Line: Shape, Drawable {
 	///   - dir: Direction of the ray
 	/// - Returns: The point of intersection, if the ray intersections the plane
 	public func rayPlaneIntersection(origin: Vector, dir: Vector) -> Vector? {
+		guard let distance = distanceToIntersection(origin: origin, dir: dir.normalized()) else {
+			return nil
+		}
+		
 		let norm = normal()
 		let denom = norm.dot(dir)
 
@@ -148,11 +152,40 @@ public struct Line: Shape, Drawable {
 		guard t >= 0 else { return nil }
 		let pHit = origin + (dir * t)
 
-		// TODO: This isn't a real solution
-		guard self.contains(pHit.rounded()) else { return nil }
-
-		// FIXME: A point is returned when ray is parallel to line
 		return pHit
+	}
+
+	/// Calculate the distance from a ray to the intersection with the line.
+	///
+	/// Adapted from https://stackoverflow.com/a/32146853.
+	public func distanceToIntersection(origin: Vector, dir: Vector) -> Double? {
+		let v1 = origin - start
+		let v2 = end - start
+		let v3 = Vector(-dir.y, dir.x, 0)
+
+		let dot = v2 * v3
+		guard abs(dot) > 0.000001 else {
+			return nil
+		}
+
+		let t1: Double = v2.crossProduct(v1) / dot
+		let t2 = (v1 * v3) / dot
+
+		if t1 >= 0 && (t2 >= 0 && t2 <= 1) {
+			return t1
+		}
+
+		return nil
+	}
+}
+
+extension Line: RayTracable {
+	public func rayIntersection(_ ray: Ray) -> Vector? {
+		rayPlaneIntersection(origin: ray.origin, dir: ray.direction)
+	}
+
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		distanceToIntersection(origin: ray.origin, dir: ray.direction)
 	}
 }
 

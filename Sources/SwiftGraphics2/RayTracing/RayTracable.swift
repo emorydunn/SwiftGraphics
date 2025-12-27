@@ -13,7 +13,9 @@ public protocol RayTracable {
     /// - Parameters:
     ///   - ray: The `Ray` to intersect
     func rayIntersection(_ ray: Ray) -> Vector?
-    
+
+	func rayIntersectionDistance(_ ray: Ray) -> Double?
+
     /// Modify the path of a ray.
     ///
     /// The default implementation of this method terminates the `Ray`.
@@ -29,6 +31,29 @@ public extension RayTracable {
     func modifyRay(_ ray: Ray) {
         ray.terminateRay()
     }
+
+	/// Calculate the angle of deflection using Snell's Law of Reflection
+	/// - Parameters:
+	///   - dir: The angle of intersection
+	///   - interface: The interface
+	///   - refraction: The refraction index of the material
+	///   - extIndex: The refraction index of the exterior material
+	/// - Returns: A `Vector` rotated by the angle of reflection
+	func deflectionAngle(for dir: Vector, at interface: Line, refraction: Double = 1.46, extIndex: Double = 1.0) -> Vector {
+
+		var dirCopy = dir
+
+		// Determine the angle from the normal
+		let thetaInc = dirCopy.angleBetween(interface.normal()).radians
+
+		// Snell's Law of reflection
+		let deflection = asin((extIndex * sin(thetaInc)) / refraction)
+
+		dirCopy.rotate(by: .radians(deflection))
+
+		return dirCopy
+
+	}
 }
 
 public extension RayTracable where Self: ClosedShape {
@@ -45,29 +70,6 @@ public extension RayTracable where Self: ClosedShape {
 		let tangentAngle = entryAngle + Angle.quarterCircle
 
         return Line(center: intersection, direction: tangentAngle, length: 50)
-    }
-    
-    /// Calculate the angle of deflection using Snell's Law of Reflection
-    /// - Parameters:
-    ///   - dir: The angle of intersection
-    ///   - interface: The interface
-    ///   - refraction: The refraction index of the material
-    ///   - extIndex: The refraction index of the exterior material
-    /// - Returns: A `Vector` rotated by the angle of reflection
-    func deflectionAngle(for dir: Vector, at interface: Line, refraction: Double = 1.46, extIndex: Double = 1.0) -> Vector {
-
-        var dirCopy = dir
-
-        // Determine the angle from the normal
-		let thetaInc = dirCopy.angleBetween(interface.normal()).radians
-
-        // Snell's Law of reflection
-        let deflection = asin((extIndex * sin(thetaInc)) / refraction)
-        
-		dirCopy.rotate(by: .radians(deflection))
-
-        return dirCopy
-        
     }
     
     /// Deflect a ray according to Snell's Law
@@ -98,6 +100,10 @@ struct Material: RayDrawable {
 		shape.rayIntersection(ray)
 	}
 
+	func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		shape.rayIntersectionDistance(ray)
+	}
+
 	func modifyRay(_ ray: Ray) {
 		let interface = shape.interface(of: ray.origin)
 		ray.direction = shape.deflectionAngle(for: ray.direction,
@@ -105,7 +111,38 @@ struct Material: RayDrawable {
 											  refraction: refraction,
 											  extIndex: extIndex)
 	}
+}
 
+public struct Fresnel: RayDrawable, CustomStringConvertible {
+	let shape: Line
+
+	public init(_ x1: Double, _ y1: Double, _ x2: Double, _ y2: Double) {
+		self.shape = Line(x1, y1, x2, y2)
+	}
+
+	public init(_ line: Line) {
+		self.shape = line
+	}
+
+	public func rayIntersection(_ ray: Ray) -> Vector? {
+		shape.rayIntersection(ray)
+	}
+
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		shape.rayIntersectionDistance(ray)
+	}
+
+	public func modifyRay(_ ray: Ray) {
+		if shape.normal().dot(ray.direction) < 0 {
+			ray.terminateRay()
+		} else {
+			ray.direction = shape.normal().normalized()
+		}
+	}
+
+	public var description: String {
+		"Fresnel at \(shape.center)"
+	}
 }
 
 extension ClosedShape where Self: RayTracable {

@@ -61,6 +61,10 @@ public struct EmptyDrawable: Drawable {
 extension EmptyDrawable: RayTracable {
 	public func rayIntersection(_ ray: Ray) -> Vector? { nil }
 
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		nil
+	}
+
 	public func intersections(with otherShape: any Intersectable) -> [Vector] {
 		[]
 	}

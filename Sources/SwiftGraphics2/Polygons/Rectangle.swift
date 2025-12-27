@@ -84,6 +84,20 @@ extension Rectangle: RayTracable {
 			}
 			.first
 	}
+
+	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
+		[
+			topEdge.distanceToIntersection(origin: ray.origin, dir: ray.direction),
+			rightEdge.distanceToIntersection(origin: ray.origin, dir: ray.direction),
+			bottomEdge.distanceToIntersection(origin: ray.origin, dir: ray.direction),
+			leftEdge.distanceToIntersection(origin: ray.origin, dir: ray.direction)
+		]
+			.compactMap { $0 }
+			.sorted { lhs, rhs in
+				lhs < rhs
+			}
+			.first
+	}
 }
 
 extension Rectangle {
