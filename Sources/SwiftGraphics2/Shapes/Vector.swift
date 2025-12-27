@@ -12,7 +12,11 @@ import simd
 /// A wrapper around a three-dimensional SIMD vector.
 public struct Vector {
     var simdVector: simd_double3
-    
+
+	var vector2d: simd_double2 {
+		simd_double2(x, y)
+	}
+
     public var x: Double {
         get { simdVector.x }
         set { simdVector.x = newValue }
@@ -143,19 +147,31 @@ public extension Vector {
     }
     
     /// Calculates and returns a vector composed of the cross product between two vectors
-    func cross2(_ vector: Vector) -> Vector {
+    func crossProduct(_ vector: Vector) -> Vector {
         let x = self.y * vector.z - self.z * vector.y
         let y = self.z * vector.x - self.x * vector.z
         let z = self.x * vector.y - self.y * vector.x
         
         return Vector(x, y, z)
     }
-    
+
+	/// Calculates and returns a vector composed of the cross product between two vectors
+	func crossProduct(_ vector: Vector) -> Double {
+		self.x * vector.y - self.y * vector.x
+	}
+
+
     /// Calculates the dot product of two vectors.
+	@available(*, deprecated, message: "Use * operator")
     func dot(_ vector: Vector) -> Double {
         simd_dot(simdVector, vector.simdVector)
     }
-    
+
+	/// Calculates the dot product of two vectors.
+	func dot2d(_ vector: Vector) -> Double {
+		(self.x * vector.x) + (self.y * vector.y)
+	}
+
     func sign() -> Vector {
         Vector(simd_sign(simdVector))
     }
@@ -209,7 +225,15 @@ public extension Vector {
         let newHeading = self.heading() + theta
         rotate(to: newHeading)
     }
-    
+
+	/// Rotate the receiver by the specified angle
+	/// - Parameter theta: Angle, in radians, to rotate
+	func rotated(by theta: Angle) -> Vector{
+		var copy = self
+		copy.rotate(by: theta)
+		return copy
+	}
+
     mutating func matrixRotate(by theta: Angle) {
         simdVector = simdVector * MatrixTransformation.rotate(by: theta)
     }
