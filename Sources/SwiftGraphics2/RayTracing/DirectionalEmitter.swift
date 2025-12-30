@@ -9,7 +9,7 @@
 import Foundation
 
 /// An emitter that casts a single ray at a given angle
-public struct DirectionalEmitter: Emitter {
+public struct DirectionalEmitter: Emitter, CustomStringConvertible {
 
 	/// The origin of the emitter
 	public var origin: Vector
@@ -30,6 +30,10 @@ public struct DirectionalEmitter: Emitter {
 	public init(_ origin: Vector, direction: Vector) {
 		self.origin = origin
 		self.direction = direction
+	}
+
+	public var description: String {
+		"Direction Emitter at \(origin) in \(direction.heading())"
 	}
 
 #if Vector3D
