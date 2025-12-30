@@ -72,5 +72,4 @@ public struct EmitterGroup: Emitter, CustomStringConvertible {
 			emitter.run(objects: objects, initialIndex: initialIndex)
 		}
 	}
-
 }
