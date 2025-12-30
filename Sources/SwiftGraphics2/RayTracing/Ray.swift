@@ -20,6 +20,10 @@ public class Ray {
 	/// The path the ray has taken
 	public var path: Path
 
+	public var materialIndex: Double = 1.333
+
+	public var previousIndex: Double = 1
+
 	/// Whether or no the ray is terminated
 	///
 	/// If this value is true no more tracing will be done
