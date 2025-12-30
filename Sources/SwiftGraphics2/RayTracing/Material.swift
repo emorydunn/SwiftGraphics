@@ -43,45 +43,15 @@ struct Material: RayDrawable {
 		}
 
 		print("Ray is moving from \(index1) to \(index2) at \(ray.direction.heading())")
-		print(shape.interface(of: ray.origin).normal().heading())
+		let newDir: Angle = shape.deflectionAngle(for: ray.direction,
+												  at: interface,
+												  index1: index1,
+												  index2: index2)
 
-//		let theta1 = ray.direction.angleBetween(interface.normal())
-		let theta1 = interface.normal().angleBetween(ray.direction)
-		let sinAngle = Angle(radians: (index1 / index2) * sin(theta1.radians))
+		ray.direction.rotate(to: newDir)
 
-		print(theta1, sinAngle)
-
-//		let critAngle = shape.criticalAngle(for: ray.direction, at: interface, index1: index1, index2: index2)
-//		let newDir: Angle = shape.deflectionAngle(for: ray.direction,
-//												  at: interface,
-//												  index1: index1,
-//												  index2: index2)
-//
-//
-//		print("New direction is \(newDir), critical angle is \(critAngle)")
-//
-//		ray.direction.rotate(to: newDir)
-//
-//		ray.previousIndex = ray.materialIndex
-//		ray.materialIndex = refraction
-
-
-//		if ray.materialIndex == refraction {
-//			print("Ray is exiting material from \(refraction) to \(extIndex)")
-//			ray.direction = shape.deflectionAngle(for: ray.direction,
-//												  at: interface,
-//												  index1: extIndex,
-//												  index2: refraction)
-//			ray.materialIndex = extIndex
-//		} else {
-//			print("Ray is entering material from \(ray.materialIndex) to \(refraction)")
-//			ray.direction = shape.deflectionAngle(for: ray.direction,
-//												  at: interface,
-//												  index1: ray.materialIndex,
-//												  index2: refraction)
-//			ray.materialIndex = refraction
-//		}
-
+		ray.previousIndex = ray.materialIndex
+		ray.materialIndex = refraction
 
 	}
 }
