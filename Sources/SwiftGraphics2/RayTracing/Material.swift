@@ -42,7 +42,6 @@ struct Material: RayDrawable {
 			index2 = refraction
 		}
 
-		print("Ray is moving from \(index1) to \(index2) at \(ray.direction.heading())")
 		let newDir: Angle = shape.deflectionAngle(for: ray.direction,
 												  at: interface,
 												  index1: index1,
@@ -55,8 +54,6 @@ struct Material: RayDrawable {
 
 	}
 }
-
-
 
 extension Shape where Self: RayTracable {
 	public func material(refraction: Double, extIndex: Double) -> some RayDrawable {
@@ -82,5 +79,4 @@ public enum RefractiveIndex {
 	public static let windowGlass: Double = 1.52
 	public static let sapphire: Double = 1.77
 	public static let diamond: Double = 2.417
-
 }
