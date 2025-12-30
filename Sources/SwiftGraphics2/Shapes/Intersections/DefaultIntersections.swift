@@ -147,16 +147,21 @@ enum IntersectionMethods {
     /// - Returns: An array of points at the shape intersections
     static func intersections(between line: Line, and circle: Circle) -> [Vector] {
         let deltaLine = line.end - line.start
-        
-        let a = deltaLine.magSq()
-        let b = 2 * (deltaLine.x * (line.start.x - circle.center.x) +
-            deltaLine.y * (line.start.y - circle.center.y) +
-            deltaLine.z * (line.start.z - circle.center.z))
-        var c = circle.center.magSq()
-        
-        c += line.start.magSq()
-        c -= 2 * (line.start.dot(circle.center))
-        c -= circle.radius.squared()
+
+		let a = deltaLine.magSq()
+#if Vector3D
+		let b = 2 * (deltaLine.x * (line.start.x - circle.center.x) +
+					 deltaLine.y * (line.start.y - circle.center.y) +
+					 deltaLine.z * (line.start.z - circle.center.z))
+#else
+		let b = 2 * (deltaLine.x * (line.start.x - circle.center.x) +
+					 deltaLine.y * (line.start.y - circle.center.y))
+#endif
+		var c = circle.center.magSq()
+
+		c += line.start.magSq()
+		c -= 2 * (line.start.dot(circle.center))
+		c -= circle.radius.squared()
         
         let bb4ac = b * b - 4 * a * c
         

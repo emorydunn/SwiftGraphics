@@ -83,18 +83,16 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 		
 		let mu = sinAlpha + (cosAlpha - lambda) * cotAlpha
 
-		let pointA = Vector(cos(start.radians), sin(start.radians), 0) * radius + center
+		let pointA = Vector(cos(start.radians), sin(start.radians)) * radius + center
 		let pointB = Vector(
 			lambda * cosPhi + mu * sinPhi,
-			lambda * sinPhi - mu * cosPhi,
-			0
+			lambda * sinPhi - mu * cosPhi
 		) * radius + center
 		let pointC = Vector(
 			lambda * cosPhi - mu * sinPhi,
-			lambda * sinPhi + mu * cosPhi,
-			0
+			lambda * sinPhi + mu * cosPhi
 		) * radius + center
-		let pointD = Vector(cos(start.radians + size.radians), sin(start.radians + size.radians), 0) * radius + center
+		let pointD = Vector(cos(start.radians + size.radians), sin(start.radians + size.radians)) * radius + center
 
 		return BezierPath(pointA, pointB, pointC, pointD)
 	}

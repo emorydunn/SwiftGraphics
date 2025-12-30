@@ -8,14 +8,15 @@
 import Foundation
 import simd
 
+#if Vector3D
+public typealias VectorType = simd_double3
+#else
+public typealias VectorType = simd_double2
+#endif
 
 /// A wrapper around a three-dimensional SIMD vector.
 public struct Vector {
-    var simdVector: simd_double3
-
-	var vector2d: simd_double2 {
-		simd_double2(x, y)
-	}
+    var simdVector: VectorType
 
     public var x: Double {
         get { simdVector.x }
@@ -26,12 +27,15 @@ public struct Vector {
         get { simdVector.y }
         set { simdVector.y = newValue }
     }
-    
+
+#if Vector3D
     public var z: Double {
         get { simdVector.z }
         set { simdVector.z = newValue }
     }
-    
+#endif
+
+#if Vector3D
     /// Instantiate a new `Vector` at the specified coordinates
     /// - Parameters:
     ///   - x: The `x` position of the vector
@@ -49,22 +53,57 @@ public struct Vector {
     public init(_ x: Double, _ y: Double, _ z: Double = 1, transformation: simd_double3x3) {
         self.simdVector = transformation * simd_double3(x: x, y: y, z: z)
     }
-    
-    init(_ simdVector: simd_double3) {
-        self.simdVector = simdVector
-    }
+	#else
+	/// Instantiate a new `Vector` at the specified coordinates
+	/// - Parameters:
+	///   - x: The `x` position of the vector
+	///   - y: The `y` position of the vector
+	public init(_ x: Double, _ y: Double) {
+		self.simdVector = simd_double2(x: x, y: y)
+	}
+
+	/// Create a new `Vector` by applying a transformation to the specified points.
+	/// - Parameters:
+	///   - x: The `x` position of the vector
+	///   - y: The `y` position of the vector
+	///   - z: The `z` position of the vector
+	public init(_ x: Double, _ y: Double, transformation: simd_double3x3) {
+		let transformed = transformation * simd_double3(x: x, y: y, z: 1)
+		self.simdVector = simd_double2(x: transformed.x, y: transformed.y)
+	}
+	#endif
+
+	init(_ simdVector: VectorType) {
+		self.simdVector = simdVector
+	}
+
+	init(_ simdVector: simd_double3) {
+#if Vector3D
+		self.simdVector = simdVector
+		#else
+		self.simdVector = simd_double2(simdVector.x, simdVector.y)
+#endif
+	}
 
 	/// Instantiate a new `Vector` with the specified angle
 	/// - Parameter angle: The angle, in Radians, of the vector
 	public init(angle: Angle) {
 		let angle = angle.radians
-		self.init(cos(angle), sin(angle), 0)
+		self.init(cos(angle), sin(angle))
+
+#if Vector3D
+#warning("3D vector rotation is not fully implemented.")
+#endif
 	}
 }
 
 extension Vector: Equatable, CustomStringConvertible {
     public var description: String {
-        "Vector (\(x), \(y), \(z))"
+#if Vector3D
+		"Vector (\(x), \(y), \(z))"
+#else
+		"Vector (\(x), \(y)"
+#endif
     }
 }
 
@@ -143,17 +182,28 @@ public extension Vector {
     
     /// Calculates and returns a vector composed of the cross product between two vectors
     func cross(_ vector: Vector) -> Vector {
-        Vector(simd_cross(simdVector, vector.simdVector))
+		let v1 = simd_double3(x, y, 0)
+		let v2 = simd_double3(vector.x, vector.y, 0)
+        return Vector(simd_cross(v1, v2))
     }
     
     /// Calculates and returns a vector composed of the cross product between two vectors
-    func crossProduct(_ vector: Vector) -> Vector {
-        let x = self.y * vector.z - self.z * vector.y
-        let y = self.z * vector.x - self.x * vector.z
-        let z = self.x * vector.y - self.y * vector.x
-        
-        return Vector(x, y, z)
-    }
+	func crossProduct(_ vector: Vector) -> Vector {
+#if Vector3D
+		let x = self.y * vector.z - self.z * vector.y
+		let y = self.z * vector.x - self.x * vector.z
+		let z = self.x * vector.y - self.y * vector.x
+
+		return Vector(x, y, z)
+#else
+		#warning("This is probably not accurate.")
+		let x = self.y * 1 - 1 * vector.y
+		let y = 1 * vector.x - self.x * 1
+//		let z = self.x * vector.y - self.y * vector.x
+
+		return Vector(x, y)
+#endif
+	}
 
 	/// Calculates and returns a vector composed of the cross product between two vectors
 	func crossProduct(_ vector: Vector) -> Double {
@@ -191,7 +241,7 @@ public extension Vector {
 		// Solution: we'll clamp the value to the -1,1 range
 
 		var angle = acos(min(1, max(-1, dotmagmag)))
-		angle *= sign(self.cross(vector).z)
+//		angle *= sign(self.cross(vector).z)
 
 		return .radians(angle)
 
@@ -235,7 +285,12 @@ public extension Vector {
 	}
 
     mutating func matrixRotate(by theta: Angle) {
-        simdVector = simdVector * MatrixTransformation.rotate(by: theta)
+		#if Vector3D
+		simdVector = simdVector * MatrixTransformation.rotate(by: theta)
+		#else
+		let rotated = simd_double3(x, y, 1) * MatrixTransformation.rotate(by: theta)
+		simdVector = simd_double2(rotated.x, rotated.y)
+		#endif
     }
     
     /// Rotate the Vector around the specified point

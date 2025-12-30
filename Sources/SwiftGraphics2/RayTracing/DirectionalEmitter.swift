@@ -32,15 +32,28 @@ public struct DirectionalEmitter: Emitter {
 		self.direction = direction
 	}
 
+#if Vector3D
 	/// Instantiate a new emitter
 	/// - Parameters:
 	///   - x: `x` coordinate of the origin
 	///   - y: `y` coordinate of the origin
+	///   - z: `z` coordinate of the origin
 	///   - direction: Direction of the emitter's ray
 	public init(x: Double, y: Double, z: Double = 0, direction: Vector) {
 		self.origin = Vector(x, y, z)
 		self.direction = direction
 	}
+#else
+	/// Instantiate a new emitter
+	/// - Parameters:
+	///   - x: `x` coordinate of the origin
+	///   - y: `y` coordinate of the origin
+	///   - direction: Direction of the emitter's ray
+	public init(x: Double, y: Double, direction: Vector) {
+		self.origin = Vector(x, y)
+		self.direction = direction
+	}
+#endif
 
 	/// Instantiate a new emitter
 	/// - Parameters:

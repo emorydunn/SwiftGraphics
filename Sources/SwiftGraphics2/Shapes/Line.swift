@@ -161,7 +161,12 @@ public struct Line: Shape, Drawable {
 	public func distanceToIntersection(origin: Vector, dir: Vector) -> Double? {
 		let v1 = origin - start
 		let v2 = end - start
-		let v3 = Vector(-dir.y, dir.x, 0)
+#if Vector3D
+		// TODO: Confirm 3D distance
+		let v3 = Vector(-dir.y, dir.x, dir.z)
+#else
+		let v3 = Vector(-dir.y, dir.x)
+#endif
 
 		let dot = v2 * v3
 		guard abs(dot) > 0.000001 else {
