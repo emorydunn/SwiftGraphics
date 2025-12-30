@@ -40,7 +40,13 @@ public struct Angle: Sendable {
         self.degrees = degrees
         self.radians = degrees * Double.pi / 180
     }
-    
+
+	/// Create a new Angle from degrees.
+	/// - Parameter degrees: The angle in degrees.
+	public init(degrees: Int) {
+		self.init(degrees: Double(degrees))
+	}
+
     /// Create a new Angle from degrees.
     /// - Parameter radians: The angle in degrees.
 	public init(radians: Double) {
