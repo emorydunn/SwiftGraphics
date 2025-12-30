@@ -12,28 +12,30 @@ import Foundation
 /// Generate Perlin noise. 
 ///
 /// Implemented from p5.js
-public class PerlinGenerator {
-    
+public final class PerlinGenerator: Sendable {
+
     /// A shared generator
     public static let shared = PerlinGenerator()
-    
+
     let yWrapB = 4
-    lazy var yWrap = 1 << yWrapB
+	var yWrap: Int { 1 << yWrapB }
     let zWrapB = 8
-    lazy var zWrap = 1 << zWrapB
+	var zWrap: Int { 1 << zWrapB }
     let size = 4095
     
     /// The number of noise samples to blend together
-    public var octives = 2
-    
+	public let octives: Int
+
     /// The amount each octave loses influence
-    var ampFalloff = 0.5
-    
+	let ampFalloff: Double
+
     /// The noise array
-    var perlin = [Double]()
-    
+	let perlin: [Double]
+
     /// Instantiate a new generator
-    public init() {
+	public init(octives: Int = 2, ampFalloff: Double = 0.5) {
+		self.octives = octives
+		self.ampFalloff = ampFalloff
         self.perlin = (0..<(size + 1)).map { _ in Double.random(in: 0...1) }
     }
     
@@ -43,8 +45,12 @@ public class PerlinGenerator {
     
     /// Calculate the Perlin noise values for the specified coordinates
     /// - Parameter vector: Position for the noice value
-    public func noise(_ vector: Vector) -> Double {
-        return noise(vector.x, vector.y, vector.z)
+	public func noise(_ vector: Vector) -> Double {
+#if Vector3D
+		noise(vector.x, vector.y, vector.z)
+#else
+		noise(vector.x, vector.y)
+#endif
     }
     
     
@@ -54,7 +60,7 @@ public class PerlinGenerator {
     ///   - y: `y` coordinate
     ///   - z: `z` coordinate
     public func noise(_ x: Double, _ y: Double = 0, _ z: Double = 0) -> Double {
-        
+
         // Create mutable copies
         var x = x
         var y = y

@@ -8,7 +8,7 @@
 import Foundation
 
 /// Represents an angle, both in degrees and radians.
-public struct Angle {
+public struct Angle: Sendable {
 
     /// Create a new Angle from degrees.
     /// - Parameter value: The angle in degrees.
