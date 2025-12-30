@@ -108,16 +108,22 @@ public extension RayTracable where Self: ClosedShape {
     /// The interface of the intersection of a ray
     /// - Parameter intersection: The point of intersection
     /// - Returns: A line representing the normal
-    func interface(of intersection: Vector) -> Line {
+	func interface(of intersection: Vector) -> Line {
 		var entryAngle = angle(ofPoint: intersection)
-        if entryAngle.radians < 0 {
+		if entryAngle.radians < 0 {
 			entryAngle = Angle.fullCircle + entryAngle
-        }
-        
+		}
+
 		let tangentAngle = entryAngle + Angle.quarterCircle
 
-        return Line(center: intersection, direction: tangentAngle, length: 50)
-    }
+		let interface = Line(center: intersection, direction: tangentAngle, length: 50)
+
+		if intersection.isBehind(line: interface) {
+			return interface
+		} else {
+			return interface.pointsSwitched()
+		}
+	}
     
     /// Deflect a ray according to Snell's Law
     /// - Parameter ray: The ray to deflect

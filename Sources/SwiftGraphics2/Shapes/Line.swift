@@ -186,6 +186,7 @@ public struct Line: Shape, Drawable {
 	func pointsSwitched() -> Line {
 		Line(start: end, end: start)
 	}
+
 }
 
 extension Line: RayTracable {
@@ -198,13 +199,12 @@ extension Line: RayTracable {
 	}
 
 	public func interface(of intersection: Vector) -> Line {
-		if normal() * (intersection) < 0 {
-			pointsSwitched()
-		} else {
+		if intersection.isBehind(line: self) {
 			self
+		} else {
+			pointsSwitched()
 		}
 	}
-
 }
 
 extension Line: SVGDrawable {

@@ -323,6 +323,15 @@ public extension Vector {
 
 		return 2 * div * line.center - self
 	}
+	
+	/// Determine whether the vector is behind a given line.
+	///
+	/// If the dot product of the normal of the line and the vector is
+	/// greater than `0` the point is behind the line.
+	/// - Parameter line: The line to test.
+	func isBehind(line: Line) -> Bool {
+		line.normal() * self > 0
+	}
 }
 
 extension Vector {
