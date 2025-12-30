@@ -48,7 +48,7 @@ public struct LinearEmitter: Emitter {
 	/// This method calculates the paths of the emitter's rays, but does not draw them.
 	/// Any previous rays will be overwritten.
 	/// - Parameter objects: The objects with which the rays will interact
-	public mutating func run(objects: [RayTracable]) {
+	public mutating func run(objects: [RayTracable], initialIndex: Double) {
 		// Draw the line
 
 		// Ensure there is space between the rays
@@ -65,7 +65,8 @@ public struct LinearEmitter: Emitter {
 
 			let ray = Ray(
 				origin: origin,
-				direction: Vector(angle: angle)
+				direction: Vector(angle: angle),
+				initialIndex: initialIndex
 			)
 			ray.run(objects: objects)
 			return ray

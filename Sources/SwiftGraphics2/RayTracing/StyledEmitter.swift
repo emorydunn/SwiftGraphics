@@ -61,8 +61,8 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 		return element
 	}
 
-	public mutating func run(objects: [RayTracable]) {
-		shape.run(objects: objects)
+	public mutating func run(objects: [RayTracable], initialIndex: Double) {
+		shape.run(objects: objects, initialIndex: initialIndex)
 	}
 
 }

@@ -95,12 +95,13 @@ public struct ShapeEmitter: Emitter {
 	/// This method calculates the paths of the emitter's rays, but does not draw them.
 	/// Any previous rays will be overwritten.
 	/// - Parameter objects: The objects with which the rays will interact
-	public mutating func run(objects: [RayTracable]) {
+	public mutating func run(objects: [RayTracable], initialIndex: Double) {
 		self.rays = stride(from: startAngle, to: endAngle, by: stepAngle).map { angle in
 			let origin = emitterSource.point(at: angle)
 			let ray = Ray(
 				origin: origin,
-				direction: Vector(angle: angle)
+				direction: Vector(angle: angle),
+				initialIndex: initialIndex
 			)
 
 			ray.run(objects: objects)

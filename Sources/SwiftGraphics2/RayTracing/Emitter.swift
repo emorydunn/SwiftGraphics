@@ -18,7 +18,7 @@ public protocol Emitter: Drawable {
     /// This method calculates the paths of the emitter's rays, but does not draw them.
     /// Any previous rays will be overwritten.
     /// - Parameter objects: The objects with which the rays will interact
-    mutating func run(objects: [RayTracable])
+    mutating func run(objects: [RayTracable], initialIndex: Double)
 
 }
 
@@ -26,8 +26,8 @@ extension Emitter {
     
     /// Process the ray casting operations for this emitter and draw the paths.
     /// - Parameter objects: The objects with which the rays will interact
-    public mutating func draw(objects: [RayTracable], in context: DrawingContext) {
-        run(objects: objects)
+    public mutating func draw(objects: [RayTracable], in context: DrawingContext, initialIndex: Double) {
+        run(objects: objects, initialIndex: initialIndex)
         draw(in: context)
     }
 

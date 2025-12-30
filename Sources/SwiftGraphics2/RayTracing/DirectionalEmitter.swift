@@ -83,15 +83,15 @@ public struct DirectionalEmitter: Emitter, CustomStringConvertible {
 	/// This method calculates the paths of the emitter's rays, but does not draw them.
 	/// Any previous rays will be overwritten.
 	/// - Parameter objects: The objects with which the rays will interact
-	public mutating func run(objects: [RayTracable]) {
-		let ray = makeRay()
+	public mutating func run(objects: [RayTracable], initialIndex: Double) {
+		let ray = makeRay(initialIndex: initialIndex)
 		ray.run(objects: objects)
 
 		self.ray = ray
 	}
 
-	public func makeRay() -> Ray {
-		Ray(origin: origin, direction: direction)
+	public func makeRay(initialIndex: Double) -> Ray {
+		Ray(origin: origin, direction: direction, initialIndex: initialIndex)
 	}
 
 //	/// Draw the paths taken by the emitter's rays.

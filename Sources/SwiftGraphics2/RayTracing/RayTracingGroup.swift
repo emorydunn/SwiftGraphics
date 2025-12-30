@@ -15,8 +15,11 @@ public struct RayTracingGroup: Drawable, SVGDrawable {
 
 	public let drawShapes: Bool
 
-	public init(drawShapes: Bool = true, @RenderBuilder body: () -> [RayDrawable], @EmitterBuilder emitters: () -> [Emitter]) {
+	let initialIndex: Double
+
+	public init(drawShapes: Bool = true, initialIndex: Double = 1, @RenderBuilder body: () -> [RayDrawable], @EmitterBuilder emitters: () -> [Emitter]) {
 		self.drawShapes = drawShapes
+		self.initialIndex = initialIndex
 		self.shapes = body()
 		self.emitters = emitters()
 	}
@@ -31,7 +34,7 @@ public struct RayTracingGroup: Drawable, SVGDrawable {
 
 		// Process emitters
 		for var emitter in emitters {
-			emitter.run(objects: shapes)
+			emitter.run(objects: shapes, initialIndex: initialIndex)
 
 			if let svg = emitter.svgElement() {
 				element.addChild(svg)

@@ -20,9 +20,9 @@ public class Ray {
 	/// The path the ray has taken
 	public var path: Path
 
-	public var materialIndex: Double = 1.333
+	public var materialIndex: Double
 
-	public var previousIndex: Double = 1
+	public var previousIndex: Double
 
 	/// Whether or no the ray is terminated
 	///
@@ -34,7 +34,7 @@ public class Ray {
 	/// The ray is limited to 1000 iterations
 	var iterationCount = 0 {
 		didSet {
-			if iterationCount > 1000 {
+			if iterationCount > 2 {
 				print("Iteration count has crossed threshold")
 				terminateRay()
 			}
@@ -45,10 +45,12 @@ public class Ray {
 	/// - Parameters:
 	///   - origin: The position of the Ray
 	///   - direction: The direction of the Ray
-	public init(origin: Vector, direction: Vector) {
+	public init(origin: Vector, direction: Vector, initialIndex: Double) {
 		self.origin = origin
 		self.direction = direction
 		self.path = Path()
+		self.materialIndex = initialIndex
+		self.previousIndex = initialIndex
 	}
 
 	/// Instantiate a new Ray.
@@ -56,10 +58,11 @@ public class Ray {
 	///   - x: The X position of the Ray.
 	///   - y: The Y position of the Ray.
 	///   - direction: The direction of the Ray, in degrees.
-	public convenience init(x: Double, y: Double, direction: Angle) {
+	public convenience init(x: Double, y: Double, direction: Angle, initialIndex: Double) {
 		self.init(
 			origin: Vector(x, y),
-			direction: Vector(angle: direction))
+			direction: Vector(angle: direction),
+		initialIndex: initialIndex)
 	}
 
 	/// Remove the ray's saved path and reset its iterations
