@@ -102,7 +102,7 @@ extension Vector: Equatable, CustomStringConvertible {
 #if Vector3D
 		"Vector (\(x), \(y), \(z))"
 #else
-		"Vector (\(x), \(y)"
+		"Vector (\(x), \(y))"
 #endif
     }
 }
@@ -223,7 +223,7 @@ public extension Vector {
 	}
 
     func sign() -> Vector {
-        Vector(simd_sign(simdVector))
+		Vector(simd_sign(simdVector))
     }
     
     /// Provide the heading of the receiver
