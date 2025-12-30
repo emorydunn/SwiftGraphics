@@ -103,7 +103,7 @@ public struct Line: Shape, Drawable {
     /// Return a point at the specified distance of the line
     /// - Parameter distance: Distance from the end point
     public func point(at distance: Double) -> Vector {
-        var v = (end - start).normalized() // swiftlint:disable:this identifier_name
+        var v = (end - start).normalized()
         v *= distance
 
         return start + v
@@ -182,6 +182,10 @@ public struct Line: Shape, Drawable {
 
 		return nil
 	}
+
+	func pointsSwitched() -> Line {
+		Line(start: end, end: start)
+	}
 }
 
 extension Line: RayTracable {
@@ -194,7 +198,11 @@ extension Line: RayTracable {
 	}
 
 	public func interface(of intersection: Vector) -> Line {
-		self
+		if normal() * (intersection) < 0 {
+			pointsSwitched()
+		} else {
+			self
+		}
 	}
 
 }
