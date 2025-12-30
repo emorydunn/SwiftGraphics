@@ -37,7 +37,7 @@ public extension Sketch {
         return fileName
     }
     
-    func outputFolder(from path: String = #file) -> URL {
+    func outputFolder(from path: String = #filePath) -> URL {
         var url = URL(fileURLWithPath: path).deletingLastPathComponent()
 
         while true {
