@@ -78,28 +78,26 @@ public extension RayTracable {
 	///   - extIndex: The refraction index of the exterior material
 	/// - Returns: A `Vector` rotated by the angle of reflection
 	func deflectionAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
+		let normal = interface.normal()
 
 		// Determine the angle from the normal
-		let theta1 = dir.angleBetween(interface.normal()).radians
-		let sinAngle = (index1 / index2) * sin(theta1)
+		let theta1 = dir.angleBetween(normal)
+
+		let sinAngle = (index1 / index2) * sin(theta1.radians)
 
 		// If the sin(theta2) is less than 1 we're below the critical angle
 		// and achieve total internal reflection.
-		guard sinAngle < 1 else {
-			return .radians(theta1)
+		guard abs(sinAngle) < 1 else {
+			return Vector(angle: theta1).reflected(across: interface).heading() + 90
 		}
 
-		let deflectionAngle = asin(sinAngle)
+		let deflectionAngle = Angle(radians: asin(sinAngle))
 
-		// Snell's Law of reflection
-		return .radians(deflectionAngle)
+		return interface.normal().heading() + deflectionAngle
 	}
 
 	func criticalAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
-		let theta1 = dir.angleBetween(interface.normal()).radians
-		let sinTheta2 = (index1 / index2) * sin(theta1)
-
-		let thetaCrit = asin((index2 / index1) * sin(sinTheta2))
+		let thetaCrit = asin(index2 / index1)
 
 		return .radians(thetaCrit)
 	}
