@@ -127,8 +127,8 @@ public struct Size: Hashable, Equatable, Codable {
 	
 	public var margins: Rectangle {
 		Rectangle(center: center,
-				  width: width - margin * 2,
-				  height: height - margin * 2)
+				  width: marginWidth,
+				  height: marginHeight)
 	}
 
 	public var boundingBox: Rectangle {
