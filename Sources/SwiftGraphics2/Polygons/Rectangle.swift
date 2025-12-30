@@ -47,7 +47,14 @@ public struct Rectangle: Polygon, Drawable, Intersectable {
 		self.height = size.height
 		self.rotation = rotation
 	}
-    
+
+	public init(corner: Vector, width: Double, height: Double, rotation: Angle = .degrees(0)) {
+		self.origin = Vector(corner.x + width / 2, corner.y + height / 2)
+		self.width = width
+		self.height = height
+		self.rotation = rotation
+	}
+
     /// Calculates the points of the rectangle by applying a matrix transformation.
     ///
     /// The points start in the top left and proceed clockwise:
