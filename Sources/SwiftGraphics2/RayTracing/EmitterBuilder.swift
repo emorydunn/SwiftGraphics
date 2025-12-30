@@ -35,12 +35,16 @@ public struct EmitterBuilder {
 		component
 	}
 
-	public static func buildEither(first component: Emitter) -> Emitter {
-		component
+	public static func buildEither(first component: Emitter) -> [Emitter] {
+		[
+			component
+		]
 	}
 
-	public static func buildEither(second component: Emitter) -> Emitter {
-		component
+	public static func buildEither(second component: Emitter) -> [Emitter] {
+		[
+			component
+		]
 	}
 
 }
