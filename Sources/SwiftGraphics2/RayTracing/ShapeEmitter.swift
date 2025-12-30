@@ -136,4 +136,8 @@ extension ShapeEmitter: RayTracable {
 	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
 		emitterSource.rayIntersectionDistance(ray)
 	}
+
+	public func interface(of intersection: Vector) -> Line {
+		emitterSource.interface(of: intersection)
+	}
 }

@@ -187,6 +187,11 @@ extension Line: RayTracable {
 	public func rayIntersectionDistance(_ ray: Ray) -> Double? {
 		distanceToIntersection(origin: ray.origin, dir: ray.direction)
 	}
+
+	public func interface(of intersection: Vector) -> Line {
+		self
+	}
+
 }
 
 extension Line: SVGDrawable {

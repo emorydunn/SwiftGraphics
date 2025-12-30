@@ -21,6 +21,8 @@ public protocol RayTracable {
     /// The default implementation of this method terminates the `Ray`.
     /// - Parameter ray: The ray to modify
     func modifyRay(_ ray: Ray)
+
+	func interface(of intersection: Vector) -> Line
 }
 
 public extension RayTracable {
@@ -41,18 +43,65 @@ public extension RayTracable {
 	/// - Returns: A `Vector` rotated by the angle of reflection
 	func deflectionAngle(for dir: Vector, at interface: Line, refraction: Double = 1.46, extIndex: Double = 1.0) -> Vector {
 
-		var dirCopy = dir
-
 		// Determine the angle from the normal
-		let thetaInc = dirCopy.angleBetween(interface.normal()).radians
+		let thetaInc = dir.angleBetween(interface.normal()).radians
 
 		// Snell's Law of reflection
 		let deflection = asin((extIndex * sin(thetaInc)) / refraction)
 
-		dirCopy.rotate(by: .radians(deflection))
+		return dir.rotated(by: .radians(deflection))
+	}
 
-		return dirCopy
+	/// Calculate the angle of deflection using Snell's Law of Reflection
+	/// - Parameters:
+	///   - dir: The angle of intersection
+	///   - interface: The interface
+	///   - refraction: The refraction index of the material
+	///   - extIndex: The refraction index of the exterior material
+	/// - Returns: A `Vector` rotated by the angle of reflection
+	func deflectionAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Vector {
 
+		// Determine the angle from the normal
+		let thetaInc = dir.angleBetween(interface.normal()).radians
+
+		// Snell's Law of reflection
+		let deflection = asin((index1 / index2) * sin(thetaInc))
+
+		return dir.rotated(by: .radians(deflection))
+	}
+
+	/// Calculate the angle of deflection using Snell's Law of Reflection
+	/// - Parameters:
+	///   - dir: The angle of intersection
+	///   - interface: The interface
+	///   - refraction: The refraction index of the material
+	///   - extIndex: The refraction index of the exterior material
+	/// - Returns: A `Vector` rotated by the angle of reflection
+	func deflectionAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
+
+		// Determine the angle from the normal
+		let theta1 = dir.angleBetween(interface.normal()).radians
+		let sinAngle = (index1 / index2) * sin(theta1)
+
+		// If the sin(theta2) is less than 1 we're below the critical angle
+		// and achieve total internal reflection.
+		guard sinAngle < 1 else {
+			return .radians(theta1)
+		}
+
+		let deflectionAngle = asin(sinAngle)
+
+		// Snell's Law of reflection
+		return .radians(deflectionAngle)
+	}
+
+	func criticalAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
+		let theta1 = dir.angleBetween(interface.normal()).radians
+		let sinTheta2 = (index1 / index2) * sin(theta1)
+
+		let thetaCrit = asin((index2 / index1) * sin(sinTheta2))
+
+		return .radians(thetaCrit)
 	}
 }
 
