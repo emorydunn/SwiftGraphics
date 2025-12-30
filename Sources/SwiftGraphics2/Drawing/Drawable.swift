@@ -72,4 +72,8 @@ extension EmptyDrawable: RayTracable {
 	public func pointOnPerimeter(_ t: Double) -> Vector {
 		Vector(0, 0)
 	}
+
+	public func interface(of intersection: Vector) -> Line {
+		Line(0, 0, 0, 0)
+	}
 }
