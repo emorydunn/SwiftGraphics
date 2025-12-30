@@ -317,6 +317,12 @@ public extension Vector {
 	func rounded(_ rule: FloatingPointRoundingRule = .toNearestOrAwayFromZero) -> Vector {
 		Vector(simdVector.rounded(rule))
 	}
+
+	func reflected(across line: Line) -> Vector {
+		let div = (self * line.center) / (line.center * line.center)
+
+		return 2 * div * line.center - self
+	}
 }
 
 extension Vector {
