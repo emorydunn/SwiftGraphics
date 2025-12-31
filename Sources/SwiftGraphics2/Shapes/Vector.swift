@@ -210,18 +210,6 @@ public extension Vector {
 		self.x * vector.y - self.y * vector.x
 	}
 
-
-    /// Calculates the dot product of two vectors.
-	@available(*, deprecated, message: "Use * operator")
-    func dot(_ vector: Vector) -> Double {
-        simd_dot(simdVector, vector.simdVector)
-    }
-
-	/// Calculates the dot product of two vectors.
-	func dot2d(_ vector: Vector) -> Double {
-		(self.x * vector.x) + (self.y * vector.y)
-	}
-
     func sign() -> Vector {
 		Vector(simd_sign(simdVector))
     }
@@ -233,7 +221,7 @@ public extension Vector {
 
 	/// Calculates and returns the angle (in radians) between two vectors.
 	public func angleBetween(_ vector: Vector) -> Angle {
-		let dotmagmag = self.dot(vector) / (self.mag() * vector.mag())
+		let dotmagmag = (self * vector) / (self.mag() * vector.mag())
 		// Mathematically speaking: the dotmagmag variable will be between -1 and 1
 		// inclusive. Practically though it could be slightly outside this range due
 		// to floating-point rounding issues. This can make Math.acos return NaN.
@@ -241,10 +229,13 @@ public extension Vector {
 		// Solution: we'll clamp the value to the -1,1 range
 
 		var angle = acos(min(1, max(-1, dotmagmag)))
-//		angle *= sign(self.cross(vector).z)
+#if Vector3D
+		angle *= sign(self.cross(vector).z)
+#else
+		angle *= sign().y
+#endif
 
 		return .radians(angle)
-
 	}
 
 	private func sign(_ num: Double) -> Double {
@@ -330,7 +321,9 @@ public extension Vector {
 	/// greater than `0` the point is behind the line.
 	/// - Parameter line: The line to test.
 	func isBehind(line: Line) -> Bool {
-		line.normal() * self > 0
+		let dot = self * line.normal()
+
+		return dot > 0
 	}
 }
 

@@ -30,7 +30,7 @@ public struct Fresnel: RayDrawable, CustomStringConvertible {
 	}
 
 	public func modifyRay(_ ray: Ray) {
-		if shape.normal().dot(ray.direction) < 0 {
+		if shape.normal() * ray.direction < 0 {
 			ray.terminateRay()
 		} else {
 			ray.direction = shape.normal().normalized()

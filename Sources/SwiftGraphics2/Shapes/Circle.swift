@@ -116,7 +116,7 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 		let originDiffs = ray.origin - center
 
 		let a = ray.direction.magSq()
-		let b = 2 * ray.direction.dot(originDiffs)
+		let b = 2 * ray.direction * originDiffs
 		let c = originDiffs.magSq() - radius.squared()
 
 		let discr = b.squared() - 4 * a * c

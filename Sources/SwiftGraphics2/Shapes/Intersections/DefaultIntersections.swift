@@ -160,7 +160,7 @@ enum IntersectionMethods {
 		var c = circle.center.magSq()
 
 		c += line.start.magSq()
-		c -= 2 * (line.start.dot(circle.center))
+		c -= 2 * (line.start * circle.center)
 		c -= circle.radius.squared()
         
         let bb4ac = b * b - 4 * a * c
