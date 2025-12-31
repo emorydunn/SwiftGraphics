@@ -42,6 +42,8 @@ struct Material: RayDrawable {
 			index2 = refraction
 		}
 
+		let interface = shape.interface(of: ray.origin)
+		ray.interfaces.append(interface)
 		let newDir: Angle = shape.deflectionAngle(for: ray.direction,
 												  at: interface,
 												  index1: index1,

@@ -124,6 +124,15 @@ extension DirectionalEmitter: SVGDrawable {
 			element.addChild(ray?.path.points.last?.svgElement())
 		}
 
+		for interface in ray!.interfaces {
+			element.addChild(interface
+				.svgElement()
+			)
+
+			element.addChild(Line(origin: interface.center, direction: interface.normal(), length: 20)
+				.svgElement())
+		}
+
 		return element
 	}
 }

@@ -29,12 +29,14 @@ public class Ray {
 	/// If this value is true no more tracing will be done
 	public var isTerminated: Bool = false
 
+	public var interfaces: [Line] = []
+
 	/// How many steps the ray has taken
 	///
 	/// The ray is limited to 1000 iterations
 	var iterationCount = 0 {
 		didSet {
-			if iterationCount > 2 {
+			if iterationCount > 10 {
 				print("Iteration count has crossed threshold")
 				terminateRay()
 			}
