@@ -56,6 +56,10 @@ public struct Line: Shape, Drawable {
 		)
 	}
 
+	public init(center: Vector, direction: Vector, length: Double) {
+		self.init(center: center, direction: direction.heading(), length: length)
+	}
+
 	/// Instantiate a new `Line` from an origin of a specified length
 	/// - Parameters:
 	///   - origin: The origin of the line
@@ -69,6 +73,10 @@ public struct Line: Shape, Drawable {
 			origin.x + dir.x * length,
 			origin.y + dir.y * length
 		)
+	}
+
+	public init(origin: Vector, direction: Vector, length: Double) {
+		self.init(origin: origin, direction: direction.heading(), length: length)
 	}
 
     /// Determine whether a point is on the line
@@ -144,10 +152,10 @@ public struct Line: Shape, Drawable {
 		}
 		
 		let norm = normal()
-		let denom = norm.dot(dir)
+		let denom = norm * dir
 
 		let p0 = center - origin
-		let t = p0.dot(norm) / denom
+		let t = (p0 * norm) / denom
 
 		guard t >= 0 else { return nil }
 		let pHit = origin + (dir * t)
