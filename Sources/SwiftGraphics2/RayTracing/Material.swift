@@ -10,7 +10,6 @@ struct Material: RayDrawable {
 	let shape: RayTracable
 
 	var refraction: Double
-	var extIndex: Double
 
 	func rayIntersection(_ ray: Ray) -> Vector? {
 		shape.rayIntersection(ray)
@@ -58,14 +57,13 @@ struct Material: RayDrawable {
 }
 
 extension Shape where Self: RayTracable {
-	public func material(refraction: Double, extIndex: Double) -> some RayDrawable {
+	public func material(refraction: Double) -> some RayDrawable {
 		if var styled = self as? Material {
 			styled.refraction = refraction
-			styled.extIndex = extIndex
 			return styled
 		}
 
-		return Material(shape: self, refraction: refraction, extIndex: extIndex)
+		return Material(shape: self, refraction: refraction)
 	}
 }
 
