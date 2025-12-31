@@ -88,7 +88,6 @@ public class Ray {
 
 			// Find the closest intersecting object
 			for object in objects {
-
 				guard let distance = object.rayIntersectionDistance(self) else { continue }
 				guard distance > 0.000001 else { continue }
 
@@ -96,6 +95,16 @@ public class Ray {
 					closestPoint = origin + direction * distance
 					closestDistance = distance
 					closestObject = object
+				}
+			}
+
+			// Look for cycles
+			if path.points.count > 2 {
+				let secondToLast = path.points[path.points.count - 2]
+				if closestPoint?.rounded() == secondToLast.rounded() {
+					print("Ray is in a cycle at \(iterationCount) iterations, terminating.")
+					terminateRay()
+					return
 				}
 			}
 
