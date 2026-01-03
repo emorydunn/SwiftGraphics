@@ -52,7 +52,9 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 			element?.strokeColor(strokeColor)
 			element?.strokeWidth(strokeWidth)
 			element?.fillColor(fillColor)
-			element?.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
+			if blendMode != .normal {
+				element?.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
+			}
 
 			return element
 		}
@@ -64,7 +66,9 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 			child.strokeColor(strokeColor)
 			child.strokeWidth(strokeWidth)
 			child.fillColor(fillColor)
-			child.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
+			if blendMode != .normal {
+				child.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
+			}
 		}
 
 		return element
