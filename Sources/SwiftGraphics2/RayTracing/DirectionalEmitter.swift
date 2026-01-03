@@ -113,19 +113,20 @@ public struct DirectionalEmitter: Emitter, CustomStringConvertible {
 
 extension DirectionalEmitter: SVGDrawable {
 	public func svgElement() -> XMLElement? {
+		guard let ray else { return nil }
 		let element = XMLElement(name: "g")
 
 		element.addChild(origin.svgElement())
 
 		switch style {
 		case .line:
-			element.addChild(ray?.path.svgElement())
+			element.addChild(ray.svgElement())
 		case .point:
-			element.addChild(ray?.path.points.last?.svgElement())
+			element.addChild(ray.path.last?.svgElement())
 		}
 
-		for interface in ray!.interfaces {
-			let norm = interface
+		for (origon, interface) in ray.pairedIntersections {
+			let norm = Line(origin: origin, direction: interface, length: 50) 
 				.strokeColor(.blue)
 				.svgElement()
 

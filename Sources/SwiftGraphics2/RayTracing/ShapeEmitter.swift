@@ -119,9 +119,9 @@ extension ShapeEmitter: SVGDrawable {
 		for ray in rays {
 			switch style {
 			case .line:
-				element.addChild(ray.path.svgElement())
+				element.addChild(ray.svgElement())
 			case .point:
-				element.addChild(ray.path.points.last?.svgElement())
+				element.addChild(ray.path.last?.svgElement())
 			}
 		}
 

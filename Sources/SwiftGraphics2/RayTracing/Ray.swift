@@ -4,7 +4,7 @@
 //
 //  Created by Emory Dunn on 2025-12-24.
 //
-
+import Foundation
 
 /// An object representing a set of straight lines originating from a point.
 ///
@@ -18,7 +18,7 @@ public class Ray {
 	public var direction: Vector
 
 	/// The path the ray has taken
-	public var path: Path
+	public var path: [Vector]
 
 	public var materialIndex: Double
 
@@ -28,35 +28,41 @@ public class Ray {
 	///
 	/// If this value is true no more tracing will be done
 	public var isTerminated: Bool = false
-
-	public var interfaces: [Line] = []
+	
+	/// The normals of intersection points.
+	///
+	/// Primarily used for debugging.
+	public var interfaces: [Vector] = []
 
 	/// How many steps the ray has taken
 	///
 	/// The ray is limited to 1000 iterations
 	var iterationCount = 0 {
 		didSet {
-			if iterationCount > 10 {
+			if iterationCount > iterationLimit {
 				print("Iteration count has crossed threshold")
 				terminateRay()
 			}
 		}
 	}
 
-	var previousPoint: Vector {
-		path.points.last ?? origin
+	public var iterationLimit: Int
+
+	public var previousPoint: Vector {
+		path.last ?? origin
 	}
 
 	/// Instantiate a new Ray.
 	/// - Parameters:
 	///   - origin: The position of the Ray
 	///   - direction: The direction of the Ray
-	public init(origin: Vector, direction: Vector, initialIndex: Double) {
+	public init(origin: Vector, direction: Vector, initialIndex: Double, iterationLimit: Int = 100) {
 		self.origin = origin
 		self.direction = direction
-		self.path = Path()
+		self.path = []
 		self.materialIndex = initialIndex
 		self.previousIndex = initialIndex
+		self.iterationLimit = iterationLimit
 	}
 
 	/// Instantiate a new Ray.
@@ -64,11 +70,12 @@ public class Ray {
 	///   - x: The X position of the Ray.
 	///   - y: The Y position of the Ray.
 	///   - direction: The direction of the Ray, in degrees.
-	public convenience init(x: Double, y: Double, direction: Angle, initialIndex: Double) {
+	public convenience init(x: Double, y: Double, direction: Angle, initialIndex: Double, iterationLimit: Int = 100) {
 		self.init(
 			origin: Vector(x, y),
 			direction: Vector(angle: direction),
-		initialIndex: initialIndex)
+			initialIndex: initialIndex,
+			iterationLimit: iterationLimit)
 	}
 
 	/// Remove the ray's saved path and reset its iterations
@@ -85,7 +92,7 @@ public class Ray {
 	/// Perform the ray tracing operation.
 	/// - Parameter objects: The objects to trace against.
 	public func run(objects: [RayTracable]) {
-		self.path = Path(origin)
+		self.path = [origin]
 
 		while isTerminated == false {
 			var closestDistance = Double.infinity
@@ -105,8 +112,8 @@ public class Ray {
 			}
 
 			// Look for cycles
-			if path.points.count > 2 {
-				let secondToLast = path.points[path.points.count - 2]
+			if path.count > 2 {
+				let secondToLast = path[path.count - 2]
 				if closestPoint?.rounded() == secondToLast.rounded() {
 					print("Ray is in a cycle at \(iterationCount) iterations, terminating.")
 					terminateRay()
@@ -124,7 +131,7 @@ public class Ray {
 					return
 				}
 
-				path.addPoint(closestPoint)
+				path.append(closestPoint)
 				origin = closestPoint
 				closestObject.modifyRay(self)
 
@@ -141,7 +148,17 @@ public class Ray {
 	/// - Parameters:
 	///   - objects: Objects to test for intersection when casting rays
 	public func draw(in context: DrawingContext) {
-		path.draw(in: context)
+		Path(path).draw(in: context)
+	}
+
+	public var pairedIntersections: Sequence<(Vector, Vector)> {
+		zip(path, interfaces)
+	}
+}
+
+extension Ray: SVGDrawable {
+	public func svgElement() -> XMLElement? {
+		Path(path).svgElement()
 	}
 }
 

@@ -47,7 +47,7 @@ struct Material: RayDrawable {
 		}
 
 		// Add debug normal line
-		ray.interfaces.append(Line(origin: ray.origin, direction: interface, length: 50))
+		ray.interfaces.append(interface)
 
 		let newDir: Angle = shape.deflectionAngle(for: ray,
 												  at: interface,
