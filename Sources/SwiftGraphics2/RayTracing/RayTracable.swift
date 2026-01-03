@@ -77,29 +77,62 @@ public extension RayTracable {
 	///   - refraction: The refraction index of the material
 	///   - extIndex: The refraction index of the exterior material
 	/// - Returns: A `Vector` rotated by the angle of reflection
-	func deflectionAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
-		let normal = interface.normal()
+	func deflectionAngle(for ray: Ray, at interface: Vector, index1: Double, index2: Double) -> Vector {
+		let directionNormalized = ray.direction
 
-		// Determine the angle from the normal
-		let theta1 = dir.angleBetween(normal)
+		let relativeIOR = index1 / index2
+		let cosAngleIn = -(directionNormalized * interface)
+		let sinSqrAngle = relativeIOR.squared() * (1 - cosAngleIn.squared())
 
-		let sinAngle = (index1 / index2) * sin(theta1.radians)
-
-		// If the sin(theta2) is less than 1 we're below the critical angle
-		// and achieve total internal reflection.
-		guard abs(sinAngle) < 1 else {
-			return Vector(angle: theta1).reflected(across: interface).heading() + 90
+		// If the angle is greater than 1 we're above the
+		// critical angle and need to reflect.
+		guard sinSqrAngle <= 1 else {
+			return directionNormalized + 2 * cosAngleIn * interface
 		}
 
-		let deflectionAngle = Angle(radians: asin(sinAngle))
+		return directionNormalized * relativeIOR + interface * (relativeIOR * cosAngleIn - sqrt(1 - sinSqrAngle))
+	}
 
-		return interface.normal().heading() + deflectionAngle
+	/// Calculate the angle of deflection using Snell's Law of Reflection
+	/// - Parameters:
+	///   - dir: The angle of intersection
+	///   - interface: The interface
+	///   - refraction: The refraction index of the material
+	///   - extIndex: The refraction index of the exterior material
+	/// - Returns: A `Vector` rotated by the angle of reflection
+	func deflectionAngle(for ray: Ray, at interface: Line, index1: Double, index2: Double) -> Angle {
+		deflectionAngle(for: ray, at: interface, index1: index1, index2: index2).heading()
 	}
 
 	func criticalAngle(for dir: Vector, at interface: Line, index1: Double, index2: Double) -> Angle {
 		let thetaCrit = asin(index2 / index1)
 
 		return .radians(thetaCrit)
+	}
+	
+	/// Calculate the ratio of light reflected versus transmitted through an interface.
+	///
+	/// The higher the returned value the more light is reflected versus transmitted.
+	///
+	/// Adapted from _Reflections and Refractions in Ray Tracing_ by Bram de Greve.
+	/// - Parameters:
+	///   - ray: The `Ray` to test.
+	///   - interface: The normal of the interface.
+	///   - index1: The index of refraction of the material the `Ray` is in.
+	///   - index2: The index of refraction of the material to which the `Ray` is moving.
+	/// - Returns: The ratio of transmitted light, from `0...1`.
+	func reflectance(for ray: Ray, at interface: Vector, index1: Double, index2: Double) -> Double {
+		let ratio = index1 / index2
+		let cosIn = -(ray.direction * interface)
+		let sinSquareRefract = ratio * ratio * (1 - cosIn * cosIn)
+
+		guard sinSquareRefract < 1 else { return 1 }
+
+		let cosRefract = sqrt(1 - sinSquareRefract)
+		let sqrtRayPerp = (index1 * cosIn - index2 * cosRefract) / (index1 * cosIn + index2 * cosRefract)
+		let sqrtRayParallel = (index2 * cosIn - index1 * cosRefract) / (index2 * cosIn + index1 * cosRefract)
+
+		return (sqrtRayPerp * sqrtRayPerp + sqrtRayParallel * sqrtRayParallel) / 2
 	}
 }
 
