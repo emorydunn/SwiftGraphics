@@ -17,6 +17,8 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 	/// Weight of the outline of the shape
 	public var strokeWidth: Double?
 
+	public var blendMode: BlendMode
+
 	public var shape: Emitter
 
 	public var style: RayTraceStyle {
@@ -24,10 +26,11 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 		set { shape.style = newValue }
 	}
 
-	init(strokeColor: Color? = nil, fillColor: Color? = nil, strokeWidth: Double? = nil, style: RayTraceStyle = .line, shape: Emitter) {
+	init(strokeColor: Color? = nil, fillColor: Color? = nil, strokeWidth: Double? = nil, style: RayTraceStyle = .line, blendMode: BlendMode = .normal, shape: Emitter) {
 		self.strokeColor = strokeColor
 		self.fillColor = fillColor
 		self.strokeWidth = strokeWidth
+		self.blendMode = blendMode
 		self.shape = shape
 	}
 
@@ -49,6 +52,7 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 			element?.strokeColor(strokeColor)
 			element?.strokeWidth(strokeWidth)
 			element?.fillColor(fillColor)
+			element?.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
 
 			return element
 		}
@@ -60,6 +64,7 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 			child.strokeColor(strokeColor)
 			child.strokeWidth(strokeWidth)
 			child.fillColor(fillColor)
+			child.addAttribute("mix-blend-mode: \(blendMode);", forKey: "style")
 		}
 
 		return element
@@ -72,32 +77,32 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 }
 
 public extension Emitter {
-    func strokeColor(_ color: Color?) -> some Emitter {
-        if var styled = self as? StyledEmitter {
-            styled.strokeColor = color
-            return styled
-        }
-        
-        return StyledEmitter(strokeColor: color, shape: self)
-    }
+	func strokeColor(_ color: Color?) -> some Emitter {
+		if var styled = self as? StyledEmitter {
+			styled.strokeColor = color
+			return styled
+		}
 
-    func fillColor(_ color: Color?) -> some Emitter {
-        if var styled = self as? StyledEmitter {
-            styled.fillColor = color
-            return styled
-        }
-        
-        return StyledEmitter(fillColor: color, shape: self)
-    }
+		return StyledEmitter(strokeColor: color, shape: self)
+	}
 
-    func strokeWidth(_ weight: Double?) -> some Emitter {
-        if var styled = self as? StyledEmitter {
-            styled.strokeWidth = weight
-            return styled
-        }
-        
-        return StyledEmitter(strokeWidth: weight, shape: self)
-    }
+	func fillColor(_ color: Color?) -> some Emitter {
+		if var styled = self as? StyledEmitter {
+			styled.fillColor = color
+			return styled
+		}
+
+		return StyledEmitter(fillColor: color, shape: self)
+	}
+
+	func strokeWidth(_ weight: Double?) -> some Emitter {
+		if var styled = self as? StyledEmitter {
+			styled.strokeWidth = weight
+			return styled
+		}
+
+		return StyledEmitter(strokeWidth: weight, shape: self)
+	}
 
 	func rayStyle(_ style: RayTraceStyle) -> some Emitter {
 		if var styled = self as? StyledEmitter {
@@ -106,5 +111,14 @@ public extension Emitter {
 		}
 
 		return StyledEmitter(style: style, shape: self)
+	}
+
+	func blendMode(_ blendMode: BlendMode) -> some Emitter {
+		if var styled = self as? StyledEmitter {
+			styled.blendMode = blendMode
+			return styled
+		}
+
+		return StyledEmitter(blendMode: blendMode, shape: self)
 	}
 }
