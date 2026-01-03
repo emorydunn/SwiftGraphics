@@ -40,7 +40,7 @@ public struct LinearEmitter: Emitter {
 	public init(_ x1: Double, _ y1: Double, _ x2: Double, _ y2: Double, rayStep: Double) {
 		// swiftlint:disable:previous identifier_name
 		self.rayStep = rayStep
-		self.emitterSource = Line(x1, y1, x2, y2)
+		self.emitterSource = Line(x1, y2, x2, y1)
 	}
 
 	/// Process the ray casting operations for this emitter.
@@ -49,13 +49,10 @@ public struct LinearEmitter: Emitter {
 	/// Any previous rays will be overwritten.
 	/// - Parameter objects: The objects with which the rays will interact
 	public mutating func run(objects: [RayTracable], initialIndex: Double) {
-		// Draw the line
-
 		// Ensure there is space between the rays
 		guard rayStep > 0 else { return }
 
 		var angleVector: Vector = emitterSource.normal()
-		angleVector.rotate(by: 180)
 
 		let angle = angleVector.heading()
 		let percentStep = (rayStep / emitterSource.length)
