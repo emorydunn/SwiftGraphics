@@ -325,6 +325,28 @@ public extension Vector {
 
 		return dot > 0
 	}
+
+	/// Determine whether the vector is behind a given line.
+	///
+	/// If the dot product of the normal of the line and the vector is
+	/// greater than `0` the point is behind the line.
+	/// - Parameter line: The line to test.
+	func isBehind(_ vector: Vector) -> Bool {
+		let dot = self * vector
+
+		return dot > 0
+	}
+
+	/// Determine whether the vector is behind a given line.
+	///
+	/// If the dot product of the normal of the line and the vector is
+	/// greater than `0` the point is behind the line.
+	/// - Parameter line: The line to test.
+	func isInfront(_ vector: Vector) -> Bool {
+		let dot = self * vector
+
+		return dot < 0
+	}
 }
 
 extension Vector {
