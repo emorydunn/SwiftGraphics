@@ -19,19 +19,19 @@ struct Material: RayDrawable {
 		shape.rayIntersectionDistance(ray)
 	}
 
-	func interface(of intersection: Vector) -> Line {
+	func interface(of intersection: Vector) -> Vector {
 		shape.interface(of: intersection)
 	}
 
 	func modifyRay(_ ray: Ray) {
-		let interface = shape.interface(of: ray.origin.normalized())
-
 		// If the ray's index matches the material
 		// then the ray is "inside" the material
 		// and we need to exit
 		// Otherwise the ray is entering the material
 		let index1: Double
 		let index2: Double
+
+		var interface = shape.interface(of: ray.origin)
 
 		if ray.materialIndex == refraction {
 			index1 = ray.materialIndex
@@ -41,18 +41,22 @@ struct Material: RayDrawable {
 			index2 = refraction
 		}
 
-		let interface = shape.interface(of: ray.origin)
-		ray.interfaces.append(interface)
-		let newDir: Angle = shape.deflectionAngle(for: ray.direction,
+		// Ensure the normal is in the same direction as the ray
+		if ray.direction.isBehind(interface) {
+			interface = interface.rotated(by: .pi)
+		}
+
+		// Add debug normal line
+		ray.interfaces.append(Line(origin: ray.origin, direction: interface, length: 50))
+
+		let newDir: Angle = shape.deflectionAngle(for: ray,
 												  at: interface,
 												  index1: index1,
 												  index2: index2)
 
 		ray.direction.rotate(to: newDir)
-
 		ray.previousIndex = ray.materialIndex
 		ray.materialIndex = refraction
-
 	}
 }
 
