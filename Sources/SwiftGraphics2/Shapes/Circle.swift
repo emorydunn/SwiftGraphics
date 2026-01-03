@@ -136,6 +136,13 @@ public struct Circle: ClosedShape, Drawable, RayTracable, Intersectable {
 
 		return tValue
 	}
+
+	/// The interface of the intersection of a ray
+	/// - Parameter intersection: The point of intersection
+	/// - Returns: A line representing the normal
+	public func interface(of intersection: Vector) -> Vector {
+		(intersection - center).normalized()
+	}
 }
 
 extension Circle: SVGDrawable {
