@@ -24,7 +24,7 @@ public protocol RayTracable {
 
 	func interface(of intersection: Vector) -> Vector
 
-	func deflectionAngle(for ray: Ray, at interface: Line, index1: Double, index2: Double) -> Vector
+	func deflectionAngle(for ray: Ray, at interface: Vector, index1: Double, index2: Double) -> Vector
 }
 
 public extension RayTracable {

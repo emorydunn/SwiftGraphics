@@ -25,8 +25,8 @@ public struct Fresnel: RayDrawable, CustomStringConvertible {
 		shape.rayIntersectionDistance(ray)
 	}
 
-	public func interface(of intersection: Vector) -> Line {
-		shape
+	public func interface(of intersection: Vector) -> Vector {
+		shape.interface(of: intersection)
 	}
 
 	public func modifyRay(_ ray: Ray) {

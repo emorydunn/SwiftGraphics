@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  RenderBuilder.swift
 //  SwiftGraphics
 //
 //  Created by Emory Dunn on 2025-12-25.
@@ -51,8 +51,8 @@ struct RenderGroup: RayDrawable {
 		nil
 	}
 	
-	func interface(of intersection: Vector) -> Line {
-		Line(0, 0, 0, 0)
+	func interface(of intersection: Vector) -> Vector {
+		Vector(0, 0)
 	}
 	
 	let shapes: [RayDrawable]
@@ -60,6 +60,4 @@ struct RenderGroup: RayDrawable {
 	init(_ shapes: [RayDrawable]) {
 		self.shapes = shapes
 	}
-
-
 }

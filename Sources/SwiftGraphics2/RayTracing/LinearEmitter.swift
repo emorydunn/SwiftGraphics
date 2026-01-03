@@ -105,7 +105,7 @@ extension LinearEmitter: RayTracable {
 		emitterSource.rayIntersectionDistance(ray)
 	}
 
-	public func interface(of intersection: Vector) -> Line {
-		emitterSource
+	public func interface(of intersection: Vector) -> Vector {
+		emitterSource.interface(of: intersection)
 	}
 }

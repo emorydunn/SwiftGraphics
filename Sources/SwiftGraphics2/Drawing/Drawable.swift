@@ -73,7 +73,7 @@ extension EmptyDrawable: RayTracable {
 		Vector(0, 0)
 	}
 
-	public func interface(of intersection: Vector) -> Line {
-		Line(0, 0, 0, 0)
+	public func interface(of intersection: Vector) -> Vector {
+		Vector(0, 0)
 	}
 }
