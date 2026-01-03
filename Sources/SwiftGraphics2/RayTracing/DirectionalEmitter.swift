@@ -125,12 +125,13 @@ extension DirectionalEmitter: SVGDrawable {
 		}
 
 		for interface in ray!.interfaces {
-			element.addChild(interface
+			let norm = interface
+				.strokeColor(.blue)
 				.svgElement()
-			)
 
-			element.addChild(Line(origin: interface.center, direction: interface.normal(), length: 20)
-				.svgElement())
+			norm?.debugElement()
+			
+			element.addChild(norm)
 		}
 
 		return element

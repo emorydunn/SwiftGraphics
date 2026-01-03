@@ -42,6 +42,8 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 
 		let element = shape.svgElement()
 
+		guard element?.isDebugElement == false else { return element }
+
 		// If there are no children apply the style directly the the node
 		guard let children = element?.children else {
 			element?.strokeColor(strokeColor)
@@ -53,6 +55,8 @@ public struct StyledEmitter: Emitter, Drawable, SVGDrawable {
 
 		// If the node has children, such as a group, override the style
 		for case let child as XMLElement in children {
+			guard child.isDebugElement == false else { continue }
+
 			child.strokeColor(strokeColor)
 			child.strokeWidth(strokeWidth)
 			child.fillColor(fillColor)

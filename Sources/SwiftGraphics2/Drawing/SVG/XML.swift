@@ -69,6 +69,28 @@ public extension XMLElement {
 	func fillColor(_ value: Color?) {
 		addAttribute(value, forKey: "fill")
 	}
+	
+	/// Add the `debug-element` attribute to the node.
+	///
+	/// Marking an element as debug will tell the renderer to treat is differently than normal
+	/// elements.
+	///
+	/// Currently its style won't be overridden.
+	/// - Parameter enabled: Whether to mark the value as a debug element.
+	func debugElement(enabled: Bool = true) {
+		addAttribute(true, forKey: "debug-element")
+	}
+
+	var isDebugElement: Bool {
+		guard
+			let attr = self.attribute(forName: "debug-element"),
+				let string = attr.stringValue
+		else {
+			return false
+		}
+
+		return Bool(string) ?? false
+	}
 
 	func addChild(_ child: XMLNode?) {
 		guard let child else { return }

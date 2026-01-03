@@ -35,18 +35,22 @@ public struct StyledShape: Drawable, SVGDrawable {
         guard let shape = shape as? SVGDrawable else { return nil }
         
         let element = shape.svgElement()
-        
+
+		guard element?.isDebugElement == false else { return element }
+
         // If there are no children apply the style directly the the node
         guard let children = element?.children else {
             element?.strokeColor(strokeColor)
             element?.strokeWidth(strokeWidth)
             element?.fillColor(fillColor)
-                    
+
             return element
         }
         
         // If the node has children, such as a group, override the style
         for case let child as XMLElement in children {
+			guard child.isDebugElement == false else { continue }
+			
             child.strokeColor(strokeColor)
             child.strokeWidth(strokeWidth)
             child.fillColor(fillColor)
