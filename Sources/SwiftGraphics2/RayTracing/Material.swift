@@ -67,16 +67,53 @@ extension Shape where Self: RayTracable {
 	}
 }
 
-public enum RefractiveIndex {
-	public static let vacuum: Double = 1
-	public static let air: Double = 1.000293
+extension Double {
+	public enum refractiveIndex {
 
-	public static let water: Double = 1.333
-	public static let oliveOil: Double = 1.47
+		/// Index of Refraction of Vacuum.
+		///
+		/// `IoR = 1`
+		public static let vacuum: Double = 1
 
-	public static let ice: Double = 1.31
-	public static let quartz: Double = 1.46
-	public static let windowGlass: Double = 1.52
-	public static let sapphire: Double = 1.77
-	public static let diamond: Double = 2.417
+		/// Index of Refraction of Air.
+		///
+		/// `IoR = 1.000293`
+		public static let air: Double = 1.000293
+
+		/// Index of Refraction of Water.
+		///
+		/// `IoR = 1.333`
+		public static let water: Double = 1.333
+
+		/// Index of Refraction of Olive Oil.
+		///
+		/// `IoR = 1.47`
+		public static let oliveOil: Double = 1.47
+
+		/// Index of Refraction of Ice.
+		///
+		/// `IoR = 1.31`
+		public static let ice: Double = 1.31
+
+		/// Index of Refraction of Quartz.
+		///
+		/// `IoR = 1.46`
+		public static let quartz: Double = 1.46
+
+		/// Index of Refraction of Window Glass.
+		///
+		/// `IoR = 1.52`
+		public static let windowGlass: Double = 1.52
+
+		/// Index of Refraction of Sapphire.
+		///
+		/// `IoR = 1.77`
+		public static let sapphire: Double = 1.77
+
+		/// Index of Refraction of Diamond.
+		///
+		/// `IoR = 2.417`
+		public static let diamond: Double = 2.417
+	}
+
 }
