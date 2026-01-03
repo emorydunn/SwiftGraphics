@@ -43,6 +43,10 @@ public class Ray {
 		}
 	}
 
+	var previousPoint: Vector {
+		path.points.last ?? origin
+	}
+
 	/// Instantiate a new Ray.
 	/// - Parameters:
 	///   - origin: The position of the Ray
